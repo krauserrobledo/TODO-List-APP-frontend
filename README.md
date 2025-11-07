@@ -1,59 +1,60 @@
-# Frontend
+# ***TODOListApp Frontend Project***
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.7.
+## ***WEEKLY SPRINT 11/03***
 
-## Development server
+#### ***Initialize Angular project:***
 
-To start a local development server, run:
+- start new project :
 
-```bash
-ng serve
-```
+  - ng new frontend.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+- Install angular/material :
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+  - ng add @angular/material
 
-```bash
-ng generate component component-name
-```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- Configure environments :
 
-```bash
-ng generate --help
-```
+  - Created Environments new folder.
+    
+  - Created Environment.js class.
 
-## Building
 
-To build the project run:
+### ***Frontend clean arch learning:***
 
-```bash
-ng build
-```
+  - https://medium.com/taager-tech-blog/clean-architecture-for-angular-applications-b7ab140f0d5a
+  
+  - https://gitlab.com/taager-com/examples/-/tree/main/clean-architecture-angular/src/base
+  
+  - https://www.youtube.com/watch?v=LswOKQAulfM&list=LL&index=2 
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
-## Running unit tests
+### ***Set project structure:***
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+ |- app
+ |   
+ |- Base
+ |   |- guards
+ |   |- interceptors
+ |   |- services
+ |
+ |- Data
+ |    |- repositories
+ |        |- user
+ |   
+ |- Environments
+ |
+ |- Domain
+ |   |- models
+ |   |- repositories
+ |   |- usecases
+ |
+ |- Presentation
+     |- assets
+     |- components
+     |- pages
+     |- stores
 
-```bash
-ng test
-```
+### ***Create Auth Module.***
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
