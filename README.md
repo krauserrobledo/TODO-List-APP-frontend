@@ -32,29 +32,30 @@
 
 ### ***Set project structure:***
 
- |- app
- |   
- |- Base
- |   |- guards
- |   |- interceptors
- |   |- services
- |
- |- Data
- |    |- repositories
- |        |- user
- |   
- |- Environments
- |
- |- Domain
- |   |- models
- |   |- repositories
- |   |- usecases
- |
- |- Presentation
-     |- assets
-     |- components
-     |- pages
-     |- stores
+ - app
+    
+ - Base
+    - guards
+    - interceptors
+    - services
+ 
+ - Data
+     - repositories
+         - user
+    
+ - Environments
+ 
+ - Domain
+    - models
+    - repositories
+    - usecases
+ 
+ - Presentation
+     - assets
+     - components
+     - pages
+     - stores
 
 ### ***Create Auth Module.***
+
 
