@@ -1,10 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import { AuthRepository } from '../repositories/auth-repository';
 import { LoginRequest, AuthResponse } from '../entities/auth-entity';
+import { AuthApiRepository } from '../../data/repositories/auth/auth-api-repository';
 
 @Injectable({ providedIn: 'root' })
 export class LoginUseCase {
-  private authRepository = inject(AuthRepository);
+  private authRepository = inject(AuthApiRepository);
 
   execute(request: LoginRequest): Promise<AuthResponse> {
     return this.authRepository.login(request);

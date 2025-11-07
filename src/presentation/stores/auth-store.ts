@@ -1,12 +1,12 @@
 import { Injectable, signal, inject } from '@angular/core';
-import { AuthRepository } from './../../domain/repositories/auth-repository';
 import { UserEntity } from './../../domain/entities/user-entity';
+import { AuthApiRepository } from '../../data/repositories/auth/auth-api-repository';
 
 @Injectable({ providedIn: 'root' })
 export class AuthStore {
-  private authRepository = inject(AuthRepository);
+  private authRepository = inject(AuthApiRepository);
 
-  currentUser = signal<UserEntity | null>(this.authRepository.getCurrentUser());
+  currentUser = signal<UserEntity | null>(null);
   isLoading = signal(false);
   error = signal<string | null>(null);
 

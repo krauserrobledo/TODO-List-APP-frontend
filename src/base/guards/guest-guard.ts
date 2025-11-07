@@ -1,10 +1,10 @@
 import { Injectable, inject } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { AuthRepository } from '../../domain/repositories/auth-repository';
+import { AuthApiRepository } from '../../data/repositories/auth/auth-api-repository';
 
 @Injectable({ providedIn: 'root' })
 export class GuestGuard implements CanActivate {
-  private authRepository = inject(AuthRepository);
+  private authRepository = inject(AuthApiRepository);
   private router = inject(Router);
 
   canActivate(): boolean {

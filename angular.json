@@ -3,9 +3,13 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "frontend": {
+    "test": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -15,6 +19,7 @@
           "options": {
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
@@ -22,8 +27,6 @@
               }
             ],
             "styles": [
-              "src/custom-theme.scss",
-              "src/styles.css"
             ]
           },
           "configurations": {
@@ -54,10 +57,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "frontend:build:production"
+              "buildTarget": "test:build:production"
             },
             "development": {
-              "buildTarget": "frontend:build:development"
+              "buildTarget": "test:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -69,6 +72,7 @@
           "builder": "@angular/build:karma",
           "options": {
             "tsConfig": "tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
@@ -76,7 +80,7 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+             
             ]
           }
         }
@@ -84,6 +88,6 @@
     }
   },
   "cli": {
-    "analytics": "bb7e3b03-27c4-4426-8cf1-8d50b108bbc2"
+    "analytics": false
   }
 }
