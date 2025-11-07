@@ -1,13 +1,19 @@
-import { UserEntity } from "./user-entity";
+export interface AuthResponse {
+  token: string;
+  email: string;
+}
 
-export interface AuthCredentials {
-    email: string;
-    password: string;
-  }
-  
-  export interface AuthResponse {
-    user: UserEntity;
-    token: string;
-    refreshToken: string;
-    expiresIn: number;
-  }
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface RegisterRequest {
+  username: string;
+  email: string;
+  password: string;
+}
+
+export interface ValidateTokenRequest {
+  token: string;
+}

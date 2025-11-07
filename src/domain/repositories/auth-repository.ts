@@ -1,9 +1,10 @@
-import { AuthCredentials, AuthResponse } from '../entities/auth-entity';
+import { AuthResponse, LoginRequest, RegisterRequest, ValidateTokenRequest } from '../entities/auth-entity';
 import { UserEntity } from '../entities/user-entity';
 
 export abstract class AuthRepository {
-  abstract login(credentials: AuthCredentials): Promise<AuthResponse>;
-  abstract logout(): Promise<void>;
-  abstract refreshToken(): Promise<AuthResponse>;
-  abstract getCurrentUser(): Promise<UserEntity>;
+  abstract login(request: LoginRequest): Promise<AuthResponse>;
+  abstract register(request: RegisterRequest): Promise<AuthResponse>;
+  abstract validateToken(request: ValidateTokenRequest): Promise<{ valid: boolean }>;
+  abstract getCurrentUser(): UserEntity | null;
+  abstract logout(): void;
 }

@@ -1,9 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { AuthRepository } from './../../domain/repositories/auth-repository';
+import { AuthRepository } from '../../domain/repositories/auth-repository';
 
 @Injectable({ providedIn: 'root' })
-export class AuthGuard implements CanActivate {
+export class GuestGuard implements CanActivate {
   private authRepository = inject(AuthRepository);
   private router = inject(Router);
 
@@ -11,11 +11,11 @@ export class AuthGuard implements CanActivate {
     const user = this.authRepository.getCurrentUser();
     const token = (this.authRepository as any).getToken?.();
     
-    if (user && token) {
+    if (!user || !token) {
       return true;
     }
     
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
     return false;
   }
 }

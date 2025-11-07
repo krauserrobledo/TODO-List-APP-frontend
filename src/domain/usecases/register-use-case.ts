@@ -1,12 +1,12 @@
 import { Injectable, inject } from '@angular/core';
-import { UserEntity } from '../entities/user-entity';
 import { AuthRepository } from '../repositories/auth-repository';
+import { RegisterRequest, AuthResponse } from '../entities/auth-entity';
 
 @Injectable({ providedIn: 'root' })
-export class GetCurrentUserUseCase {
+export class RegisterUseCase {
   private authRepository = inject(AuthRepository);
 
-  execute(): UserEntity | null {
-    return this.authRepository.getCurrentUser();
+  execute(request: RegisterRequest): Promise<AuthResponse> {
+    return this.authRepository.register(request);
   }
 }
