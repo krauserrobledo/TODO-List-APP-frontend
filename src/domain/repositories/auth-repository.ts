@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { AuthResponse, LoginRequest, RegisterRequest, ValidateTokenRequest } from '../entities/auth-entity';
 import { UserEntity } from '../entities/user-entity';
 
