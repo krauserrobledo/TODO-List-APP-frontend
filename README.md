@@ -58,4 +58,41 @@
 
 ### ***Create Auth Module.***
 
+  - Domain Layer:
+
+    - Entities:  User, Auth.
+    - Repositories : auth-repository, user-repository.
+    - Use Cases:  Login, Register, Get User.
+
+
+  - Data Layer:
+
+    - Response Models : user, api.
+    - Repositories Implementation : auth-api-repository, user repository.
+
+  - Presentation:
+
+    - pages : login register.
+    - Stores: auth store.
+
+## ***WEEKLY SPRINT 11/10***
+
+
+- Topics Learning
+
+- Auth refactoring for architecture  improve
+
+- Check authentication functionality.
+
+- Domain: Create entities and repositories interfaces.
+
+- Implement Task Feature:
+
+    - Data : Dtos, mapper,  apimodels, task-api-repository for task
+
+    - Presentation : task Store, components.
+
+
+
+
 

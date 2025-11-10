@@ -3,11 +3,23 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import {  provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
+
+import { AuthRepository } from '../domain/repositories/auth-repository';
+import { AuthApiRepository } from '../data/repositories/auth/auth-api-repository';
+import { RegisterUseCase } from '../domain/usecases/register-use-case';
+import { LoginUseCase } from '../domain/usecases/login-use-case';
+
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(),
+    {
+      provide: AuthRepository,
+      useClass: AuthApiRepository
+    },
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    provideRouter(routes)
+    provideRouter(routes),
+    RegisterUseCase,
+    LoginUseCase
   ]
 };
