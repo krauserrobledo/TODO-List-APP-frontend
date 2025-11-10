@@ -6,6 +6,7 @@
     background: #343a40;
     color: white;
     padding: 1rem 2rem;
+    text-justify:distribute;
   }
   
   .app-header nav {

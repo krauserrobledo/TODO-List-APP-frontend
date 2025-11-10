@@ -1,7 +1,7 @@
-import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListeners, provideZoneChangeDetection, provideZonelessChangeDetection } from '@angular/core';
+import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
-import {  provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {  provideHttpClient } from '@angular/common/http';
 
 
 import { AuthRepository } from '../domain/repositories/auth-repository';

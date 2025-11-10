@@ -7,4 +7,5 @@ export abstract class AuthRepository {
   abstract validateToken(request: ValidateTokenRequest): Promise<{ valid: boolean }>;
   abstract getCurrentUser(): UserEntity | null;
   abstract logout(): void;
+  abstract getToken(): string | null;
 }

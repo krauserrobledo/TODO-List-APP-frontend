@@ -1,11 +1,8 @@
 <div class="app">
     <header class="app-header" *ngIf="authStore.currentUser()">
       <nav>
-        <span>TODO List App</span>
-        
+        <span>Bienvenido, {{ authStore.currentUser()?.userName }}</span>
+        <button (click)="logout()">Cerrar Sesión</button>
       </nav>
     </header>
-    <main>
-      <router-outlet></router-outlet> 
-    </main>
   </div>

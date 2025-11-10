@@ -1,14 +1,57 @@
 import { Injectable, signal, inject } from '@angular/core';
 import { UserEntity } from './../../domain/entities/user-entity';
-import { AuthApiRepository } from '../../data/repositories/auth/auth-api-repository';
+import { AuthRepository } from '../../domain/repositories/auth-repository';
+import { LogoutUseCase } from '../../domain/usecases/logout-usecase';
+import { RegisterUseCase } from '../../domain/usecases/register-use-case';
+import { LoginRequest, RegisterRequest } from '../../domain/entities/auth-entity';
+import { LoginUseCase } from '../../domain/usecases/login-use-case';
 
 @Injectable({ providedIn: 'root' })
 export class AuthStore {
-  private authRepository = inject(AuthApiRepository);
+  private authRepository = inject(AuthRepository);
+  private loginUseCase = inject(LoginUseCase);
+  private registerUseCase = inject(RegisterUseCase);
+  private logoutUseCase = inject(LogoutUseCase);
 
-  currentUser = signal<UserEntity | null>(null);
+  currentUser = signal<UserEntity | null>(this.authRepository.getCurrentUser())
   isLoading = signal(false);
   error = signal<string | null>(null);
+
+  async login(credentials: LoginRequest): Promise<void> {
+    this.setLoading(true);
+    this.setError(null);
+    
+    try {
+      const response = await this.loginUseCase.execute(credentials);
+      this.currentUser.set(this.authRepository.getCurrentUser());
+    } catch (error: any) {
+      this.setError(error.message);
+      throw error;
+    } finally {
+      this.setLoading(false);
+    }
+  }
+
+  async register(userData: RegisterRequest): Promise<void> {
+    this.setLoading(true);
+    this.setError(null);
+    
+    try {
+      const response = await this.registerUseCase.execute(userData);
+      this.currentUser.set(this.authRepository.getCurrentUser());
+    } catch (error: any) {
+      this.setError(error.message);
+      throw error;
+    } finally {
+      this.setLoading(false);
+    }
+  }
+
+  logout(): void {
+    this.logoutUseCase.execute();
+    this.currentUser.set(null);
+    this.error.set(null);
+  }
 
   setUser(user: UserEntity | null): void {
     this.currentUser.set(user);
@@ -20,11 +63,5 @@ export class AuthStore {
 
   setError(error: string | null): void {
     this.error.set(error);
-  }
-
-  logout(): void {
-    this.authRepository.logout();
-    this.currentUser.set(null);
-    this.error.set(null);
   }
 }

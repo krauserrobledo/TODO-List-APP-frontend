@@ -7,38 +7,59 @@ import { LoginRequest, RegisterRequest, ValidateTokenRequest, AuthResponse } fro
 import { UserEntity } from '../../../domain/entities/user-entity';
 
 import { environment } from '../../../environments/environment';
+import { AuthMapper } from '../../../base/mappers/auth-mapper';
+import { LoginRequestDto } from '../../models/dtos/auth/login-request-dto';
+import { RegisterRequestDto } from '../../models/dtos/auth/register-request-dto';
 
 @Injectable({ providedIn: 'root' })
 export class AuthApiRepository implements AuthRepository {
   private http = inject(HttpClient);
+  
+  private authMapper = inject(AuthMapper); 
   private baseUrl = `${environment.apiUrl}/auth`;
   private readonly TOKEN_KEY = 'auth_token';
   private readonly USER_KEY = 'current_user';
 
   async login(request: LoginRequest): Promise<AuthResponse> {
-    const response = await this.http.post<AuthResponse>(`${this.baseUrl}/login`, request).toPromise();
+    const loginDto : LoginRequestDto = this.authMapper.toLoginRequestDto(request);
+
+    const response = await this.http.post<any>(`${this.baseUrl}/login`, loginDto).toPromise();
     
     if (!response) {
       throw new Error('Login failed');
     }
-
-    this.setToken(response.token);
-    this.setCurrentUser({ email: response.email, id: '', username: response.email });
     
-    return response;
+    const authResponseDto = this.authMapper.toAuthResponseDto(response);
+    const authResponse = this.authMapper.toAuthResponse(authResponseDto);
+    const userEntity = this.authMapper.toUserEntityFromAuth(authResponseDto, request.email.split('@')[0]);
+
+    this.setToken(authResponse.token);
+    this.setCurrentUser(userEntity);
+    
+    return authResponse;
   }
 
   async register(request: RegisterRequest): Promise<AuthResponse> {
-    const response = await this.http.post<AuthResponse>(`${this.baseUrl}/register`, request).toPromise();
+    
+    const registerDto: RegisterRequestDto = this.authMapper.toRegisterRequestDto(request);
+    
+    console.log('📝 Register DTO:', registerDto);
+    
+    const response = await this.http.post<any>(`${this.baseUrl}/register`, registerDto).toPromise();
     
     if (!response) {
       throw new Error('Registration failed');
     }
 
-    this.setToken(response.token);
-    this.setCurrentUser({ email: response.email, id: '', username: request.username });
+    // Use Mapper
+    const authResponseDto = this.authMapper.toAuthResponseDto(response);
+    const authResponse = this.authMapper.toAuthResponse(authResponseDto);
+    const userEntity = this.authMapper.toUserEntityFromAuth(authResponseDto, request.userName);
+
+    this.setToken(authResponse.token);
+    this.setCurrentUser(userEntity);
     
-    return response;
+    return authResponse;
   }
 
   async validateToken(request: ValidateTokenRequest): Promise<{ valid: boolean }> {
