@@ -1,10 +1,11 @@
-import { Component, inject } from '@angular/core';
 import { AuthStore } from '../../stores/auth-store';
 import { Router } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })

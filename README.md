@@ -78,11 +78,11 @@
 ## ***WEEKLY SPRINT 11/10***
 
 
-- Topics Learning
-
-- Auth refactoring for architecture  improve
+- Topics Learning.
 
 - Check authentication functionality.
+
+- Auth refactoring for architecture  improve.
 
 - Domain: Create entities and repositories interfaces.
 
@@ -93,6 +93,36 @@
     - Presentation : task Store, components.
 
 
+### ***Topics Learning***
 
+
+### ***Auth Functionallity Checking***
+
+  - Dependency Injection Issue: 
+      
+      Problem: NG0201 - No provider for AuthRepository
+      Fix: Configure providers in app.config.ts
+
+  - Error 400 - Wrong request rormat
+
+      Problem: userName vs UserName
+      Fix: DTOs and Mapper Implement
+
+  - Error 400 - UserName already exist
+
+      Problem: ASP.NET Identity validates unique UserName
+      Fix: fixes in backend and front
+
+### ***Auth Refactoring***
+
+  - Create DTOs in Data/Models.
+
+  - Created AuthMappers in Base/Mappers.
+
+  - Created Use Cases.
+
+  - Add Mappers to Repository Implementation auth-api-implementation.
+
+  - Added Mapper and Use Cases to providers.
 
 

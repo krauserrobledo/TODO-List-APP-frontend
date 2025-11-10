@@ -29,23 +29,49 @@ export class RegisterComponent {
 
   async onSubmit(): Promise<void> {
     if (this.registerForm.valid) {
+      
+    const userName = this.registerForm.get('userName')?.value?.trim();
+    const email = this.registerForm.get('email')?.value?.trim().toLowerCase();
+    const password = this.registerForm.get('password')?.value;
+
       this.authStore.setLoading(true);
       this.authStore.setError(null);
 
       try {
+
         const request = this.registerForm.value as { userName: string; email: string; password: string };
         await this.authStore.register(request);
+
         this.router.navigate(['/dashboard']);
+
       } catch (error: any) {
         this.authStore.setError(error.message || 'Error Creating Account');
         console.error(' Error:', error);
-        console.error(' Error status:', error.status);
-        console.error(' Error message:', error.message);
-        console.error(' Error body:', error.error);
-      } 
+        let errorMessage = 'Error creating Account';
       
-      finally {
+        if (error.error) {
+          
+          if (error.error.errors && Array.isArray(error.error.errors)) {
+            const firstError = error.error.errors[0];
+            if (firstError.includes('already taken')) {
+              errorMessage = 'User Name already exists';
+            } else {
+              errorMessage = firstError;
+            }
+          }
+          
+          else if (error.error.error) {
+            if (error.error.error.includes('already taken')) {
+              errorMessage = 'User Name already exists!';
+            } else {
+              errorMessage = error.error.error;
+            }
+          }
+        }
         
+        this.authStore.setError(errorMessage);
+        
+      } finally {
         this.authStore.setLoading(false);
       }
     }
