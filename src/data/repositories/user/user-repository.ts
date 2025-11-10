@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { UserModel } from '../../models/user-entity';
+import { UserModel } from '../../models/user-model';
 import { UserImplementationRepositoryMapper } from './user-repository-mapper';
 import { UserRepository } from '../../../domain/repositories/user-repository';
 import { UserEntity } from '../../../domain/entities/user-entity';

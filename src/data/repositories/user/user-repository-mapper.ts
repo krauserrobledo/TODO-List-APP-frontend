@@ -1,6 +1,6 @@
 import { Mapper } from './../../../base/utils/mapper';
 import { UserEntity } from './../../../domain/entities/user-entity';
-import { UserModel } from './../../models/user-entity';
+import { UserModel } from '../../models/user-model';
 
 
 export class UserImplementationRepositoryMapper extends Mapper<UserModel, UserEntity> {
