@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { LoginUseCase } from '../../../../domain/usecases/login-use-case';
+import { LoginUseCase } from '../../../../domain/usecases/user/login-use-case';
 import { AuthStore } from '../../../stores/auth-store';
 
 @Component({
@@ -32,6 +32,7 @@ export class LoginComponent {
       this.authStore.setError(null);
 
       try {
+        this.authStore.setUser;
         const request = this.loginForm.value as { email: string; password: string };
         await this.loginUseCase.execute(request);
         this.router.navigate(['/dashboard']);

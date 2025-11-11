@@ -29,10 +29,6 @@ export class RegisterComponent {
 
   async onSubmit(): Promise<void> {
     if (this.registerForm.valid) {
-      
-    const userName = this.registerForm.get('userName')?.value?.trim();
-    const email = this.registerForm.get('email')?.value?.trim().toLowerCase();
-    const password = this.registerForm.get('password')?.value;
 
       this.authStore.setLoading(true);
       this.authStore.setError(null);
