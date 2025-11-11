@@ -1,11 +1,16 @@
 <div class="app">
-    <header class="app-header">
-      <nav>
-        <span>TODO List App</span>
-        
-      </nav>
-    </header>
-    <main>
-      <router-outlet></router-outlet> 
-    </main>
-  </div>
+  <header class="app-header">
+    <nav>
+      <span>TODO List App</span>
+
+      <ng-container *ngIf="authStore.currentUser() as user">
+        <span>Welcome, {{ user.userName }}</span>
+        <button (click)="logout()">Sign Out</button>
+      </ng-container>
+    </nav>
+  </header>
+
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+</div>

@@ -6,8 +6,8 @@ import {  provideHttpClient } from '@angular/common/http';
 
 import { AuthRepository } from '../domain/repositories/auth-repository';
 import { AuthApiRepository } from '../data/repositories/auth/auth-api-repository';
-import { RegisterUseCase } from '../domain/usecases/register-use-case';
-import { LoginUseCase } from '../domain/usecases/login-use-case';
+import { RegisterUseCase } from '../domain/usecases/user/register-use-case';
+import { LoginUseCase } from '../domain/usecases/user/login-use-case';
 
 export const appConfig: ApplicationConfig = {
   providers: [

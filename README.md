@@ -80,7 +80,16 @@
 
 - Topics Learning.
 
+  - Ngxs Store.
+  - RxJs.
+  - PrimeNG 
+  - Reactive forms
+  - Dialogs
+  - Observables - Suscribers
+
+
 - Check authentication functionality.
+
 
 - Auth refactoring for architecture  improve.
 
@@ -95,8 +104,13 @@
 
 ### ***Topics Learning***
 
+  - Clean Architecture : https://www.youtube.com/watch?v=pDgcQlPzRK4
+  - Ngrx Store : https://www.youtube.com/watch?v=VGY6Raqpoc0
+
 
 ### ***Auth Functionallity Checking***
+
+Responses tested with DEvTools
 
   - Dependency Injection Issue: 
       
@@ -113,8 +127,11 @@
       Problem: ASP.NET Identity validates unique UserName
       Fix: fixes in backend and front
 
-### ***Auth Refactoring***
 
+### ***Auth Refactoring.***
+
+  - Delete duplicate DTOs
+  
   - Create DTOs in Data/Models.
 
   - Created AuthMappers in Base/Mappers.
@@ -126,3 +143,8 @@
   - Added Mapper and Use Cases to providers.
 
 
+### ***Create entities and repositories interfaces.***
+
+  - Created Dtos for every request and response in data/dtos.
+
+  - Created Repository interfaces in domain/repository.

@@ -1,10 +1,11 @@
 import { Injectable, signal, inject } from '@angular/core';
 import { UserEntity } from './../../domain/entities/user-entity';
 import { AuthRepository } from '../../domain/repositories/auth-repository';
-import { LogoutUseCase } from '../../domain/usecases/logout-usecase';
-import { RegisterUseCase } from '../../domain/usecases/register-use-case';
-import { LoginRequest, RegisterRequest } from '../../domain/entities/auth-entity';
-import { LoginUseCase } from '../../domain/usecases/login-use-case';
+import { LogoutUseCase } from '../../domain/usecases/user/logout-usecase';
+import { RegisterUseCase } from '../../domain/usecases/user/register-use-case';
+import { LoginUseCase } from '../../domain/usecases/user/login-use-case';
+import { LoginRequestDto } from '../../data/models/dtos/auth/login-request-dto';
+import { RegisterRequestDto } from '../../data/models/dtos/auth/register-request-dto';
 
 @Injectable({ providedIn: 'root' })
 export class AuthStore {
@@ -17,7 +18,7 @@ export class AuthStore {
   isLoading = signal(false);
   error = signal<string | null>(null);
 
-  async login(credentials: LoginRequest): Promise<void> {
+  async login(credentials: LoginRequestDto): Promise<void> {
     this.setLoading(true);
     this.setError(null);
     
@@ -32,7 +33,7 @@ export class AuthStore {
     }
   }
 
-  async register(userData: RegisterRequest): Promise<void> {
+  async register(userData: RegisterRequestDto): Promise<void> {
     this.setLoading(true);
     this.setError(null);
     

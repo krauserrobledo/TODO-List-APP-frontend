@@ -1,8 +1,6 @@
-// data/repositories/auth-api.repository.ts
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthRepository } from '../../../domain/repositories/auth-repository';
-import { LoginRequest, RegisterRequest, ValidateTokenRequest, AuthResponse } from '../../../domain/entities/auth-entity';
 
 import { UserEntity } from '../../../domain/entities/user-entity';
 
@@ -10,6 +8,8 @@ import { environment } from '../../../environments/environment';
 import { AuthMapper } from '../../../base/mappers/auth-mapper';
 import { LoginRequestDto } from '../../models/dtos/auth/login-request-dto';
 import { RegisterRequestDto } from '../../models/dtos/auth/register-request-dto';
+import { AuthResponseDto } from '../../models/dtos/auth/auth-response-dto';
+import { ValidateTokenRequestDto } from '../../models/dtos/auth/validate-token-request-dto';
 
 @Injectable({ providedIn: 'root' })
 export class AuthApiRepository implements AuthRepository {
@@ -20,7 +20,8 @@ export class AuthApiRepository implements AuthRepository {
   private readonly TOKEN_KEY = 'auth_token';
   private readonly USER_KEY = 'current_user';
 
-  async login(request: LoginRequest): Promise<AuthResponse> {
+  async login(request: LoginRequestDto): Promise<AuthResponseDto> {
+
     const loginDto : LoginRequestDto = this.authMapper.toLoginRequestDto(request);
 
     const response = await this.http.post<any>(`${this.baseUrl}/login`, loginDto).toPromise();
@@ -39,11 +40,11 @@ export class AuthApiRepository implements AuthRepository {
     return authResponse;
   }
 
-  async register(request: RegisterRequest): Promise<AuthResponse> {
+  async register(request: RegisterRequestDto): Promise<AuthResponseDto> {
     
     const registerDto: RegisterRequestDto = this.authMapper.toRegisterRequestDto(request);
     
-    console.log('📝 Register DTO:', registerDto);
+    console.log('Register DTO:', registerDto);
     
     const response = await this.http.post<any>(`${this.baseUrl}/register`, registerDto).toPromise();
     
@@ -62,7 +63,7 @@ export class AuthApiRepository implements AuthRepository {
     return authResponse;
   }
 
-  async validateToken(request: ValidateTokenRequest): Promise<{ valid: boolean }> {
+  async validateToken(request: ValidateTokenRequestDto): Promise<{ valid: boolean }> {
     return await this.http.post<{ valid: boolean }>(`${this.baseUrl}/validate`, request).toPromise() 
       ?? { valid: false };
   }

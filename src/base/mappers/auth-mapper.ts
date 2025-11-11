@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { LoginRequest, RegisterRequest, AuthResponse } from './../../domain/entities/auth-entity';
 import { UserEntity } from './../../domain/entities/user-entity';
 import { AuthResponseDto } from '../../data/models/dtos/auth/auth-response-dto.js';
 import { RegisterRequestDto } from '../../data/models/dtos/auth/register-request-dto';
@@ -9,23 +8,23 @@ import { LoginRequestDto } from '../../data/models/dtos/auth/login-request-dto';
 export class AuthMapper {
   
   // Domain Entity → DTO
-  toRegisterRequestDto(request: RegisterRequest): RegisterRequestDto {
+  toRegisterRequestDto(request: RegisterRequestDto): RegisterRequestDto {
     return {
-      UserName: request.userName, 
-      Email: request.email,
-      Password: request.password  
+      userName: request.userName, 
+      email: request.email,
+      password: request.password  
     };
   }
 
-  toLoginRequestDto(request: LoginRequest): LoginRequestDto {
+  toLoginRequestDto(request: LoginRequestDto): LoginRequestDto {
     return {
-      Email: request.email,  
-      Password: request.password 
+      email: request.email,  
+      password: request.password 
     };
   }
 
   // DTO → Domain Entity
-  toAuthResponse(dto: AuthResponseDto): AuthResponse {
+  toAuthResponse(dto: AuthResponseDto): AuthResponseDto {
     return {
       token: dto.token,
       email: dto.email
