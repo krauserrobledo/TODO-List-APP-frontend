@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { CreateCategoryRequestDto } from "../dtos/categories/create-category-request-dto";
-import { UpdateCategoryRequestDto } from "../dtos/categories/update-category-request-dto";
-import { CategoryResponseDto } from "../dtos/categories/category-response-dto";
+import { CreateCategoryRequestDto } from "../dtos/category/create-category-request-dto";
+import { UpdateCategoryRequestDto } from "../dtos/category/update-category-request-dto";
+import { CategoryResponseDto } from "../dtos/category/category-response-dto";
 import { CategoryModel } from "../../domain/models/category/category-model";
 
 @Injectable({ providedIn: 'root' })
@@ -39,10 +39,10 @@ export class CategoryMapper {
   toCategoryResponseDto(apiResponse: any): CategoryResponseDto {
         return {
 
-            id: apiResponse.id || apiResponse.data?.id,
-            name: apiResponse.name || apiResponse.data?.name,
-            color: apiResponse.color || apiResponse.data?.color,
-            userId: apiResponse.userId || apiResponse.data?.userId,
+            id: apiResponse.id ?? apiResponse.data?.id ?? '',
+            name: apiResponse.name ?? apiResponse.data?.name ?? '',
+            color: apiResponse.color ?? apiResponse.data?.color ?? '',
+            userId: apiResponse.userId ?? apiResponse.data?.userId ?? '',
         }
     }
 }

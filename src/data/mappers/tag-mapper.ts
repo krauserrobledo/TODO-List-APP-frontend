@@ -2,27 +2,28 @@ import { Injectable } from "@angular/core";
 import { TagCreateRequest } from "../dtos/tag/tag-create-request";
 import { TagUpdateRequest } from "../dtos/tag/tag-update-request";
 import { TagResponseDto } from "../dtos/tag/tag-response-dto";
+import { TagModel } from "../../domain/models/tag/tag-model";
 
 @Injectable({ providedIn: 'root' })
 export class TagMapper {
 
     // Domain Entity → DTO
-    toCreateRequestDto(request: TagCreateRequest): TagCreateRequest {
+    toCreateRequestDto(model: TagModel): TagCreateRequest {
         return {
 
-            name: request.name
+            name: model.name
         }
     }
 
-    toUpdateRequestDto(request: TagUpdateRequest): TagUpdateRequest {
+    toUpdateRequestDto(model: TagModel): TagUpdateRequest {
         return {
 
-            name: request.name
+            name: model.name
         }
     }
 
     // DTO → Domain Entity
-    toTagResponse(dto: TagResponseDto): TagResponseDto {
+    toTagModel(dto: TagResponseDto): TagModel {
         return {
 
             id: dto.id,
