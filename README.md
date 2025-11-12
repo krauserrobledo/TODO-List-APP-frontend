@@ -132,15 +132,21 @@ Responses tested with DEvTools
 
   - Delete duplicate DTOs
   
-  - Create DTOs in Data/Models.
-
+  - Create DTOs and Response models in Data/Models.
+  
   - Created AuthMappers in Base/Mappers.
 
   - Created Use Cases.
 
+  - Created service for auth.
+
+  - Using mappers and usecases in auth-service.
+
   - Add Mappers to Repository Implementation auth-api-implementation.
 
   - Added Mapper and Use Cases to providers.
+
+  - using models and service in auth-store(not DTOs)
 
 
 ### ***Create entities and repositories interfaces.***

@@ -11,8 +11,8 @@ import { ValidateTokenRequestDto } from '../../dtos/auth/validate-token-request-
 
 @Injectable({ providedIn: 'root' })
 export class AuthApiRepository implements AuthRepository {
-  private http = inject(HttpClient);
   
+  private http = inject(HttpClient);
   private authMapper = inject(AuthMapper); 
   private baseUrl = `${environment.apiUrl}/auth`;
   private readonly TOKEN_KEY = 'auth_token';

@@ -1,4 +1,4 @@
-import { CategoryEntity } from "./category-entity";
+import { CategoryModel } from "../category/category-model";
 import { SubtaskEntity } from "./subtask-entity";
 import { TagEntity } from "./tag-entity";
 
@@ -11,6 +11,6 @@ export interface TaskEntity {
       status: string;
       userId: string;
       subtasks: SubtaskEntity[];
-      categories: CategoryEntity[];
+      categories: CategoryModel[];
       tags: TagEntity[];
     }

@@ -1,30 +1,31 @@
 import { Injectable } from "@angular/core";
-import { CategoryCreateRequest } from "../dtos/categories/category-create-request";
-import { CategoryUpdateRequest } from "../dtos/categories/category-update-request";
+import { CreateCategoryRequestDto } from "../dtos/categories/create-category-request-dto";
+import { UpdateCategoryRequestDto } from "../dtos/categories/update-category-request-dto";
 import { CategoryResponseDto } from "../dtos/categories/category-response-dto";
+import { CategoryModel } from "../../domain/models/category/category-model";
 
 @Injectable({ providedIn: 'root' })
 export class CategoryMapper {
   
   // Domain Entity → DTO
-  toCreateRequestDto(request: CategoryCreateRequest): CategoryCreateRequest{
+  toCreateRequestDto(model: CategoryModel): CreateCategoryRequestDto{
     return{
 
-        name: request.name,
-        color: request.color
+        name: model.name,
+        color: model.color
     }
   }
 
-  toupdateRequestDto(request: CategoryUpdateRequest): CategoryUpdateRequest{
+  toUpdateRequestDto(model: CategoryModel): UpdateCategoryRequestDto{
     return{
 
-        name: request.name,
-        color: request.color
+        name: model.name,
+        color: model.color
     }
   }
 
   // DTO → Domain Entity
-  toCategoryResponse(dto: CategoryResponseDto): CategoryResponseDto{
+  toCategoryModel(dto: CategoryResponseDto): CategoryModel{
     return{
 
         id: dto.id,
@@ -35,7 +36,7 @@ export class CategoryMapper {
   }
   
   // API Response → DTO
-  toCategoryResopnseDto(apiResponse: any): CategoryResponseDto {
+  toCategoryResponseDto(apiResponse: any): CategoryResponseDto {
         return {
 
             id: apiResponse.id || apiResponse.data?.id,
