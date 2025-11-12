@@ -4,54 +4,57 @@ import { AuthRepository } from '../../../domain/repositories/auth-repository';
 import { UserModel } from '../../../domain/models/auth/user-model';
 import { environment } from '../../../environments/environment';
 import { AuthMapper } from '../../mappers/auth-mapper';
-import { LoginRequestDto } from '../../dtos/auth/login-request-dto';
-import { RegisterRequestDto } from '../../dtos/auth/register-request-dto';
-import { AuthResponseDto } from '../../dtos/auth/auth-response-dto';
-import { ValidateTokenRequestDto } from '../../dtos/auth/validate-token-request-dto';
+import { LoginModel } from '../../../domain/models/auth/login-model';
+import { RegisterModel } from '../../../domain/models/auth/register-model';
+import { ValidateTokenModel } from '../../../domain/models/auth/validate-token-model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthApiRepository implements AuthRepository {
-  
+
   private http = inject(HttpClient);
   private authMapper = inject(AuthMapper); 
   private baseUrl = `${environment.apiUrl}/auth`;
   private readonly TOKEN_KEY = 'auth_token';
   private readonly USER_KEY = 'current_user';
 
-  async login(request: LoginRequestDto): Promise<AuthResponseDto> {
-    const response = await this.http.post<any>(`${this.baseUrl}/login`, request).toPromise();
-    
-    if (!response) {
-      throw new Error('Login failed');
-    }
-    
-    const authResponseDto = this.authMapper.toAuthResponseDto(response);
-    const userEntity = this.authMapper.toUserEntity(authResponseDto);
+  async login(model: LoginModel): Promise<UserModel> {
+    // Convertimos el modelo de dominio a DTO
+    const dto = this.authMapper.toLoginRequestDto(model);
+
+    // Llamada al backend
+    const response = await this.http.post<any>(`${this.baseUrl}/login`, dto).toPromise();
+    if (!response) throw new Error('Login failed');
   
+    // Convertimos respuesta cruda → DTO → UserModel
+    const authResponseDto = this.authMapper.toAuthResponseDto(response);
+    const userModel = this.authMapper.toUserModel(authResponseDto);
+  
+    // Guardamos token y usuario actual
     this.setToken(authResponseDto.token);
-    this.setCurrentUser(userEntity);
-    
-    return authResponseDto;
+    this.setCurrentUser(userModel);
+  
+    return userModel;
   }
   
-  async register(request: RegisterRequestDto): Promise<AuthResponseDto> {
-    const response = await this.http.post<any>(`${this.baseUrl}/register`, request).toPromise();
-    
-    if (!response) {
-      throw new Error('Registration failed');
-    }
+  async register(model: RegisterModel): Promise<UserModel> {
+    const dto = this.authMapper.toRegisterRequestDto(model);
+
+    const response = await this.http.post<any>(`${this.baseUrl}/register`, dto).toPromise();
+    if (!response) throw new Error('Registration failed');
   
     const authResponseDto = this.authMapper.toAuthResponseDto(response);
-    const userEntity = this.authMapper.toUserEntity(authResponseDto);
+    const userModel = this.authMapper.toUserModel(authResponseDto);
   
     this.setToken(authResponseDto.token);
-    this.setCurrentUser(userEntity);
+    this.setCurrentUser(userModel);
     
-    return authResponseDto;
+    return userModel;
   }
 
-  async validateToken(request: ValidateTokenRequestDto): Promise<{ valid: boolean }> {
-    return await this.http.post<{ valid: boolean }>(`${this.baseUrl}/validate`, request).toPromise() 
+  async validateToken(model: ValidateTokenModel): Promise<{ valid: boolean }> {
+    const dto = this.authMapper.toValidateTokenRequestDto(model);
+
+    return await this.http.post<{ valid: boolean }>(`${this.baseUrl}/validate`, dto).toPromise() 
       ?? { valid: false };
   }
 

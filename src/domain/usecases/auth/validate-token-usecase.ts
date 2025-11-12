@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
 import { AuthRepository } from "../../repositories/auth-repository";
-import { ValidateTokenRequestDto } from "../../../data/dtos/auth/validate-token-request-dto";
+import { ValidateTokenModel } from "../../models/auth/validate-token-model";
 
 @Injectable({ providedIn: 'root' })
 export class ValidateTokenUseCase {
   constructor(private authRepository: AuthRepository) {}
 
-  execute(request: ValidateTokenRequestDto): Promise<{ valid: boolean }> {
-    return this.authRepository.validateToken(request);
+  execute(model: ValidateTokenModel): Promise<{ valid: boolean }> {
+    return this.authRepository.validateToken(model);
   }
 }

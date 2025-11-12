@@ -3,6 +3,7 @@ import { UserModel } from '../../domain/models/auth/user-model';
 import { AuthService } from '../../base/services/auth-service';
 import { RegisterModel } from '../../domain/models/auth/register-model';
 import { LoginModel } from '../../domain/models/auth/login-model';
+import { ValidateTokenModel } from '../../domain/models/auth/validate-token-model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthStore {
@@ -45,7 +46,7 @@ export class AuthStore {
   async validateToken(token: string): Promise<void> {
     this.setLoading(true);
     try {
-      const result = await this.authService.validateToken({ token });
+      const result = await this.authService.validateToken({ token } as ValidateTokenModel);
       if (!result.valid) {
         this.logout();
       }

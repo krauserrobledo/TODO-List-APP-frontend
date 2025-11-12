@@ -33,10 +33,10 @@ export class AuthMapper {
     };
   }
 
-  // DTO → Domain Entity
-  toUserEntity(dto: AuthResponseDto): UserModel {
+  // DTO → Domain Model
+  toUserModel(dto: AuthResponseDto): UserModel {
     return {
-      id: '', 
+      id:  '', 
       email: dto.email,
       userName: dto.userName ?? ''
     };

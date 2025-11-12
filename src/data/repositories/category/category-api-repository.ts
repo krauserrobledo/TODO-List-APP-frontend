@@ -3,40 +3,34 @@ import { Injectable, inject } from "@angular/core";
 import { CategoryModel } from "../../../domain/models/category/category-model";
 import { CategoryRepository } from "../../../domain/repositories/category-repository";
 import { environment } from "../../../environments/environment";
-import { CreateCategoryRequestDto } from "../../dtos/categories/create-category-request-dto";
-import { UpdateCategoryRequestDto } from "../../dtos/categories/update-category-request-dto";
-import { CategoryResponseDto } from "../../dtos/categories/category-response-dto";
 import { CategoryMapper } from "../../mappers/category-mapper";
 
 @Injectable({ providedIn: 'root' })
 export class CategoryApiRepository implements CategoryRepository {
 
   private http = inject(HttpClient);
-  private categoryMapper = inject(CategoryMapper)
+  private categoryMapper = inject(CategoryMapper);
   private baseUrl = `${environment.apiUrl}/categories`;
 
-  async createCategory(request: CreateCategoryRequestDto): Promise<CategoryModel> {
+  async createCategory(model: CategoryModel): Promise<CategoryModel> {
+    const dto = this.categoryMapper.toCreateRequestDto(model);
 
-    const response = await this.http.post<any>(this.baseUrl, request).toPromise();
-
+    const response = await this.http.post<any>(this.baseUrl, dto).toPromise();
     if (!response) throw new Error('Creation failed');
 
-    const dto = this.categoryMapper.toCategoryResponseDto(response);
-
-    return this.categoryMapper.toCategoryModel(dto);
+    const categoryResponseDto = this.categoryMapper.toCategoryResponseDto(response);
+    return this.categoryMapper.toCategoryModel(categoryResponseDto);
   }
 
-  async updateCategory(id: string, request: UpdateCategoryRequestDto): Promise<CategoryModel> {
+  async updateCategory(id: string, model: CategoryModel): Promise<CategoryModel> {
+    const dto = this.categoryMapper.toUpdateRequestDto(model);
 
-    const response = await this.http.put<any>(`${this.baseUrl}/${id}`, request).toPromise();
-
+    const response = await this.http.put<any>(`${this.baseUrl}/${id}`, dto).toPromise();
     if (!response) throw new Error('Update failed');
 
-    const dto = this.categoryMapper.toCategoryResponseDto(response);
-    
-    return this.categoryMapper.toCategoryModel(dto);
-}
-
+    const categoryResponseDto = this.categoryMapper.toCategoryResponseDto(response);
+    return this.categoryMapper.toCategoryModel(categoryResponseDto);
+  }
 
   async deleteCategory(id: string): Promise<void> {
     await this.http.delete(`${this.baseUrl}/${id}`).toPromise();
@@ -48,3 +42,4 @@ export class CategoryApiRepository implements CategoryRepository {
     return response.map(dto => this.categoryMapper.toCategoryModel(dto));
   }
 }
+

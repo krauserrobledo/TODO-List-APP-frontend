@@ -1,13 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { AuthRepository } from '../../repositories/auth-repository';
-import { RegisterRequestDto } from '../../../data/dtos/auth/register-request-dto';
-import { AuthResponseDto } from '../../../data/dtos/auth/auth-response-dto';
+import { RegisterModel } from '../../models/auth/register-model';
+import { UserModel } from '../../models/auth/user-model';
 
 @Injectable({ providedIn: 'root' })
 export class RegisterUseCase {
   private authRepository = inject(AuthRepository);
 
-  execute(request: RegisterRequestDto): Promise<AuthResponseDto> {
-    return this.authRepository.register(request);
+  execute(model: RegisterModel): Promise<UserModel> {
+    return this.authRepository.register(model);
   }
 }

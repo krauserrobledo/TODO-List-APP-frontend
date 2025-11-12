@@ -1,10 +1,10 @@
 import { Injectable, inject } from '@angular/core';
 import { UserModel } from '../../models/auth/user-model';
-import { AuthApiRepository } from '../../../data/repositories/auth/auth-api-repository';
+import { AuthRepository } from '../../repositories/auth-repository';
 
 @Injectable({ providedIn: 'root' })
 export class GetUserProfileUseCase {
-  private authRepository = inject(AuthApiRepository);
+  private authRepository = inject(AuthRepository);
 
   execute(): UserModel | null {
     return this.authRepository.getCurrentUser();
