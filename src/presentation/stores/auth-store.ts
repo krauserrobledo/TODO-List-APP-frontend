@@ -1,18 +1,18 @@
 import { Injectable, signal, inject } from '@angular/core';
-import { UserEntity } from './../../domain/entities/user-entity';
-import { LoginRequestDto } from '../../data/models/dtos/auth/login-request-dto';
-import { RegisterRequestDto } from '../../data/models/dtos/auth/register-request-dto';
+import { UserModel } from '../../domain/models/auth/user-model';
 import { AuthService } from '../../base/services/auth-service';
+import { RegisterModel } from '../../domain/models/auth/register-model';
+import { LoginModel } from '../../domain/models/auth/login-model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthStore {
   private authService =inject(AuthService);
 
-  currentUser = signal<UserEntity | null>(this.authService.getUserProfile());
+  currentUser = signal<UserModel | null>(this.authService.getUserProfile());
   isLoading = signal(false);
   error = signal<string | null>(null);
 
-  async login(credentials: LoginRequestDto): Promise<void> {
+  async login(credentials: LoginModel): Promise<void> {
     this.setLoading(true);
     this.setError(null);
     
@@ -27,7 +27,7 @@ export class AuthStore {
     }
   }
 
-  async register(userData: RegisterRequestDto): Promise<void> {
+  async register(userData: RegisterModel): Promise<void> {
     this.setLoading(true);
     this.setError(null);
     
@@ -60,7 +60,7 @@ export class AuthStore {
     this.error.set(null);
   }
 
-  setUser(user: UserEntity | null): void {
+  setUser(user: UserModel | null): void {
     this.currentUser.set(user);
   }
 

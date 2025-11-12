@@ -1,42 +1,46 @@
 import { Injectable } from "@angular/core";
-import { ValidateTokenRequestDto } from "../../data/models/dtos/auth/validate-token-request-dto";
 import { LoginUseCase } from "../../domain/usecases/auth/login-usecase";
 import { RegisterUseCase } from "../../domain/usecases/auth/register-usecase";
-import { LoginRequestDto } from "../../data/models/dtos/auth/login-request-dto";
 import { LogoutUseCase } from "../../domain/usecases/auth/logout-usecase";
-import { RegisterRequestDto } from "../../data/models/dtos/auth/register-request-dto";
 import { ValidateTokenUseCase } from "../../domain/usecases/auth/validate-token-usecase";
 import { GetUserProfileUseCase } from "../../domain/usecases/auth/get-user-profile-usecase";
+import { LoginModel } from "../../domain/models/auth/login-model";
+import { RegisterModel } from "../../domain/models/auth/register-model";
+import { ValidateTokenModel } from "../../domain/models/auth/validate-token-model";
+import { AuthMapper } from "../../data/mappers/auth-mapper";
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
     constructor(
-    private logoutUseCase: LogoutUseCase,
-    private loginUseCase: LoginUseCase,
-    private registerUseCase: RegisterUseCase,
-    private getUserProfileUseCase : GetUserProfileUseCase,
-    private validateTokenUseCase : ValidateTokenUseCase,
-    )
-   {}
+      private logoutUseCase: LogoutUseCase,
+      private loginUseCase: LoginUseCase,
+      private registerUseCase: RegisterUseCase,
+      private getUserProfileUseCase : GetUserProfileUseCase,
+      private validateTokenUseCase : ValidateTokenUseCase,
+      private authMapper: AuthMapper  
+    ) {}
 
-  login(request: LoginRequestDto) {
-    return this.loginUseCase.execute(request);
-  }
+    login(model: LoginModel) {
+      const dto = this.authMapper.toLoginRequestDto(model);
+      return this.loginUseCase.execute(dto);
+    }
 
-  logout() {
-    return this.logoutUseCase.execute();
-  }
+    logout() {
+      return this.logoutUseCase.execute();
+    }
 
-  register(request: RegisterRequestDto) {
-    return this.registerUseCase.execute(request);
-  }
+    register(model: RegisterModel) {
+      const dto = this.authMapper.toRegisterRequestDto(model);
+      return this.registerUseCase.execute(dto);
+    }
 
-  getUserProfile() {
-    return this.getUserProfileUseCase.execute();
-  }
+    getUserProfile() {
+      return this.getUserProfileUseCase.execute();
+    }
 
-  validateToken(request : ValidateTokenRequestDto) {
-    return this.validateTokenUseCase.execute(request);
-  }
+    validateToken(model: ValidateTokenModel) {
+      const dto = this.authMapper.toValidateTokenRequestDto(model);
+      return this.validateTokenUseCase.execute(dto);
+    }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { CategoryCreateRequest } from "../models/dtos/categories/category-create-request";
-import { CategoryUpdateRequest } from "../models/dtos/categories/category-update-request";
-import { CategoryResponseDto } from "../models/dtos/categories/category-response-dto";
+import { CategoryCreateRequest } from "../dtos/categories/category-create-request";
+import { CategoryUpdateRequest } from "../dtos/categories/category-update-request";
+import { CategoryResponseDto } from "../dtos/categories/category-response-dto";
 
 @Injectable({ providedIn: 'root' })
 export class CategoryMapper {

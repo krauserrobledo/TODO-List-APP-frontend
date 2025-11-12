@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { TagCreateRequest } from "../models/dtos/tag/tag-create-request";
-import { TagUpdateRequest } from "../models/dtos/tag/tag-update-request";
-import { TagResponseDto } from "../models/dtos/tag/tag-response-dto";
+import { TagCreateRequest } from "../dtos/tag/tag-create-request";
+import { TagUpdateRequest } from "../dtos/tag/tag-update-request";
+import { TagResponseDto } from "../dtos/tag/tag-response-dto";
 
 @Injectable({ providedIn: 'root' })
 export class TagMapper {

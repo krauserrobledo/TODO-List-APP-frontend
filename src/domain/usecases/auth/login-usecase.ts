@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { AuthRepository } from '../../repositories/auth-repository';
-import { LoginRequestDto } from '../../../data/models/dtos/auth/login-request-dto';
-import { AuthResponseDto } from '../../../data/models/dtos/auth/auth-response-dto';
+import { LoginRequestDto } from '../../../data/dtos/auth/login-request-dto';
+import { AuthResponseDto } from '../../../data/dtos/auth/auth-response-dto';
 
 @Injectable({ providedIn: 'root' })
 export class LoginUseCase {

@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { AuthRepository } from '../../repositories/auth-repository';
-import { RegisterRequestDto } from '../../../data/models/dtos/auth/register-request-dto';
-import { AuthResponseDto } from '../../../data/models/dtos/auth/auth-response-dto';
+import { RegisterRequestDto } from '../../../data/dtos/auth/register-request-dto';
+import { AuthResponseDto } from '../../../data/dtos/auth/auth-response-dto';
 
 @Injectable({ providedIn: 'root' })
 export class RegisterUseCase {
