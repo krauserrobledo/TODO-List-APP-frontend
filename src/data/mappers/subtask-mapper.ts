@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { SubtaskUpdateRequest } from "../../data/models/dtos/subtask/subtask-update-request";
-import { SubtaskCreateRequest } from "../../data/models/dtos/subtask/subtask-create-request";
-import { SubtaskResponseDto } from "../../data/models/dtos/subtask/subtask-response-dto";
+import { SubtaskUpdateRequest } from "../models/dtos/subtask/subtask-update-request";
+import { SubtaskCreateRequest } from "../models/dtos/subtask/subtask-create-request";
+import { SubtaskResponseDto } from "../models/dtos/subtask/subtask-response-dto";
 
 @Injectable({ providedIn: 'root' })
 export class SubtaskMapper {

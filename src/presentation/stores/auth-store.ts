@@ -1,20 +1,14 @@
 import { Injectable, signal, inject } from '@angular/core';
 import { UserEntity } from './../../domain/entities/user-entity';
-import { AuthRepository } from '../../domain/repositories/auth-repository';
-import { LogoutUseCase } from '../../domain/usecases/user/logout-usecase';
-import { RegisterUseCase } from '../../domain/usecases/user/register-use-case';
-import { LoginUseCase } from '../../domain/usecases/user/login-use-case';
 import { LoginRequestDto } from '../../data/models/dtos/auth/login-request-dto';
 import { RegisterRequestDto } from '../../data/models/dtos/auth/register-request-dto';
+import { AuthService } from '../../base/services/auth-service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthStore {
-  private authRepository = inject(AuthRepository);
-  private loginUseCase = inject(LoginUseCase);
-  private registerUseCase = inject(RegisterUseCase);
-  private logoutUseCase = inject(LogoutUseCase);
+  private authService =inject(AuthService);
 
-  currentUser = signal<UserEntity | null>(this.authRepository.getCurrentUser())
+  currentUser = signal<UserEntity | null>(this.authService.getUserProfile());
   isLoading = signal(false);
   error = signal<string | null>(null);
 
@@ -23,8 +17,8 @@ export class AuthStore {
     this.setError(null);
     
     try {
-      const response = await this.loginUseCase.execute(credentials);
-      this.currentUser.set(this.authRepository.getCurrentUser());
+      const response = await this.authService.login(credentials);
+      this.currentUser.set(this.authService.getUserProfile());
     } catch (error: any) {
       this.setError(error.message);
       throw error;
@@ -38,8 +32,8 @@ export class AuthStore {
     this.setError(null);
     
     try {
-      const response = await this.registerUseCase.execute(userData);
-      this.currentUser.set(this.authRepository.getCurrentUser());
+      const response = await this.authService.register(userData);
+      this.currentUser.set(this.authService.getUserProfile());
     } catch (error: any) {
       this.setError(error.message);
       throw error;
@@ -48,8 +42,20 @@ export class AuthStore {
     }
   }
 
+  async validateToken(token: string): Promise<void> {
+    this.setLoading(true);
+    try {
+      const result = await this.authService.validateToken({ token });
+      if (!result.valid) {
+        this.logout();
+      }
+    } finally {
+      this.setLoading(false);
+    }
+  }
+
   logout(): void {
-    this.logoutUseCase.execute();
+    this.authService.logout();
     this.currentUser.set(null);
     this.error.set(null);
   }

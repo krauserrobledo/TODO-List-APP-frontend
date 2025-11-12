@@ -3,7 +3,7 @@ import { UserEntity } from '../../entities/user-entity';
 import { AuthApiRepository } from '../../../data/repositories/auth/auth-api-repository';
 
 @Injectable({ providedIn: 'root' })
-export class GetCurrentUserUseCase {
+export class GetUserProfileUseCase {
   private authRepository = inject(AuthApiRepository);
 
   execute(): UserEntity | null {

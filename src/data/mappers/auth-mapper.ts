@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { UserEntity } from './../../domain/entities/user-entity';
-import { AuthResponseDto } from '../../data/models/dtos/auth/auth-response-dto.js';
-import { RegisterRequestDto } from '../../data/models/dtos/auth/register-request-dto';
-import { LoginRequestDto } from '../../data/models/dtos/auth/login-request-dto';
+import { UserEntity } from '../../domain/entities/user-entity';
+import { AuthResponseDto } from '../models/dtos/auth/auth-response-dto.js';
+import { RegisterRequestDto } from '../models/dtos/auth/register-request-dto';
+import { LoginRequestDto } from '../models/dtos/auth/login-request-dto';
 
 @Injectable({ providedIn: 'root' })
 export class AuthMapper {

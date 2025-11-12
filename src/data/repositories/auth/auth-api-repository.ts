@@ -5,7 +5,7 @@ import { AuthRepository } from '../../../domain/repositories/auth-repository';
 import { UserEntity } from '../../../domain/entities/user-entity';
 
 import { environment } from '../../../environments/environment';
-import { AuthMapper } from '../../../base/mappers/auth-mapper';
+import { AuthMapper } from '../../mappers/auth-mapper';
 import { LoginRequestDto } from '../../models/dtos/auth/login-request-dto';
 import { RegisterRequestDto } from '../../models/dtos/auth/register-request-dto';
 import { AuthResponseDto } from '../../models/dtos/auth/auth-response-dto';

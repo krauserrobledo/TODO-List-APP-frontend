@@ -1,8 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { LoginUseCase } from '../../../../domain/usecases/user/login-use-case';
 import { AuthStore } from '../../../stores/auth-store';
 
 @Component({
@@ -14,7 +13,6 @@ import { AuthStore } from '../../../stores/auth-store';
 })
 export class LoginComponent {
   private fb = inject(FormBuilder);
-  private loginUseCase = inject(LoginUseCase);
   private authStore = inject(AuthStore);
   private router = inject(Router);
 
@@ -28,18 +26,12 @@ export class LoginComponent {
 
   async onSubmit(): Promise<void> {
     if (this.loginForm.valid) {
-      this.authStore.setLoading(true);
-      this.authStore.setError(null);
-
       try {
-        this.authStore.setUser;
         const request = this.loginForm.value as { email: string; password: string };
-        await this.loginUseCase.execute(request);
+        await this.authStore.login(request);
         this.router.navigate(['/dashboard']);
       } catch (error: any) {
-        this.authStore.setError(error.message || 'Error al iniciar sesión');
-      } finally {
-        this.authStore.setLoading(false);
+        console.error('Login Error:', error);
       }
     }
   }
