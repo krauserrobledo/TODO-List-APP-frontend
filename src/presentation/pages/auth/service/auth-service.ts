@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
-import { LoginModel } from "../../domain/models/auth/login-model";
-import { RegisterModel } from "../../domain/models/auth/register-model";
-import { ValidateTokenModel } from "../../domain/models/auth/validate-token-model";
-import { GetUserProfileUseCase } from "../../domain/usecases/auth/get-user-profile-usecase";
-import { LoginUseCase } from "../../domain/usecases/auth/login-usecase";
-import { LogoutUseCase } from "../../domain/usecases/auth/logout-usecase";
-import { RegisterUseCase } from "../../domain/usecases/auth/register-usecase";
-import { ValidateTokenUseCase } from "../../domain/usecases/auth/validate-token-usecase";
+import { LoginModel } from "../../../../domain/models/auth/login-model";
+import { RegisterModel } from "../../../../domain/models/auth/register-model";
+import { ValidateTokenModel } from "../../../../domain/models/auth/validate-token-model";
+import { GetUserProfileUseCase } from "../../../../domain/usecases/auth/get-user-profile-usecase";
+import { LoginUseCase } from "../../../../domain/usecases/auth/login-usecase";
+import { LogoutUseCase } from "../../../../domain/usecases/auth/logout-usecase";
+import { RegisterUseCase } from "../../../../domain/usecases/auth/register-usecase";
+import { ValidateTokenUseCase } from "../../../../domain/usecases/auth/validate-token-usecase";
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {

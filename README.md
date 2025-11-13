@@ -87,9 +87,7 @@
   - Dialogs
   - Observables - Suscribers
 
-
 - Check authentication functionality.
-
 
 - Auth refactoring for architecture  improve.
 
@@ -97,7 +95,7 @@
 
 - Implement Task Feature:
 
-    - Data : Dtos, mapper,  apimodels, task-api-repository for task
+    - Dtos, mapper,  apimodels, task-api-repository for task
 
     - Presentation : task Store, components.
 
@@ -114,8 +112,9 @@ Responses tested with DEvTools
 
   - Dependency Injection Issue: 
       
-      Problem: NG0201 - No provider for AuthRepository
-      Fix: Configure providers in app.config.ts
+    Problem: NG0201 - No provider for AuthRepository
+    
+    Fix: Configure providers in app.config.ts
 
   - Error 400 - Wrong request rormat
 
@@ -149,8 +148,17 @@ Responses tested with DEvTools
   - using models and service in auth-store(not DTOs)
 
 
-### ***Create entities and repositories interfaces.***
+### ***Create entities and repositories.***
 
   - Created Dtos for every request and response in data/dtos.
 
   - Created Repository interfaces in domain/repository.
+
+   - Created Mappers in Data/
+
+  - Created usecases in Domain/ 
+
+
+### ***Implement Task Feature***
+
+ 

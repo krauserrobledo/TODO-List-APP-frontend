@@ -1,6 +1,6 @@
 import { Injectable, signal, inject } from '@angular/core';
 import { UserModel } from '../../domain/models/auth/user-model';
-import { AuthService } from '../../base/services/auth-service';
+import { AuthService } from '../pages/auth/service/auth-service';
 import { RegisterModel } from '../../domain/models/auth/register-model';
 import { LoginModel } from '../../domain/models/auth/login-model';
 import { ValidateTokenModel } from '../../domain/models/auth/validate-token-model';
@@ -16,7 +16,7 @@ export class AuthStore {
   async login(credentials: LoginModel): Promise<void> {
     this.setLoading(true);
     this.setError(null);
-    
+
     try {
       const response = await this.authService.login(credentials);
       this.currentUser.set(this.authService.getUserProfile());
@@ -31,7 +31,7 @@ export class AuthStore {
   async register(userData: RegisterModel): Promise<void> {
     this.setLoading(true);
     this.setError(null);
-    
+
     try {
       const response = await this.authService.register(userData);
       this.currentUser.set(this.authService.getUserProfile());
