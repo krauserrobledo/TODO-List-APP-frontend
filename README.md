@@ -108,7 +108,7 @@
 
 ### ***Auth Functionallity Checking***
 
-Responses tested with DEvTools
+Responses tested with DevTools
 
   - Dependency Injection Issue: 
       
@@ -118,13 +118,15 @@ Responses tested with DEvTools
 
   - Error 400 - Wrong request rormat
 
-      Problem: userName vs UserName
-      Fix: DTOs and Mapper Implement
+    Problem: userName vs UserName
+
+    Fix: DTOs and Mapper Implement
 
   - Error 400 - UserName already exist
 
-      Problem: ASP.NET Identity validates unique UserName
-      Fix: fixes in backend and front
+    Problem: ASP.NET Identity validates unique UserName
+
+    Fix: fixes in backend and front
 
 
 ### ***Auth Refactoring.***
@@ -154,11 +156,21 @@ Responses tested with DEvTools
 
   - Created Repository interfaces in domain/repository.
 
-   - Created Mappers in Data/
+  - Created Mappers in Data/
 
   - Created usecases in Domain/ 
 
 
-### ***Implement Task Feature***
+### ***Implement Task Feature.***
+
+  - Implement task repository.
+  
+  - Create Service for task.
+
+  - Create Store for Task.
+
+  - Create Task Component.
+
+  - Integrate Task Component in Dashboard.
 
  

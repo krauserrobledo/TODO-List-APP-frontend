@@ -7,7 +7,7 @@ import { TaskModel } from '../../models/task/task-model';
 export class GetTaskUseCase {
   private taskRepository = inject(TaskRepository);
 
-  execute(model: TaskModel): Promise <TaskModel> {
-    return this.taskRepository.getTask(model.id);
+  execute(id : string): Promise <TaskModel> {
+    return this.taskRepository.getTask(id);
   }
 }
