@@ -10,7 +10,7 @@ import { AuthStore } from '../../../stores/auth-store';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './register.html' ,
-  styleUrl: './register.css' 
+  styleUrl: './register.css'
 })
 
 export class RegisterComponent {
@@ -28,6 +28,7 @@ export class RegisterComponent {
   });
 
   async onSubmit(): Promise<void> {
+
     if (this.registerForm.valid) {
 
       this.authStore.setLoading(true);
@@ -41,21 +42,24 @@ export class RegisterComponent {
         this.router.navigate(['/dashboard']);
 
       } catch (error: any) {
+
         this.authStore.setError(error.message || 'Error Creating Account');
         console.error(' Error:', error);
         let errorMessage = 'Error creating Account';
-      
+
         if (error.error) {
-          
+
           if (error.error.errors && Array.isArray(error.error.errors)) {
             const firstError = error.error.errors[0];
+
             if (firstError.includes('already taken')) {
               errorMessage = 'User Name already exists';
+              
             } else {
               errorMessage = firstError;
             }
           }
-          
+
           else if (error.error.error) {
             if (error.error.error.includes('already taken')) {
               errorMessage = 'User Name already exists!';
@@ -64,9 +68,9 @@ export class RegisterComponent {
             }
           }
         }
-        
+
         this.authStore.setError(errorMessage);
-        
+
       } finally {
         this.authStore.setLoading(false);
       }
