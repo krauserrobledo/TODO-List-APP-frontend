@@ -4,6 +4,7 @@ import { TaskModel } from "../../../domain/models/task/task-model";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
 import { TaskMapper } from "../../mappers/task-mapper";
+import { firstValueFrom } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class TaskApiRepository implements TaskRepository {
@@ -38,9 +39,9 @@ export class TaskApiRepository implements TaskRepository {
 
   //Delete
   async deleteTask(id: string): Promise<void> {
+  await firstValueFrom(this.http.delete<void>(`${this.baseUrl}/${id}`));
+}
 
-    await this.http.delete(`${this.baseUrl}/${id}`).toPromise();
-  }
 
   //Get Task
   async getTask(id: string): Promise<TaskModel> {
@@ -61,50 +62,27 @@ export class TaskApiRepository implements TaskRepository {
   }
 
   //Add category
-  async addCategoryToTask(taskId: string, categoryId: string): Promise<void> {
-    const response = await this.http.post<any>(
-      `${this.baseUrl}/${taskId}/categories/${categoryId}`, {}
-    ).toPromise();
+  async addCategoryToTask(taskId: string, categoryId: string): Promise<TaskModel> {
+  const response = await this.http.post<any>(`${this.baseUrl}/${taskId}/categories/${categoryId}`, {}).toPromise();
+  const dto = this.taskMapper.toTaskResponseDto(response);
+  return this.taskMapper.toTaskModel(dto);
+}
 
-    if (!response) throw new Error('Add category failed');
+async addTagToTask(taskId: string, tagId: string): Promise<TaskModel> {
+  const response = await this.http.post<any>(`${this.baseUrl}/${taskId}/tags/${tagId}`, {}).toPromise();
+  const dto = this.taskMapper.toTaskResponseDto(response);
+  return this.taskMapper.toTaskModel(dto);
+}
 
-    const taskResponseDto = this.taskMapper.toTaskResponseDto(response);
-    this.taskMapper.toTaskModel(taskResponseDto);
-  }
+async deleteCategoryFromTask(taskId: string, categoryId: string): Promise<TaskModel> {
+  const response = await this.http.delete<any>(`${this.baseUrl}/${taskId}/categories/${categoryId}`).toPromise();
+  const dto = this.taskMapper.toTaskResponseDto(response);
+  return this.taskMapper.toTaskModel(dto);
+}
 
-  // Add Task
-  async addTagToTask(taskId: string, tagId: string): Promise<void> {
-    const response = await this.http.post<any>(
-      `${this.baseUrl}/${taskId}/tags/${tagId}`, {}
-    ).toPromise();
-
-    if (!response) throw new Error('Add tag failed');
-
-    const taskResponseDto = this.taskMapper.toTaskResponseDto(response);
-    this.taskMapper.toTaskModel(taskResponseDto);
-  }
-
-  // Delete Category
-  async deleteCategoryFromTask(taskId: string, categoryId: string): Promise<void> {
-    const response = await this.http.delete<any>(
-      `${this.baseUrl}/${taskId}/categories/${categoryId}`
-    ).toPromise();
-
-    if (!response) throw new Error('Delete category failed');
-
-    const taskResponseDto = this.taskMapper.toTaskResponseDto(response);
-    this.taskMapper.toTaskModel(taskResponseDto);
-  }
-
-  //Delete Tag
-  async deleteTagFromTask(taskId: string, tagId: string): Promise<void> {
-    const response = await this.http.delete<any>(
-      `${this.baseUrl}/${taskId}/tags/${tagId}`
-    ).toPromise();
-
-    if (!response) throw new Error('Delete tag failed');
-
-    const taskResponseDto = this.taskMapper.toTaskResponseDto(response);
-    this.taskMapper.toTaskModel(taskResponseDto);
-  }
+async deleteTagFromTask(taskId: string, tagId: string): Promise<TaskModel> {
+  const response = await this.http.delete<any>(`${this.baseUrl}/${taskId}/tags/${tagId}`).toPromise();
+  const dto = this.taskMapper.toTaskResponseDto(response);
+  return this.taskMapper.toTaskModel(dto);
+}
 }
