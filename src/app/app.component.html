@@ -3,10 +3,13 @@
     <nav>
       <h3>TODO List App</h3>
 
-      <ng-container *ngIf="authStore.currentUser() as user">
+      @if (authStore.currentUser(); as user) {
         <span>Welcome, {{ user.userName }}</span>
         <button (click)="logout()">Sign Out</button>
-      </ng-container>
+      } @else {
+        <span>Please sign in</span>
+      }
+      
     </nav>
   </header>
 

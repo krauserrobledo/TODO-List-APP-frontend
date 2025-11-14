@@ -1,17 +1,17 @@
 import { Component, inject } from '@angular/core';
-import { TaskStore } from './../../stores/task-store';
-import { TaskModel } from '../../../domain/models/task/task-model';
+import { TaskStore } from '../../../stores/task-store';
+import { TaskModel } from '../../../../domain/models/task/task-model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-task',
+  selector: 'app-task-list',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './task.html',
-  styleUrls: ['./task.css']
+  templateUrl: './task-list.html',
+  styleUrls: ['./task-list.css']
 })
-export class Task {
+export class TaskList {
   private store = inject(TaskStore);
 
   tasks = this.store.tasks;
@@ -65,4 +65,14 @@ export class Task {
   deleteTask(task: TaskModel) {
     this.store.deleteTask(task.id);
   }
+
+  showForm = false;
+
+newTask() {
+  this.showForm = true;
+}
+
+closeForm() {
+  this.showForm = false;
+}
 }

@@ -1,0 +1,40 @@
+<div class="task-container">
+
+  <!-- Loading -->
+  <div>
+    @if (isLoading()) {
+    <span>Loading tasks...</span>
+    }
+  </div>
+
+  <!-- Error -->
+  <div>
+    @if (error()) {
+    <span>{{ error() }}</span>
+    }
+  </div>
+
+  <div class="task-list">
+    <div>
+      <h4>Task List</h4>
+      <button (click)="newTask()"> + </button>
+    </div>
+
+    <div>
+      <ul>
+        <li>
+          @for (task of tasks(); track task.id) {
+        <li>
+          <span>{{ task.title }}</span>
+
+          <span [class]="statusClasses[task.status]">{{ task.status }}</span>
+
+          <span>{{ task.dueDate }}</span>
+
+          <button (click)="deleteTask(task)">Delete</button>
+        </li>
+        }
+
+        </li>
+      </ul>
+    </div>

@@ -1,13 +1,4 @@
 <div class="task-container">
-  <h3>Tasks</h3>
-
-  <!-- Loading -->
-  <div>
-    @if (isLoading()) {
-      <span>Loading tasks...</span>
-    }
-  </div>
-
   <!-- Error -->
   <div>
     @if (error()) {
@@ -49,27 +40,6 @@
 
         <button class="form-button" type="submit">Add</button>
       </form>
-    </div>
-
-    <!-- Lista -->
-    <div class="task-list">
-      <h4>Task List</h4>
-      <ul>
-        <li *ngFor="let task of tasks()">
-          <!-- usa el mapa para aplicar la clase -->
-          <span [class]="statusClasses[task.status]">{{ task.title }}</span>
-
-          <select [ngModel]="task.status" (ngModelChange)="changeStatus(task, $event)">
-            <option value="Non Started">Non Started</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Paused">Paused</option>
-            <option value="Late">Late</option>
-            <option value="Finished">Finished</option>
-          </select>
-
-          <button (click)="deleteTask(task)">Delete</button>
-        </li>
-      </ul>
     </div>
   </div>
 </div>

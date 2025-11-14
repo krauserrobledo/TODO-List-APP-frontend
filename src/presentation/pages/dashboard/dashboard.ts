@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { Task } from '../../components/task/task';
+import { TaskList } from '../../components/task/task-list/task-list';
 
 
 @Component({
   selector: 'app-dashboard',
-  imports: [Task],
+  imports: [TaskList],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })

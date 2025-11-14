@@ -4,10 +4,9 @@
   border-radius: 8px;
 }
 
-/* Contenedor en columnas */
 .task-columns {
   display: grid;
-  grid-template-columns: 1fr 2fr; /* formulario más estrecho, lista más ancha */
+  grid-template-columns: 1fr 2fr;   
   gap: 2rem;
   margin-top: 1rem;
 }
