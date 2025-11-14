@@ -7,10 +7,18 @@ export interface TaskResponseDto {
   title: string;
   description?: string;
   dueDate: Date;
-  status: string;
+  status: TaskStatus;
   userId: string;
   subtasks?: SubtaskResponseDto[];
   categories?: CategoryResponseDto[];
   tags?: TagResponseDto[];
+  
 }
+
+export type TaskStatus =
+  | 'non_started'
+  | 'in_progress'
+  | 'paused'
+  | 'late'
+  | 'finished';
   

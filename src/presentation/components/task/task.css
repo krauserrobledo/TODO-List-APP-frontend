@@ -1,0 +1,34 @@
+.task-container {
+    padding: 1rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+  }
+  
+  .task-form {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .non_started {
+    color: gray;
+  }
+  
+  .in_progress {
+    color: blue;
+  }
+  
+  .paused {
+    color: orange;
+  }
+  
+  .late {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .finished {
+    color: green;
+    text-decoration: line-through;
+  }
+  

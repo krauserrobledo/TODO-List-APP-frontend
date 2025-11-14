@@ -7,9 +7,16 @@ export interface TaskModel {
   title: string;
   description?: string;
   dueDate: Date;
-  status: string;
+  status: TaskStatus;
   userId: string;
   subtasks?: SubtaskModel[];
   categories?: CategoryModel[];
   tags?: TagModel[];
 }
+
+export type TaskStatus =
+  | 'non_started'
+  | 'in_progress'
+  | 'paused'
+  | 'late'
+  | 'finished';
