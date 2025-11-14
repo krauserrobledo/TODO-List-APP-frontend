@@ -173,6 +173,6 @@ Responses tested with DevTools
 
   - Integrate Task Component in Dashboard.
 
-  - Configure component. 
+  - Configure component.
 
  
