@@ -53,10 +53,14 @@ export class TaskApiRepository implements TaskRepository {
 
   //Get User Task
   async getUserTasks(): Promise<TaskModel[]> {
-    const response = await this.http.get<any[]>(`${this.baseUrl}/user`).toPromise();
+    const token = localStorage.getItem('authToken');
+    const headers = { Authorization: `Bearer ${token}` };
+
+    const response = await this.http.get<any[]>(`${this.baseUrl}/user`, { headers }).toPromise();
     if (!response) return [];
     return response.map(dto => this.taskMapper.toTaskModel(dto));
-  }  
+  }
+
 
   //Add category
   async addCategoryToTask(taskId: string, categoryId: string): Promise<TaskModel> {

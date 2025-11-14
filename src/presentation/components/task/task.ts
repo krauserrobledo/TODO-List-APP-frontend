@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TaskStore } from './../../stores/task-store';
 import { TaskModel } from '../../../domain/models/task/task-model';
 import { CommonModule } from '@angular/common';
@@ -18,29 +18,44 @@ export class Task {
   isLoading = this.store.isLoading;
   error = this.store.error;
 
-  newTitle = signal('');
-  newStatus = signal<TaskModel['status']>('non_started');
-  newDueDate: string = '';
+  newTitle: string = '';
+  newDescription: string = '';
+  newStatus: TaskModel['status'] = 'Non Started';
+  newDueDate: string = ''; // Angular devuelve string en <input type="date">
+
+  // mapa para traducir estados del backend a clases CSS
+  statusClasses: Record<TaskModel['status'], string> = {
+    'Non Started': 'non_started',
+    'In Progress': 'in_progress',
+    'Paused': 'paused',
+    'Late': 'late',
+    'Finished': 'finished'
+  };
 
   ngOnInit() {
     this.store.loadTasks();
   }
 
   addTask() {
-    const title = this.newTitle();
-    if (!title.trim()) return;
+    if (!this.newTitle.trim()) return;
+    if (!this.newDescription.trim()) return;
 
     const model: TaskModel = {
       id: crypto.randomUUID(),
-      title,
-      status: this.newStatus(),
-      dueDate: new Date(this.newDueDate),
+      title: this.newTitle,
+      description: this.newDescription,
+      status: this.newStatus, // coincide con backend
+      dueDate: new Date(this.newDueDate), // convierte string a Date
       userId: ''
     };
 
     this.store.createTask(model);
-    this.newTitle.set('');
-    this.newStatus.set('non_started');
+
+    // reset form
+    this.newTitle = '';
+    this.newDescription = '';
+    this.newStatus = 'Non Started';
+    this.newDueDate = '';
   }
 
   changeStatus(task: TaskModel, status: TaskModel['status']) {

@@ -1,46 +1,75 @@
 <div class="task-container">
-    <h3>Tasks</h3>
-  
-    <!-- Loading -->
-    <div *ngIf="isLoading()">Loading tasks...</div>
-  
-    <!-- Error -->
-    <div *ngIf="error()">{{ error() }}</div>
-  
-    <!-- Formulario -->
-    <form (ngSubmit)="addTask()" class="task-form">
-      <input
-        type="text"
-        (ngModel)="newTitle()"
-        name="title"
-        placeholder="New task..."
-      />
-      <select (ngModel)="newStatus()" name="status">
-        <option value="non_started">Non Started</option>
-        <option value="in_progress">In Progress</option>
-        <option value="paused">Paused</option>
-        <option value="late">Late</option>
-        <option value="finished">Finished</option>
-      </select>
-      <button type="submit">Add</button>
-    </form>
-  
-    <!-- Lista -->
-    <ul>
-      <li *ngFor="let task of tasks()">
-        <span [class]="task.status">{{ task.title }}</span>
-  
-        <!-- Cambiar estado -->
-        <select [ngModel]="task.status" (ngModelChange)="changeStatus(task, $event)">
-          <option value="non_started">Non Started</option>
-          <option value="in_progress">In Progress</option>
-          <option value="paused">Paused</option>
-          <option value="late">Late</option>
-          <option value="finished">Finished</option>
-        </select>
-  
-        <button (click)="deleteTask(task)">Delete</button>
-      </li>
-    </ul>
+  <h3>Tasks</h3>
+
+  <!-- Loading -->
+  <div>
+    @if (isLoading()) {
+      <span>Loading tasks...</span>
+    }
   </div>
-  
+
+  <!-- Error -->
+  <div>
+    @if (error()) {
+      <span>{{ error() }}</span>
+    }
+  </div>
+
+  <!-- Contenedor en columnas -->
+  <div class="task-columns">
+    <!-- Formulario -->
+    <div class="task-form">
+      <h4>New Task</h4>
+      <form class="task-form" (ngSubmit)="addTask()">
+        <div>
+          <label>Title : </label>
+          <input type="text" [(ngModel)]="newTitle" name="title" placeholder="New task..." />
+        </div>
+
+        <div>
+          <label>Status : </label>
+          <select [(ngModel)]="newStatus" name="status">
+            <option value="Non Started">Non Started</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Paused">Paused</option>
+            <option value="Late">Late</option>
+            <option value="Finished">Finished</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Description : </label>
+          <input type="text" [(ngModel)]="newDescription" name="description" placeholder="Describe task..." />
+        </div>
+
+        <div>
+          <label>Due Date : </label>
+          <input type="date" [(ngModel)]="newDueDate" name="dueDate" />
+        </div>
+
+        <button class="form-button" type="submit">Add</button>
+      </form>
+    </div>
+
+    <!-- Lista -->
+    <div class="task-list">
+      <h4>Task List</h4>
+      <ul>
+        <li *ngFor="let task of tasks()">
+          <!-- usa el mapa para aplicar la clase -->
+          <span [class]="statusClasses[task.status]">{{ task.title }}</span>
+
+          <select [ngModel]="task.status" (ngModelChange)="changeStatus(task, $event)">
+            <option value="Non Started">Non Started</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Paused">Paused</option>
+            <option value="Late">Late</option>
+            <option value="Finished">Finished</option>
+          </select>
+
+          <button (click)="deleteTask(task)">Delete</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

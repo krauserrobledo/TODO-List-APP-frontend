@@ -16,9 +16,9 @@ export interface TaskResponseDto {
 }
 
 export type TaskStatus =
-  | 'non_started'
-  | 'in_progress'
-  | 'paused'
-  | 'late'
-  | 'finished';
+  | 'Non Started'
+  | 'In Progress'
+  | 'Paused'
+  | 'Late'
+  | 'Finished';
   
