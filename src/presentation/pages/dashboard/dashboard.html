@@ -6,23 +6,22 @@
     </header>
   
     <main class="dashboard-grid">
-      <!-- Columna izquierda: lista -->
+
       <div class="left">
         <app-task-list (selectTask)="onSelectTask($event)"></app-task-list>
-  
+      </div>
+
+      <div class="right">
         @if (showForm) {
           <app-task-form
             [task]="taskToEdit"
-            (update)="closeForm()"
-            (create)="closeForm()"
-            (delete)="closeForm()"
+            (update)="updateTask($event)"
+            (create)="createTask($event)"
+            (delete)="deleteTask($event)"
             (cancel)="closeForm()">
           </app-task-form>
         }
-      </div>
   
-      <!-- Columna derecha: detalles -->
-      <div class="right">
         @if (selectedTask) {
           <app-task-details
             [task]="selectedTask"

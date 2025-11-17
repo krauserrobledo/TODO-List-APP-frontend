@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TaskList } from '../../components/task/task-list/task-list';
 import { TaskDetails } from '../../components/task/task-details/task-details';
 import { TaskForm } from '../../components/task/task-form/task-form';
 import { TaskModel } from '../../../domain/models/task/task-model';
+import { TaskStore } from './../../stores/task-store';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,6 +14,8 @@ import { TaskModel } from '../../../domain/models/task/task-model';
   styleUrls: ['./dashboard.css'],
 })
 export class DashboardComponent {
+  private store = inject(TaskStore);
+
   selectedTask: TaskModel | null = null;
   taskToEdit: TaskModel | null = null;
   showForm = false;
@@ -32,12 +35,25 @@ export class DashboardComponent {
   }
 
   deleteTask(task: TaskModel) {
+    this.store.deleteTask(task.id);
     if (this.selectedTask?.id === task.id) this.selectedTask = null;
   }
 
   changeStatus(event: { task: TaskModel; status: TaskModel['status'] }) {
     const updated = { ...event.task, status: event.status };
+    this.store.updateTask(event.task.id, updated);
     this.selectedTask = updated;
+  }
+
+  updateTask(task: TaskModel) {
+    this.store.updateTask(task.id, task);
+    this.selectedTask = task;
+    this.closeForm();
+  }
+
+  createTask(task: TaskModel) {
+    this.store.createTask(task);
+    this.closeForm();
   }
 
   closeDetails() {

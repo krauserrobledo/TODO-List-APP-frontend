@@ -1,6 +1,6 @@
 <div class="task-container">
   <h4>Edit Task</h4>
-  <form class="task-form" (ngSubmit)="addTask()">
+  <form class="task-form" (ngSubmit)="submit()">
     <div>
       <label>Title : </label>
       <input type="text" [(ngModel)]="newTitle" name="title" placeholder="New task..." />

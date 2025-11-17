@@ -11,7 +11,7 @@ import { TaskModel } from '../../../../domain/models/task/task-model';
   styleUrls: ['./task-form.css'],
 })
 export class TaskForm implements OnChanges {
-  @Input() task: TaskModel | null = null;   // ✅ ahora existe el Input
+  @Input() task: TaskModel | null = null;
 
   @Output() create = new EventEmitter<TaskModel>();
   @Output() update = new EventEmitter<TaskModel>();
@@ -70,27 +70,6 @@ export class TaskForm implements OnChanges {
 
   resetForm() {
     this.id = null;
-    this.newTitle = '';
-    this.newDescription = '';
-    this.newStatus = 'Non Started';
-    this.newDueDate = '';
-  }
-
-
-  addTask() {
-    if (!this.newTitle.trim() || !this.newDescription.trim()) return;
-
-    const model: TaskModel = {
-      id: crypto.randomUUID(),
-      title: this.newTitle,
-      description: this.newDescription,
-      status: this.newStatus,
-      dueDate: new Date(this.newDueDate),
-      userId: ''
-    };
-
-    this.create.emit(model);
-    // reset form
     this.newTitle = '';
     this.newDescription = '';
     this.newStatus = 'Non Started';
