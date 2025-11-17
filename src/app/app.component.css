@@ -5,7 +5,7 @@
   .app-header {
     background: #343a40;
     color: white;
-    padding: 1rem 2rem;
+    padding: 0.5rem 0.5rem;
     text-justify:distribute;
   }
   
@@ -21,7 +21,7 @@
     background: #dc3545;
     color: white;
     border: none;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.5rem;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -32,7 +32,7 @@
   }
   
   main {
-    padding: 2rem;
+    padding: 1rem;
     max-width: 1200px;
     margin: 0 auto;
   }

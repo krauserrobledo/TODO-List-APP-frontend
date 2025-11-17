@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Output, EventEmitter } from '@angular/core';
 import { TaskStore } from '../../../stores/task-store';
 import { TaskModel } from '../../../../domain/models/task/task-model';
 import { CommonModule } from '@angular/common';
@@ -18,61 +18,48 @@ export class TaskList {
   isLoading = this.store.isLoading;
   error = this.store.error;
 
+  @Output() selectTask = new EventEmitter<TaskModel>();
+
+  showForm = false;
+  selectedTask: TaskModel | null = null;
+
   newTitle: string = '';
   newDescription: string = '';
   newStatus: TaskModel['status'] = 'Non Started';
-  newDueDate: string = ''; // Angular devuelve string en <input type="date">
-
-  // mapa para traducir estados del backend a clases CSS
-  statusClasses: Record<TaskModel['status'], string> = {
-    'Non Started': 'non_started',
-    'In Progress': 'in_progress',
-    'Paused': 'paused',
-    'Late': 'late',
-    'Finished': 'finished'
-  };
+  newDueDate: string = '';
 
   ngOnInit() {
     this.store.loadTasks();
   }
 
+  onSelect(task: TaskModel) {
+    this.selectedTask = task;
+    this.selectTask.emit(task);
+  }
+
   addTask() {
-    if (!this.newTitle.trim()) return;
-    if (!this.newDescription.trim()) return;
+    if (!this.newTitle.trim() || !this.newDescription.trim()) return;
 
     const model: TaskModel = {
       id: crypto.randomUUID(),
       title: this.newTitle,
       description: this.newDescription,
-      status: this.newStatus, // coincide con backend
-      dueDate: new Date(this.newDueDate), // convierte string a Date
+      status: this.newStatus,
+      dueDate: new Date(this.newDueDate),
       userId: ''
     };
 
     this.store.createTask(model);
 
-    // reset form
     this.newTitle = '';
     this.newDescription = '';
     this.newStatus = 'Non Started';
     this.newDueDate = '';
-  }
-
-  changeStatus(task: TaskModel, status: TaskModel['status']) {
-    this.store.updateTask(task.id, { ...task, status });
+    this.showForm = false;
   }
 
   deleteTask(task: TaskModel) {
     this.store.deleteTask(task.id);
+    if (this.selectedTask?.id === task.id) this.selectedTask = null;
   }
-
-  showForm = false;
-
-newTask() {
-  this.showForm = true;
-}
-
-closeForm() {
-  this.showForm = false;
-}
 }

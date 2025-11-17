@@ -1,0 +1,33 @@
+.app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .app-header {
+    padding: 0.1rem;
+  }
+  
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 360px; 
+    gap: 1rem;
+    flex: 1;
+    padding: 1rem;
+  }
+  
+  .left {
+    background: whitesmoke;
+    
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 6px;
+  }
+  
+  .right {
+    background: whitesmoke;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+  }
+  

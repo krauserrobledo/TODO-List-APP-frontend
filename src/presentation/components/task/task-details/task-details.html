@@ -1,0 +1,28 @@
+@if (task) {
+    <div class="task-details">
+      <h4>Task Details</h4>
+  
+      <p><strong>Title:</strong> {{ task.title }}</p>
+  
+      <p>
+        <strong>Status:</strong>
+        <select [(ngModel)]="selectedStatus" (change)="changeStatus.emit({ task: task!, status: selectedStatus })">
+          <option value="Non Started">Non Started</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Paused">Paused</option>
+          <option value="Late">Late</option>
+          <option value="Finished">Finished</option>
+        </select>
+      </p>
+  
+      <p><strong>Description:</strong> {{ task.description }}</p>
+      <p><strong>Due Date:</strong> {{ task.dueDate | date }}</p>
+  
+      <div class="actions">
+        <button (click)="edit.emit(task!)">Edit</button>
+        <button (click)="delete.emit(task!)">Delete</button>
+        <button (click)="close.emit()">Close</button>
+      </div>
+    </div>
+  }
+  

@@ -6,7 +6,6 @@ import { TaskService } from '../components/task/service/task-service';
 export class TaskStore {
   private taskService = inject(TaskService);
 
-  // Estado reactivo
   tasks = signal<TaskModel[]>([]);
   isLoading = signal(false);
   error = signal<string | null>(null);

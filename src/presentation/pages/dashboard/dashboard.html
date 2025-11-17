@@ -1,10 +1,38 @@
 <div class="app">
     <header class="app-header">
-        <nav>
-            <h1>Manage your Tasks</h1>
-        </nav>
+      <nav>
+        <h1>Manage your Tasks</h1>
+      </nav>
     </header>
-    <main>
-        <app-task-list></app-task-list>
+  
+    <main class="dashboard-grid">
+      <!-- Columna izquierda: lista -->
+      <div class="left">
+        <app-task-list (selectTask)="onSelectTask($event)"></app-task-list>
+  
+        @if (showForm) {
+          <app-task-form
+            [task]="taskToEdit"
+            (update)="closeForm()"
+            (create)="closeForm()"
+            (delete)="closeForm()"
+            (cancel)="closeForm()">
+          </app-task-form>
+        }
+      </div>
+  
+      <!-- Columna derecha: detalles -->
+      <div class="right">
+        @if (selectedTask) {
+          <app-task-details
+            [task]="selectedTask"
+            (close)="closeDetails()"
+            (edit)="editTask($event)"
+            (delete)="deleteTask($event)"
+            (changeStatus)="changeStatus($event)">
+          </app-task-details>
+        }
+      </div>
     </main>
-</div>
+  </div>
+  

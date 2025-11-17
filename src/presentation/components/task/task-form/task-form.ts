@@ -1,55 +1,95 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TaskStore } from '../../../stores/task-store';
-import { TaskModel } from '../../../../domain/models/task/task-model';
 import { FormsModule } from '@angular/forms';
+import { TaskModel } from '../../../../domain/models/task/task-model';
 
 @Component({
   selector: 'app-task-form',
   standalone: true,
-  imports: [CommonModule, FormsModule  ],
+  imports: [CommonModule, FormsModule],
   templateUrl: './task-form.html',
   styleUrls: ['./task-form.css'],
 })
-export class TaskForm{
-  private store = inject(TaskStore);
+export class TaskForm implements OnChanges {
+  @Input() task: TaskModel | null = null;   // ✅ ahora existe el Input
 
-  tasks = this.store.tasks;
-  isLoading = this.store.isLoading;
-  error = this.store.error;
+  @Output() create = new EventEmitter<TaskModel>();
+  @Output() update = new EventEmitter<TaskModel>();
+  @Output() delete = new EventEmitter<TaskModel>();
+  @Output() cancel = new EventEmitter<void>();
 
+  // campos del formulario
+  id: string | null = null;
   newTitle: string = '';
   newDescription: string = '';
   newStatus: TaskModel['status'] = 'Non Started';
-  newDueDate: string = ''; // Angular devuelve string en <input type="date">
+  newDueDate: string = '';
 
-  // mapa para traducir estados del backend a clases CSS
-  statusClasses: Record<TaskModel['status'], string> = {
-    'Non Started': 'non_started',
-    'In Progress': 'in_progress',
-    'Paused': 'paused',
-    'Late': 'late',
-    'Finished': 'finished'
-  };
+  isEdit = false;
 
-  ngOnInit() {
+  ngOnChanges() {
+    if (this.task) {
+      this.isEdit = true;
+      this.id = this.task.id;
+      this.newTitle = this.task.title;
+      this.newDescription = this.task.description ?? "";
+      this.newStatus = this.task.status;
+      const d = new Date(this.task.dueDate);
+      const yyyy = d.getFullYear();
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const dd = String(d.getDate()).padStart(2, '0');
+      this.newDueDate = `${yyyy}-${mm}-${dd}`;
+    } else {
+      this.resetForm();
+      this.isEdit = false;
+    }
   }
 
+  submit() {
+    if (!this.newTitle.trim() || !this.newDescription.trim()) return;
+
+    const model: TaskModel = {
+      id: this.id ?? crypto.randomUUID(),
+      title: this.newTitle,
+      description: this.newDescription,
+      status: this.newStatus,
+      dueDate: new Date(this.newDueDate),
+      userId: this.task?.userId ?? ''
+    };
+
+    if (this.isEdit) {
+      this.update.emit(model);
+    } else {
+      this.create.emit(model);
+    }
+  }
+
+  remove() {
+    if (this.task) this.delete.emit(this.task);
+  }
+
+  resetForm() {
+    this.id = null;
+    this.newTitle = '';
+    this.newDescription = '';
+    this.newStatus = 'Non Started';
+    this.newDueDate = '';
+  }
+
+
   addTask() {
-    if (!this.newTitle.trim()) return;
-    if (!this.newDescription.trim()) return;
+    if (!this.newTitle.trim() || !this.newDescription.trim()) return;
 
     const model: TaskModel = {
       id: crypto.randomUUID(),
       title: this.newTitle,
       description: this.newDescription,
-      status: this.newStatus, // coincide con backend
-      dueDate: new Date(this.newDueDate), // convierte string a Date
+      status: this.newStatus,
+      dueDate: new Date(this.newDueDate),
       userId: ''
     };
 
-    this.store.createTask(model);
-
+    this.create.emit(model);
     // reset form
     this.newTitle = '';
     this.newDescription = '';
@@ -57,8 +97,7 @@ export class TaskForm{
     this.newDueDate = '';
   }
 
-  changeStatus(task: TaskModel, status: TaskModel['status']) {
-    this.store.updateTask(task.id, { ...task, status });
+  close() {
+    this.cancel.emit();
   }
 }
-

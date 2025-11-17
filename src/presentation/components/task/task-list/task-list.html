@@ -1,40 +1,61 @@
 <div class="task-container">
-
   <!-- Loading -->
   <div>
     @if (isLoading()) {
-    <span>Loading tasks...</span>
+      <span>Loading tasks...</span>
     }
   </div>
 
   <!-- Error -->
   <div>
     @if (error()) {
-    <span>{{ error() }}</span>
+      <span>{{ error() }}</span>
     }
   </div>
 
   <div class="task-list">
-    <div>
+    <div class="header-row">
       <h4>Task List</h4>
-      <button (click)="newTask()"> + </button>
+      <button (click)="showForm = !showForm"> + </button>
     </div>
 
-    <div>
-      <ul>
-        <li>
-          @for (task of tasks(); track task.id) {
-        <li>
+    <!-- Form -->
+    @if (showForm) {
+      <form (ngSubmit)="addTask()" class="task-form">
+        <div>
+          <label>Title:</label>
+          <input type="text" [(ngModel)]="newTitle" name="title" />
+        </div>
+        <div>
+          <label>Status:</label>
+          <select [(ngModel)]="newStatus" name="status">
+            <option value="Non Started">Non Started</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Paused">Paused</option>
+            <option value="Late">Late</option>
+            <option value="Finished">Finished</option>
+          </select>
+        </div>
+        <div>
+          <label>Description:</label>
+          <input type="text" [(ngModel)]="newDescription" name="description" />
+        </div>
+        <div>
+          <label>Due Date:</label>
+          <input type="date" [(ngModel)]="newDueDate" name="dueDate" />
+        </div>
+        <button type="submit">Add</button>
+        <button type="button" (click)="showForm = false">Cancel</button>
+      </form>
+    }
+
+    <!-- List-->
+    <ul>
+      @for (task of tasks(); track task.id) {
+        <li (click)="onSelect(task)">
           <span>{{ task.title }}</span>
-
-          <span [class]="statusClasses[task.status]">{{ task.status }}</span>
-
-          <span>{{ task.dueDate }}</span>
-
-          <button (click)="deleteTask(task)">Delete</button>
         </li>
-        }
-
-        </li>
-      </ul>
-    </div>
+      }
+    </ul>
+  </div>
+</div>

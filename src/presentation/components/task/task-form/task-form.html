@@ -1,45 +1,29 @@
 <div class="task-container">
-  <!-- Error -->
-  <div>
-    @if (error()) {
-      <span>{{ error() }}</span>
-    }
-  </div>
-
-  <!-- Contenedor en columnas -->
-  <div class="task-columns">
-    <!-- Formulario -->
-    <div class="task-form">
-      <h4>New Task</h4>
-      <form class="task-form" (ngSubmit)="addTask()">
-        <div>
-          <label>Title : </label>
-          <input type="text" [(ngModel)]="newTitle" name="title" placeholder="New task..." />
-        </div>
-
-        <div>
-          <label>Status : </label>
-          <select [(ngModel)]="newStatus" name="status">
-            <option value="Non Started">Non Started</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Paused">Paused</option>
-            <option value="Late">Late</option>
-            <option value="Finished">Finished</option>
-          </select>
-        </div>
-
-        <div>
-          <label>Description : </label>
-          <input type="text" [(ngModel)]="newDescription" name="description" placeholder="Describe task..." />
-        </div>
-
-        <div>
-          <label>Due Date : </label>
-          <input type="date" [(ngModel)]="newDueDate" name="dueDate" />
-        </div>
-
-        <button class="form-button" type="submit">Add</button>
-      </form>
+  <h4>Edit Task</h4>
+  <form class="task-form" (ngSubmit)="addTask()">
+    <div>
+      <label>Title : </label>
+      <input type="text" [(ngModel)]="newTitle" name="title" placeholder="New task..." />
     </div>
-  </div>
+    <div>
+      <label>Status : </label>
+      <select [(ngModel)]="newStatus" name="status">
+        <option value="Non Started">Non Started</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Paused">Paused</option>
+        <option value="Late">Late</option>
+        <option value="Finished">Finished</option>
+      </select>
+    </div>
+    <div>
+      <label>Description : </label>
+      <input type="text" [(ngModel)]="newDescription" name="description" placeholder="Describe task..." />
+    </div>
+    <div>
+      <label>Due Date : </label>
+      <input type="date" [(ngModel)]="newDueDate" name="dueDate" />
+    </div>
+    <button class="form-button" type="submit">Add</button>
+    <button class="form-button" type="button" (click)="close()">Cancel</button>
+  </form>
 </div>
