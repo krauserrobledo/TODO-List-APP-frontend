@@ -232,7 +232,7 @@ Responses tested with DevTools
       - subtask repository.
 
 
-    ### ***Stores creation for using Services***
+  ### ***Stores creation for using Services.***
 
     - created stores for using remaining services :
 
@@ -242,3 +242,23 @@ Responses tested with DevTools
 
       - Subtask Store (uses subtask service).
 
+  
+  ### ***Implement Categories components.***
+
+    - Created Category list component.
+
+    - Created Category form component.
+
+
+  ### ***Implement Tags components.***
+
+    - Created Tags list component.
+
+    - Created Tags form component.
+
+  
+  ### ***Implement Subtask components.***
+
+    - Created Subtask list component.
+
+    - Created Subtask form component.
