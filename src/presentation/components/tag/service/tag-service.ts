@@ -28,11 +28,11 @@ export class Tagervice {
     this.deleteUseCase.execute(tagId);
   }
 
-  getTask(id: string): Promise<TagModel> {
+  getTag(id: string): Promise<TagModel> {
     return this.getTagUseCase.execute(id);
   }
 
-  getUserTasks(): Promise<TagModel[]> {
+  getUserTags(): Promise<TagModel[]> {
     return this.getUserTagsUseCase.execute();
   }
 }

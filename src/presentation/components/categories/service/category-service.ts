@@ -4,6 +4,7 @@ import { DeleteCategoryUseCase } from "../../../../domain/usecases/category/dele
 import { GetUserCategoriesUseCase } from "../../../../domain/usecases/category/get-user-categories-usecase";
 import { UpdateCategoryUseCase } from "../../../../domain/usecases/category/update-category-usecase";
 import { CategoryModel } from "../../../../domain/models/category/category-model";
+import { GetCategoryUseCase } from "../../../../domain/usecases/category/get-category-usecase";
 
 
 @Injectable({ providedIn: 'root' })
@@ -12,7 +13,8 @@ export class CategoryService {
     private createUseCase: CreateCategoryUseCase,
     private updateUseCase: UpdateCategoryUseCase,
     private deleteUseCase: DeleteCategoryUseCase,
-    private getCategoriesUseCase: GetUserCategoriesUseCase
+    private getCategoriesUseCase: GetUserCategoriesUseCase,
+    private getUseCase: GetCategoryUseCase
   ) {}
 
   createCategory(model: CategoryModel): Promise<CategoryModel> {
@@ -29,5 +31,10 @@ export class CategoryService {
 
   getUserCategories(id: string): Promise<CategoryModel[]> {
     return this.getCategoriesUseCase.execute();
+  }
+
+  getCategory(id: string): Promise<CategoryModel>{
+    return this.getUseCase.execute(id);
+
   }
 }

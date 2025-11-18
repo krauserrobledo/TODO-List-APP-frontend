@@ -1,24 +1,27 @@
+import { Injectable } from "@angular/core";
+import { SubtaskModel } from "../../../../domain/models/subtask/subtask-model";
+import { CreateSubtaskUseCase } from "../../../../domain/usecases/subtask/create-subtask-usecase";
+import { DeleteSubtaskUseCase } from "../../../../domain/usecases/subtask/delete-subtask-usecase";
+import { GetSubtaskUseCase } from "../../../../domain/usecases/subtask/get-subtask-usecase";
+import { UpdateSubtaskUseCase } from "../../../../domain/usecases/subtask/update-subtask-usecase";
+import { GetTaskSubtasksUseCase } from "../../../../domain/usecases/subtask/get-task-subtask-usecase";
 
 
 @Injectable({ providedIn: 'root' })
 export class SubtaskService {
   constructor(
-    private createUseCase: CreateTaskUseCase,
-    private updateUseCase: UpdateTaskUseCase,
-    private deleteUseCase: DeleteTaskUseCase,
-    private getTaskUseCase: GetTaskUseCase,
-    private getUserTasksUseCase: GetUserTasksUseCase,
-    private addCategoryUseCase: AddCategoryToTaskUseCase,
-    private addTagUseCase: AddTagToTaskUseCase,
-    private deleteCategoryUseCase: DeleteCategoryFromTaskUseCase,
-    private deleteTagUseCase: DeleteTagFromTaskUseCase
+    private createUseCase: CreateSubtaskUseCase,
+    private updateUseCase: UpdateSubtaskUseCase,
+    private deleteUseCase: DeleteSubtaskUseCase,
+    private getTaskUseCase: GetSubtaskUseCase,
+    private getUserTasksUseCase: GetTaskSubtasksUseCase
   ) {}
 
-  createTask(model: TaskModel): Promise<TaskModel> {
+  createTask(model: SubtaskModel): Promise<SubtaskModel> {
     return this.createUseCase.execute(model);
   }
 
-  updateTask(id: string, model: TaskModel): Promise<TaskModel> {
+  updateTask(id: string, model: SubtaskModel): Promise<SubtaskModel> {
     return this.updateUseCase.execute(id, model);
   }
 
@@ -26,27 +29,11 @@ export class SubtaskService {
     this.deleteUseCase.execute(id);
   }
 
-  getTask(id: string): Promise<TaskModel> {
+  getTask(id: string): Promise<SubtaskModel> {
     return this.getTaskUseCase.execute(id);
   }
 
-  getUserTasks(): Promise<TaskModel[]> {
+  getUserTasks(): Promise<SubtaskModel[]> {
     return this.getUserTasksUseCase.execute();
-  }
-
-  addCategory(taskId: string, categoryId: string): void {
-    this.addCategoryUseCase.execute(taskId, categoryId);
-  }
-
-  addTag(taskId: string, tagId: string): void {
-    this.addTagUseCase.execute(taskId, tagId);
-  }
-
-  deleteCategory(taskId: string, categoryId: string): void {
-    this.deleteCategoryUseCase.execute(taskId, categoryId);
-  }
-
-  deleteTag(taskId: string, tagId: string): void {
-    this.deleteTagUseCase.execute(taskId, tagId);
   }
 }

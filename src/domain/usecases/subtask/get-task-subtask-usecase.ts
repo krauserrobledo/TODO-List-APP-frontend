@@ -3,7 +3,7 @@ import { SubtaskRepository } from '../../repositories/subtask-repository';
 import { SubtaskModel } from '../../models/subtask/subtask-model';
 
 @Injectable({ providedIn: 'root' })
-export class GetTaskSubtaskUseCase {
+export class GetTaskSubtasksUseCase {
   private tagRepository = inject(SubtaskRepository);
 
   execute(model: SubtaskModel): Promise <SubtaskModel[]> {

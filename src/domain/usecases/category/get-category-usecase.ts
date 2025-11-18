@@ -6,7 +6,7 @@ import { CategoryModel } from "../../models/category/category-model";
 export class GetCategoryUseCase {
   private categoryRepository = inject(CategoryRepository);
 
-  execute(model: CategoryModel): Promise <CategoryModel> {
-    return this.categoryRepository.getCategory(model.id);
+  execute(id: string): Promise <CategoryModel> {
+    return this.categoryRepository.getCategory(id);
   }
 }
