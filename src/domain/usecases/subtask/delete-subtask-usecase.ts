@@ -6,7 +6,7 @@ import { SubtaskRepository } from '../../repositories/subtask-repository';
 export class DeleteSubtaskUseCase {
   private subtaskRepository = inject(SubtaskRepository);
 
-  execute(model: TagModel): void {
-    this.subtaskRepository.deleteSubtask(model.id);
+  execute(id: string): void {
+    this.subtaskRepository.deleteSubtask(id);
   }
 }

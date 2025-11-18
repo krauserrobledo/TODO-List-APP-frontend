@@ -6,7 +6,7 @@ import { SubtaskModel } from '../../models/subtask/subtask-model';
 export class GetSubtaskUseCase {
   private subtaskRepository = inject(SubtaskRepository);
 
-  execute(model: SubtaskModel): Promise <SubtaskModel> {
-    return this.subtaskRepository.getSubtask(model.id);
+  execute(id: string): Promise <SubtaskModel> {
+    return this.subtaskRepository.getSubtask(id);
   }
 }

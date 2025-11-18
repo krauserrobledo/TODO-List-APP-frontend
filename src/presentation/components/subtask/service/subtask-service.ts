@@ -13,27 +13,27 @@ export class SubtaskService {
     private createUseCase: CreateSubtaskUseCase,
     private updateUseCase: UpdateSubtaskUseCase,
     private deleteUseCase: DeleteSubtaskUseCase,
-    private getTaskUseCase: GetSubtaskUseCase,
-    private getUserTasksUseCase: GetTaskSubtasksUseCase
+    private getUseCase: GetSubtaskUseCase,
+    private getSubtasksUseCase: GetTaskSubtasksUseCase
   ) {}
 
-  createTask(model: SubtaskModel): Promise<SubtaskModel> {
+  createTag(model: SubtaskModel): Promise<SubtaskModel> {
     return this.createUseCase.execute(model);
   }
 
-  updateTask(id: string, model: SubtaskModel): Promise<SubtaskModel> {
+  updateTag(id: string, model: SubtaskModel): Promise<SubtaskModel> {
     return this.updateUseCase.execute(id, model);
   }
 
-  deleteTask(id: string): void {
+  deleteTag(id: string): void {
     this.deleteUseCase.execute(id);
   }
 
-  getTask(id: string): Promise<SubtaskModel> {
-    return this.getTaskUseCase.execute(id);
+  getTag(id: string): Promise<SubtaskModel> {
+    return this.getUseCase.execute(id);
   }
 
-  getUserTasks(): Promise<SubtaskModel[]> {
-    return this.getUserTasksUseCase.execute();
+  getTaskTags(taskId: string): Promise<SubtaskModel[]> {
+    return this.getSubtasksUseCase.execute(taskId);
   }
 }
