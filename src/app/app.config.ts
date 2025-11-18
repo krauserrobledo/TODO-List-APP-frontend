@@ -11,6 +11,12 @@ import { AuthApiRepository } from '../data/repositories/auth-api-repository';
 import { TaskRepository } from '../domain/repositories/task-repository';
 import { TaskApiRepository } from '../data/repositories/task-api-repository';
 import { authInterceptor } from '../base/interceptors/auth-interceptor';
+import { CategoryRepository } from '../domain/repositories/category-repository';
+import { CategoryApiRepository } from '../data/repositories/category-api-repository';
+import { TagRepository } from '../domain/repositories/tag-repository';
+import { TagApiRepository } from '../data/repositories/tag-api-repository';
+import { SubtaskRepository } from '../domain/repositories/subtask-repository';
+import { SubtaskApiRepository } from '../data/repositories/subtask-api-repository';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,6 +28,18 @@ export const appConfig: ApplicationConfig = {
     {
       provide: TaskRepository,
       useClass: TaskApiRepository
+    },
+    {
+      provide: CategoryRepository,
+      useClass: CategoryApiRepository
+    },
+    {
+      provide: TagRepository,
+      useClass: TagApiRepository
+    },
+    {
+      provide: SubtaskRepository,
+      useClass: SubtaskApiRepository
     },
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),

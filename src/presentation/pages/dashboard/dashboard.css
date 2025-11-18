@@ -10,13 +10,20 @@
   
   .dashboard-grid {
     display: grid;
-    grid-template-columns: 1fr 360px; 
+    grid-template-columns: 0.5fr 1fr 0.5fr; 
     gap: 1rem;
     flex: 1;
     padding: 1rem;
   }
-  
   .left {
+    background: whitesmoke;
+    
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 6px;
+  }
+  
+  .center {
     background: whitesmoke;
     
     border: 1px solid #ddd;

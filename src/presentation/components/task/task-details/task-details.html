@@ -17,6 +17,11 @@
   
       <p><strong>Description:</strong> {{ task.description }}</p>
       <p><strong>Due Date:</strong> {{ task.dueDate | date }}</p>
+      <p><strong>Categories:</strong> {{ task.categories}}</p>
+      <p><strong>Tags:</strong> {{ task.tags }}</p>
+      <p><strong>Subtask:</strong> {{ task.subtasks }}</p>
+
+      
   
       <div class="actions">
         <button (click)="edit.emit(task!)">Edit</button>

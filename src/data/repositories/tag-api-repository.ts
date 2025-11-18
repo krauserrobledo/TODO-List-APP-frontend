@@ -7,7 +7,7 @@ import { environment } from "../../environments/environment";
 import { firstValueFrom } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
-export class TagCategoryApiRepository implements TagRepository {
+export class TagApiRepository implements TagRepository {
 
     private http = inject(HttpClient);
     private tagMapper = inject(TagMapper);

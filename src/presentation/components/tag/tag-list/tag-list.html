@@ -1,1 +1,11 @@
-<p>tag-list works!</p>
+<h4>Tags</h4>
+    <app-tag-form (create)="store.createTag($event)"></app-tag-form>
+
+    <ul>
+      @for (tag of store.tags(); track tag.id) {
+        <li>
+          {{ tag.name }}
+          <button (click)="store.deleteTag(tag.id)">Delete</button>
+        </li>
+      }
+    </ul>

@@ -1,5 +1,5 @@
 .task-container {
-  padding: 1rem;
+  padding: 0.2rem;
   background: #f9f9f9;
   border-radius: 8px;
 }
@@ -30,6 +30,7 @@
   margin-bottom: 0.5rem;
   flex-direction: column;
   padding: 0.25rem;
+  cursor: pointer
   
 }
 

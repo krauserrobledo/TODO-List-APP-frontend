@@ -1,11 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { TagForm } from '../tag-form/tag-form';
+import { TagStore } from '../../../stores/tag-store';
 
 @Component({
   selector: 'app-tag-list',
-  imports: [],
-  templateUrl: './tag-list.html',
-  styleUrl: './tag-list.css',
+  standalone: true,
+  imports: [CommonModule, TagForm],
+  templateUrl: './tag-list.html' 
 })
 export class TagList {
+  store = inject(TagStore);
 
+  ngOnInit() {
+    this.store.loadTags();
+  }
 }

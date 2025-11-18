@@ -1,1 +1,11 @@
-<p>category-list works!</p>
+<h4>Categories</h4>
+    <app-category-form (create)="store.createCategory($event)"></app-category-form>
+
+    <ul>
+      @for (cat of store.categories(); track cat.id) {
+        <li>
+          {{ cat.name }}
+          <button (click)="store.deleteCategory(cat.id)">Delete</button>
+        </li>
+      }
+    </ul>

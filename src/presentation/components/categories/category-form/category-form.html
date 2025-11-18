@@ -1,1 +1,5 @@
-<p>category-form works!</p>
+<form (ngSubmit)="submit()">
+    <input [(ngModel)]="name" name="name" placeholder="Category name" />
+    <input type="color" [(ngModel)]="color" name="color" />
+    <button type="submit">Add</button>
+  </form>

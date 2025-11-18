@@ -9,12 +9,15 @@
   grid-template-columns: 1fr 2fr;   
   gap: 2rem;
   margin-top: 1rem;
+
 }
 
 .task-form {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  justify-content:space-around;
+  justify-self:center;
 }
 
 .task-form label {
@@ -35,8 +38,11 @@
 }
 
 .form-button {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
+  margin: 1rem;
+  padding: 1rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  
   background: #0078d7;
   color: white;
   border: none;

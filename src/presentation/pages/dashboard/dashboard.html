@@ -11,7 +11,7 @@
         <app-task-list (selectTask)="onSelectTask($event)"></app-task-list>
       </div>
 
-      <div class="right">
+      <div class="center">
         @if (showForm) {
           <app-task-form
             [task]="taskToEdit"
@@ -32,6 +32,16 @@
           </app-task-details>
         }
       </div>
+
+      <div class="right">
+        <div>
+          <app-category-list></app-category-list>
+        </div>
+        <div>
+          <app-tag-list></app-tag-list>
+        </div>
+      </div>
     </main>
-  </div>
+</div>
+
   

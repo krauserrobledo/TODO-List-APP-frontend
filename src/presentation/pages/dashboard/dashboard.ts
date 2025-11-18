@@ -5,11 +5,15 @@ import { TaskDetails } from '../../components/task/task-details/task-details';
 import { TaskForm } from '../../components/task/task-form/task-form';
 import { TaskModel } from '../../../domain/models/task/task-model';
 import { TaskStore } from './../../stores/task-store';
+import { CategoryList } from "../../components/categories/category-list/category-list";
+import { TagList } from "../../components/tag/tag-list/tag-list";
+import { CategoryForm } from "../../components/categories/category-form/category-form";
+import { TagForm } from "../../components/tag/tag-form/tag-form";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, TaskList, TaskDetails, TaskForm],
+  imports: [CommonModule, TaskList, TaskDetails, TaskForm, CategoryList, TagList, TagForm],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css'],
 })
