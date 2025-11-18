@@ -29,7 +29,7 @@ export class CategoryService {
     this.deleteUseCase.execute(categoryId);
   }
 
-  getUserCategories(id: string): Promise<CategoryModel[]> {
+  getUserCategories(): Promise<CategoryModel[]> {
     return this.getCategoriesUseCase.execute();
   }
 

@@ -233,3 +233,12 @@ Responses tested with DevTools
 
 
     ### ***Stores creation for using Services***
+
+    - created stores for using remaining services :
+
+      - Category Store.
+
+      - Tag Store.
+
+      - Subtask Store.
+

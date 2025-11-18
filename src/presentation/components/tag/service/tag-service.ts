@@ -7,7 +7,7 @@ import { UpdateTagUseCase } from "../../../../domain/usecases/tag/update-tag-use
 import { GetUserTagsUseCase } from "../../../../domain/usecases/tag/get-user-tags-usecase";
 
 @Injectable({ providedIn: 'root' })
-export class Tagervice {
+export class TagService {
   constructor(
     private createUseCase: CreateTagUseCase,
     private updateUseCase: UpdateTagUseCase,
