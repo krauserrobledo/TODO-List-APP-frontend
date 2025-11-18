@@ -6,7 +6,7 @@ import { CategoryModel } from '../../models/category/category-model';
 export class DeleteCategoryUseCase {
   private categoryRepository = inject(CategoryRepository);
 
-  execute(model: CategoryModel): void {
-    this.categoryRepository.deleteCategory(model.id);
+  execute(id: string): void {
+    this.categoryRepository.deleteCategory(id);
   }
 }

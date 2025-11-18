@@ -5,4 +5,5 @@ export abstract class CategoryRepository {
   abstract updateCategory(id: string, category: CategoryModel): Promise<CategoryModel>;
   abstract deleteCategory(id: string): Promise<void>;
   abstract getUserCategories(): Promise<CategoryModel[]>;
+  abstract getCategory(id:string): Promise<CategoryModel>;
 }

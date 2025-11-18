@@ -6,7 +6,7 @@ import { TagModel } from '../../models/tag/tag-model';
 export class CreateTagUseCase {
   private tagRepository = inject(TagRepository);
 
-  execute(model: TagModel): void {
-    this.tagRepository.createTag(model);
+  execute(model: TagModel): Promise<TagModel> {
+    return this.tagRepository.createTag(model);
   }
 }

@@ -1,6 +1,4 @@
 import { Injectable, inject } from '@angular/core';
-import { TagRepository } from '../../repositories/tag-repository';
-import { TagModel } from '../../models/tag/tag-model';
 import { SubtaskRepository } from '../../repositories/subtask-repository';
 import { SubtaskModel } from '../../models/subtask/subtask-model';
 

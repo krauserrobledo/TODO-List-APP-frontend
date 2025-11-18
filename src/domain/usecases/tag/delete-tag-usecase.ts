@@ -6,7 +6,7 @@ import { TagModel } from '../../models/tag/tag-model';
 export class DeleteTagUseCase {
   private tagRepository = inject(TagRepository);
 
-  execute(model: TagModel): void {
-    this.tagRepository.deleteTag(model.id);
+  execute( tagId: string): void {
+    this.tagRepository.deleteTag(tagId);
   }
 }

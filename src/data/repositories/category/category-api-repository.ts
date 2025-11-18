@@ -4,6 +4,7 @@ import { CategoryModel } from "../../../domain/models/category/category-model";
 import { CategoryRepository } from "../../../domain/repositories/category-repository";
 import { environment } from "../../../environments/environment";
 import { CategoryMapper } from "../../mappers/category-mapper";
+import { firstValueFrom } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class CategoryApiRepository implements CategoryRepository {
@@ -40,6 +41,14 @@ export class CategoryApiRepository implements CategoryRepository {
     const response = await this.http.get<any[]>(this.baseUrl).toPromise();
     if (!response) return [];
     return response.map(dto => this.categoryMapper.toCategoryModel(dto));
+  }
+
+  async getCategory(id: string): Promise<CategoryModel> {
+    const dto = await firstValueFrom(
+      this.http.get<any>(`${this.baseUrl}/${id}`)
+    );
+  
+    return this.categoryMapper.toCategoryModel(dto);
   }
 }
 
