@@ -236,9 +236,9 @@ Responses tested with DevTools
 
     - created stores for using remaining services :
 
-      - Category Store.
+      - Category Store (uses category service).
 
-      - Tag Store.
+      - Tag Store (uses tag service).
 
-      - Subtask Store.
+      - Subtask Store (uses subtask service).
 
