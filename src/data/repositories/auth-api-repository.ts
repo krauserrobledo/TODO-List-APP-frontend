@@ -1,12 +1,12 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AuthRepository } from '../../../domain/repositories/auth-repository';
-import { UserModel } from '../../../domain/models/auth/user-model';
-import { environment } from '../../../environments/environment';
-import { AuthMapper } from '../../mappers/auth-mapper';
-import { LoginModel } from '../../../domain/models/auth/login-model';
-import { RegisterModel } from '../../../domain/models/auth/register-model';
-import { ValidateTokenModel } from '../../../domain/models/auth/validate-token-model';
+import { AuthRepository } from '../../domain/repositories/auth-repository';
+import { UserModel } from '../../domain/models/auth/user-model';
+import { environment } from '../../environments/environment';
+import { AuthMapper } from '../mappers/auth-mapper';
+import { LoginModel } from '../../domain/models/auth/login-model';
+import { RegisterModel } from '../../domain/models/auth/register-model';
+import { ValidateTokenModel } from '../../domain/models/auth/validate-token-model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthApiRepository implements AuthRepository {

@@ -1,9 +1,9 @@
 import { inject, Injectable } from "@angular/core";
-import { TaskRepository } from "../../../domain/repositories/task-repository";
-import { TaskModel } from "../../../domain/models/task/task-model";
+import { TaskRepository } from "../../domain/repositories/task-repository";
+import { TaskModel } from "../../domain/models/task/task-model";
 import { HttpClient } from "@angular/common/http";
-import { environment } from "../../../environments/environment";
-import { TaskMapper } from "../../mappers/task-mapper";
+import { environment } from "../../environments/environment";
+import { TaskMapper } from "../mappers/task-mapper";
 import { firstValueFrom } from "rxjs";
 
 @Injectable({ providedIn: 'root' })

@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
-import { CategoryModel } from "../../../domain/models/category/category-model";
-import { CategoryRepository } from "../../../domain/repositories/category-repository";
-import { environment } from "../../../environments/environment";
-import { CategoryMapper } from "../../mappers/category-mapper";
+import { CategoryModel } from "../../domain/models/category/category-model";
+import { CategoryRepository } from "../../domain/repositories/category-repository";
+import { environment } from "../../environments/environment";
+import { CategoryMapper } from "../mappers/category-mapper";
 import { firstValueFrom } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
@@ -13,6 +13,7 @@ export class CategoryApiRepository implements CategoryRepository {
   private categoryMapper = inject(CategoryMapper);
   private baseUrl = `${environment.apiUrl}/categories`;
 
+  
   async createCategory(model: CategoryModel): Promise<CategoryModel> {
     const dto = this.categoryMapper.toCreateRequestDto(model);
 
@@ -22,6 +23,7 @@ export class CategoryApiRepository implements CategoryRepository {
     const categoryResponseDto = this.categoryMapper.toCategoryResponseDto(response);
     return this.categoryMapper.toCategoryModel(categoryResponseDto);
   }
+
 
   async updateCategory(id: string, model: CategoryModel): Promise<CategoryModel> {
     const dto = this.categoryMapper.toUpdateRequestDto(model);
@@ -33,15 +35,18 @@ export class CategoryApiRepository implements CategoryRepository {
     return this.categoryMapper.toCategoryModel(categoryResponseDto);
   }
 
+
   async deleteCategory(id: string): Promise<void> {
     await this.http.delete(`${this.baseUrl}/${id}`).toPromise();
   }
+
 
   async getUserCategories(): Promise<CategoryModel[]> {
     const response = await this.http.get<any[]>(this.baseUrl).toPromise();
     if (!response) return [];
     return response.map(dto => this.categoryMapper.toCategoryModel(dto));
   }
+
 
   async getCategory(id: string): Promise<CategoryModel> {
     const dto = await firstValueFrom(

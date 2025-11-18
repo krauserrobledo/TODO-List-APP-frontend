@@ -2,7 +2,7 @@ import { HttpInterceptorFn, HttpRequest, HttpHandlerFn, HttpErrorResponse } from
 import { inject } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { AuthApiRepository } from '../../data/repositories/auth/auth-api-repository';
+import { AuthApiRepository } from '../../data/repositories/auth-api-repository';
 
 export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
   const authRepository = inject(AuthApiRepository);

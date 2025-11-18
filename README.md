@@ -222,10 +222,14 @@ Responses tested with DevTools
       - subtask usecases.
 
   
-  - Fixed issues between repository and category use cases.
+    - Fixed issues between repository and category use cases.
 
 
-  - Repository implementation for remaining repository interfaces.
+    - Repository implementation for remaining repository interfaces.
+
+      - tag repository.
+
+      - subtask repository.
 
 
     ### ***Stores creation for using Services***
