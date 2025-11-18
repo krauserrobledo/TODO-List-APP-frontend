@@ -175,6 +175,7 @@ Responses tested with DevTools
 
   - Configure component.
 
+----
  
 ## ***Weekly Sprint 11/17***
 
@@ -193,18 +194,38 @@ Responses tested with DevTools
 	
 
 
-### ***Add creation form to task list component.***
+  ### ***Add creation form to task list component.***
 
-	- Separate responsabilities in task list and task form components
+    - Separate responsabilities in task list and task form components
 
-	- Created components for details and creation.
+    - Created components for details and creation.
+    
+    - Created layout in dashboard for task details.
+    
+    - Integrate creation in list using button 
+    
+    - Configure cliking in task to show details for each task in details component
+
+    - added task options in details component
+
+    - Configured creation form to edit if selected.
+
+
+  ### ***Services configuration for using usecases.***
+
+    - created services for remaining usecases :
+
+      - Tags usecases.
+
+      - Categories usecases.
+
+      - subtask usecases.
+
   
-  - Created layout in dashboard for task details.
-  
-  - Integrate creation in list using button 
-  
-  - Configure cliking in task to show details for each task in details component
+  - Fixed issues between repository and category use cases.
 
-  - added task options in details component
 
-  -Configured creation form to edit if selected.
+  - Repository implementation for remaining repository interfaces.
+
+
+    ### ***Stores creation for using Services***
