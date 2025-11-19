@@ -116,7 +116,7 @@ Responses tested with DevTools
     
     Fix: Configure providers in app.config.ts
 
-  - Error 400 - Wrong request rormat
+  - Error 400 - Wrong request format
 
     Problem: userName vs UserName
 
@@ -191,8 +191,6 @@ Responses tested with DevTools
 
   - Implement Subtask components
 
-	
-
 
   ### ***Add creation form to task list component.***
 
@@ -248,6 +246,8 @@ Responses tested with DevTools
     - Created Category list component.
 
     - Created Category form component.
+
+    - Implement fom in list 
 
 
   ### ***Implement Tags components.***

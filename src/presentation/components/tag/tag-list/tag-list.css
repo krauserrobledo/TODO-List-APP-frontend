@@ -1,0 +1,15 @@
+.tag-container {
+    padding: 0.2rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+  }
+
+.tag-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+.li {
+    padding: 0.3rem;
+}

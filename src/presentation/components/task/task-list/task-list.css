@@ -12,7 +12,7 @@
 }
 
 .task-columns {
-  display: flexbox;
+  display: flex;
   flex-direction: column;
   gap: 2rem;
   margin-top: 1rem;
@@ -24,14 +24,13 @@
 }
 
 .task-list li {
-  display: flexbox;
+  display: flex;
   align-items: center;
   gap: 1rem;
   margin-bottom: 0.5rem;
   flex-direction: column;
   padding: 0.25rem;
-  cursor: pointer
-  
+  cursor: pointer  
 }
 
 .form-button {

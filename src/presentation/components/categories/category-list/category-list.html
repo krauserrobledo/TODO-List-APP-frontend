@@ -1,11 +1,14 @@
+<div class="category-container">
 <h4>Categories</h4>
     <app-category-form (create)="store.createCategory($event)"></app-category-form>
-
+<div class="category-list">
     <ul>
-      @for (cat of store.categories(); track cat.id) {
-        <li>
+      @for (cat of store.categories(); track cat.id;) {
+        <li color ="category.color">
           {{ cat.name }}
           <button (click)="store.deleteCategory(cat.id)">Delete</button>
         </li>
       }
     </ul>
+</div>
+</div>

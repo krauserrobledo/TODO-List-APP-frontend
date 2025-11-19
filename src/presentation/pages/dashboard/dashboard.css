@@ -12,8 +12,6 @@
     display: grid;
     grid-template-columns: 0.5fr 1fr 0.5fr; 
     gap: 1rem;
-    flex: 1;
-    padding: 1rem;
   }
   .left {
     background: whitesmoke;

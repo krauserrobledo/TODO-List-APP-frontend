@@ -7,7 +7,8 @@ import { TagStore } from '../../../stores/tag-store';
   selector: 'app-tag-list',
   standalone: true,
   imports: [CommonModule, TagForm],
-  templateUrl: './tag-list.html' 
+  templateUrl: './tag-list.html',
+  styleUrls: ['./tag-list.css'] 
 })
 export class TagList {
   store = inject(TagStore);

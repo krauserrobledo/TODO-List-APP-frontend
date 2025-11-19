@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TagList } from './undefined/tag-list/tag-list';
+import { TagList } from './tag-list';
 
 describe('TagList', () => {
   let component: TagList;

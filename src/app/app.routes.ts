@@ -14,12 +14,12 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () => import('../presentation/pages/auth/login/login').then(c => c.LoginComponent),
-    //canActivate: [GuestGuard]
+    canActivate: [GuestGuard]
   },
   {
     path: 'register',
     loadComponent: () => import('../presentation/pages/auth/register/register').then(c => c.RegisterComponent),
-    //canActivate: [GuestGuard]
+    canActivate: [GuestGuard]
   },
   {
     path: 'dashboard',

@@ -42,7 +42,7 @@ export class CategoryApiRepository implements CategoryRepository {
 
 
   async getUserCategories(): Promise<CategoryModel[]> {
-    const response = await this.http.get<any[]>(this.baseUrl).toPromise();
+    const response = await this.http.get<any[]>(`${this.baseUrl}/user`).toPromise();
     if (!response) return [];
     return response.map(dto => this.categoryMapper.toCategoryModel(dto));
   }

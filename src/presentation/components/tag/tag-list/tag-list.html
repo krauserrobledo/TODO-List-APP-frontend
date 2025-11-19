@@ -1,11 +1,13 @@
+<div class="tag-container">
 <h4>Tags</h4>
-    <app-tag-form (create)="store.createTag($event)"></app-tag-form>
-
-    <ul>
-      @for (tag of store.tags(); track tag.id) {
-        <li>
-          {{ tag.name }}
-          <button (click)="store.deleteTag(tag.id)">Delete</button>
-        </li>
-      }
-    </ul>
+<app-tag-form (create)="store.createTag($event)"></app-tag-form>
+<div class="tag-list">
+  <ul>
+    @for (tag of store.tags(); track tag.id) {
+    <li class="li">
+      {{ tag.name }}
+      <button (click)="store.deleteTag(tag.id)">Delete</button>
+    </li>
+    }
+  </ul>
+</div></div>
