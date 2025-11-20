@@ -12,7 +12,6 @@ export class SubtaskStore {
 
   async loadSubtasks(taskId: string) {
     this.isLoading.set(true);
-    this.error.set(null);
     try {
       const data = await this.service.getTaskTags(taskId);
       this.subtasks.set(data);

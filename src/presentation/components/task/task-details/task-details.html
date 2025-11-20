@@ -19,7 +19,11 @@
       <p><strong>Due Date:</strong> {{ task.dueDate | date }}</p>
       <p><strong>Categories:</strong> {{ task.categories}}</p>
       <p><strong>Tags:</strong> {{ task.tags }}</p>
-      <p><strong>Subtask:</strong> {{ task.subtasks }}</p>
+      <p><strong>Subtask:</strong></p>
+      
+      <div class="task-details">
+        <app-subtask-list [taskId]="task.id"></app-subtask-list>
+      </div>
 
       
   

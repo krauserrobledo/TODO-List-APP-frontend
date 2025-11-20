@@ -1,1 +1,19 @@
-<p>subtask-list works!</p>
+<div class="subtask-list">
+    <h5>Subtasks</h5>
+  
+    <form (ngSubmit)="addSubtask()">
+      <input [(ngModel)]="newTitle" name="title" placeholder="New subtask" />
+      <button type="submit">Add</button>
+    </form>
+  
+    <ul>
+      @for (sub of store.subtasks(); track sub.id) {
+        <li>
+          {{ sub.title }}
+          
+          <button (click)="deleteSubtask(sub.id)">Delete</button>
+        </li>
+      }
+    </ul>
+  </div>
+  
