@@ -20,7 +20,7 @@ export class TaskMapper {
     return {
       title: model.title,
       description: model.description,
-      dueDate: model.dueDate?.toISOString(),
+      dueDate: model.dueDate? new Date(model.dueDate).toISOString() : null,
       status: model.status
     };
   }
@@ -29,7 +29,7 @@ export class TaskMapper {
     return {
       title: model.title,
       description: model.description,
-      dueDate: model.dueDate?.toISOString(),
+      dueDate: model.dueDate? new Date(model.dueDate).toISOString() : null,
       status: model.status
     };
   }

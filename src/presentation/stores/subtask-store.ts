@@ -13,7 +13,7 @@ export class SubtaskStore {
   async loadSubtasks(taskId: string) {
     this.isLoading.set(true);
     try {
-      const data = await this.service.getTaskTags(taskId);
+      const data = await this.service.getTaskSubtasks(taskId);
       this.subtasks.set(data);
     } catch (err: any) {
       this.error.set(err.message ?? 'Error loading subtasks');
@@ -24,7 +24,7 @@ export class SubtaskStore {
 
   async createSubtask(model: SubtaskModel) {
     try {
-      const created = await this.service.createTag(model);
+      const created = await this.service.createSubtask(model);
       this.subtasks.update(list => [...list, created]);
     } catch (err: any) {
       this.error.set(err.message ?? 'Error creating subtask');
@@ -33,7 +33,7 @@ export class SubtaskStore {
 
   async updateSubtask(id: string, model: SubtaskModel) {
     try {
-      const updated = await this.service.updateTag(id, model);
+      const updated = await this.service.updateSubtask(id, model);
       this.subtasks.update(list =>
         list.map(s => (s.id === id ? updated : s))
       );
@@ -44,7 +44,7 @@ export class SubtaskStore {
 
   async deleteSubtask(id: string) {
     try {
-      await this.service.deleteTag(id);
+      await this.service.deleteSubtask(id);
       this.subtasks.update(list => list.filter(s => s.id !== id));
     } catch (err: any) {
       this.error.set(err.message ?? 'Error deleting subtask');

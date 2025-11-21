@@ -24,4 +24,6 @@ export class TaskDetails implements OnChanges {
   ngOnChanges() {
     if (this.task) this.selectedStatus = this.task.status;
   }
+
+  
 }

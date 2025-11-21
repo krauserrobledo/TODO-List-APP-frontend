@@ -17,10 +17,17 @@
   
       <p><strong>Description:</strong> {{ task.description }}</p>
       <p><strong>Due Date:</strong> {{ task.dueDate | date }}</p>
-      <p><strong>Categories:</strong> {{ task.categories}}</p>
-      <p><strong>Tags:</strong> {{ task.tags }}</p>
-      <p><strong>Subtask:</strong></p>
+      <p><strong>Categories:</strong> </p>
+      <div *ngFor="let cat of task.categories">
+        {{ cat.name }}
+      </div>
       
+      <p><strong>Tags:</strong></p>
+      <div *ngFor="let tag of task.tags">
+        {{ tag.name }}
+      </div>
+
+      <p><strong>Subtask:</strong></p>
       <div class="task-details">
         <app-subtask-list [taskId]="task.id"></app-subtask-list>
       </div>

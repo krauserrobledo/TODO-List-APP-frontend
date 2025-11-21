@@ -4,9 +4,9 @@ import { SubtaskModel } from '../../models/subtask/subtask-model';
 
 @Injectable({ providedIn: 'root' })
 export class CreateSubtaskUseCase {
-  private subtaskRepository = inject(SubtaskRepository);
+  constructor(private repository: SubtaskRepository) {}
 
-  execute(model: SubtaskModel): Promise<SubtaskModel>  {
-    return this.subtaskRepository.createSubtask(model.taskId, model);
+  execute(taskId: string, model: SubtaskModel): Promise<SubtaskModel> {
+    return this.repository.createSubtask(taskId, model);
   }
 }

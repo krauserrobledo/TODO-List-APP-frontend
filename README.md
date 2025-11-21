@@ -243,18 +243,22 @@ Responses tested with DevTools
   
   ### ***Implement Categories components.***
 
-    - Created Category list component.
+    - Created Category list and form component.
 
-    - Created Category form component.
+    - Implement form in list and added both in dashboard.
 
-    - Implement fom in list 
+    - Created task-category list and form component.
 
 
   ### ***Implement Tags components.***
 
-    - Created Tags list component.
+    - Created Tags list and form component.
 
-    - Created Tags form component.
+    - Implement form in list .
+
+    - Implement form in list and added both in dashboard.
+
+    - Created task-tag list and form component.
 
   
   ### ***Implement Subtask components.***
@@ -262,3 +266,7 @@ Responses tested with DevTools
     - Created Subtask list component.
 
     - Created Subtask form component.
+
+    - both were implemented in task details to manage subtask .
+
+    - fixed model configurations in Backend (unique index).
