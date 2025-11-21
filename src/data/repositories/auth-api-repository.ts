@@ -18,10 +18,9 @@ export class AuthApiRepository implements AuthRepository {
   private readonly USER_KEY = 'current_user';
 
   async login(model: LoginModel): Promise<UserModel> {
-    // Convertimos el modelo de dominio a DTO
+ 
     const dto = this.authMapper.toLoginRequestDto(model);
 
-    // Llamada al backend
     const response = await this.http.post<any>(`${this.baseUrl}/login`, dto).toPromise();
     if (!response) throw new Error('Login failed');
   

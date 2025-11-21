@@ -1,7 +1,11 @@
-import { Component, EventEmitter, Output, Input, OnChanges } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TaskModel } from '../../../../domain/models/task/task-model';
+import { CategoryModel } from '../../../../domain/models/category/category-model';
+import { TagModel } from '../../../../domain/models/tag/tag-model';
+import { CategoryStore } from '../../../stores/category-store';
+import { TagStore } from '../../../stores/tag-store';
 
 @Component({
   selector: 'app-task-form',
@@ -18,14 +22,26 @@ export class TaskForm implements OnChanges {
   @Output() delete = new EventEmitter<TaskModel>();
   @Output() cancel = new EventEmitter<void>();
 
-  // campos del formulario
+
   id: string | null = null;
   newTitle: string = '';
   newDescription: string = '';
   newStatus: TaskModel['status'] = 'Non Started';
   newDueDate: string = '';
+  categories?: CategoryModel[] | null;
+  tags?: TagModel[] | null ;
 
   isEdit = false;
+  
+  storeCategories = inject(CategoryStore);
+storeTags = inject(TagStore);
+model: TaskModel | null = null;
+
+ngOnInit() {
+  this.storeCategories.loadCategories();
+  this.storeTags.loadTags();
+}
+
 
   ngOnChanges() {
     if (this.task) {
@@ -54,7 +70,9 @@ export class TaskForm implements OnChanges {
       description: this.newDescription,
       status: this.newStatus,
       dueDate: new Date(this.newDueDate),
-      userId: this.task?.userId ?? ''
+      userId: this.task?.userId ?? '',
+      categories: this.categories?? undefined,
+      tags: this.tags?? undefined
     };
 
     if (this.isEdit) {

@@ -11,7 +11,7 @@ export class TaskStore {
   error = signal<string | null>(null);
 
   // CRUD
-  async loadTasks(taskId: string) {
+  async loadTasks() {
     this.isLoading.set(true);
     try {
       const result = await this.taskService.getUserTasks();

@@ -23,6 +23,33 @@
       <label>Due Date : </label>
       <input type="date" [(ngModel)]="newDueDate" name="dueDate" />
     </div>
+    <label>Categories</label>
+    <select multiple [(ngModel)]="categories">
+      @for (cat of storeCategories.categories(); track cat.id) {
+        <option [ngValue]="cat">
+          @if (cat) {
+            {{ cat.name }}
+          } @else {
+            Not Available Categories
+          }
+        </option>
+      }
+    </select>
+
+    <label>Tags</label>
+    <select multiple [(ngModel)]="tags">
+      @for (tag of storeTags.tags(); track tag.id) {
+        <option [ngValue]="tag">
+          @if (tag) {
+            {{ tag.name }}
+          } @else {
+            Not Available Tags
+          }
+        </option>
+      }
+    </select>
+    
+
     <div>
     <button class="form-button" type="submit">Add</button>
     <button class="form-button" type="button" (click)="close()">Cancel</button>
