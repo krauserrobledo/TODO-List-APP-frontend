@@ -7,12 +7,12 @@ import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { MessageService } from 'primeng/api';
 import {PasswordModule } from 'primeng/password';
-
+import {DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, ButtonModule, MessageModule, PasswordModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, ButtonModule, MessageModule, PasswordModule, DialogModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
   providers:[MessageService]
@@ -26,7 +26,7 @@ export class LoginComponent {
 
   isLoading = this.authStore.isLoading.asReadonly();
   error = this.authStore.error.asReadonly();
-
+  showErrorDialog = false;
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required]
@@ -45,16 +45,10 @@ export class LoginComponent {
       } catch (error: any) {
 
         console.error('Login Error:', error);
+        this.showErrorDialog = true
       }
     }
   }
 
-  showErrorToast() {
-    this.messageService.add({
-      severity: 'error',
-      summary: 'Login Error',
-      detail: this.error() ?? "",
-      life: 5000
-    });
-  }
+  
 }

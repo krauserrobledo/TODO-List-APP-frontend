@@ -288,10 +288,17 @@ Responses tested with DevTools
         })
     ```
 
-    - Apply PrimeNG components on templates
+    - Apply PrimeNG components on templates.
+
+
 
 
 ### ***Reactive forms*** 
+
+
+### ***Dialogs***
+
+  - Implemented P-dialogs in Login and register errors.
 
 
 ### ***Observables - Suscribers*** 

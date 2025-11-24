@@ -1,16 +1,6 @@
 <div class="login-container">
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
     <h2>Sign In</h2>
-    
-    <!-- Error -->
-    @if (error()) {
-      <p-message 
-        severity="error" 
-        [closable]="true" 
-        styleClass="error-message w-full">
-        {{ error() }}
-      </p-message>
-    }
 
     <!--Email-->
     <div class="field">
@@ -67,3 +57,23 @@
     </p>
   </form>
 </div>
+<p-dialog 
+  header="Login Error" 
+  [(visible)]="showErrorDialog" 
+  [modal]="true" 
+  [style]="{ width: '450px' }"
+  [draggable]="false" 
+  [resizable]="false">
+  <div class="flex align-items-center">
+    <i class="pi pi-exclamation-triangle text-red-500 text-2xl mr-3"></i>
+    <span>{{ error() }}</span>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button 
+      label="OK" 
+      icon="pi pi-check" 
+      (click)="showErrorDialog = false" 
+      styleClass="p-button-text">
+    </p-button>
+  </ng-template>
+</p-dialog>

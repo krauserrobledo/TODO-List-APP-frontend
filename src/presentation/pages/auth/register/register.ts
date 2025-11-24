@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthStore } from '../../../stores/auth-store';
+import { Dialog } from "primeng/dialog";
+import { Button } from "primeng/button";
 
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, Dialog, Button],
   templateUrl: './register.html' ,
   styleUrl: './register.css'
 })
@@ -20,6 +22,7 @@ export class RegisterComponent {
 
   isLoading = this.authStore.isLoading.asReadonly();
   error = this.authStore.error.asReadonly();
+  showErrorDialog = false;
 
   registerForm = this.fb.group({
     userName: ['', Validators.required],
@@ -46,7 +49,7 @@ export class RegisterComponent {
         this.authStore.setError(error.message || 'Error Creating Account');
         console.error(' Error:', error);
         let errorMessage = 'Error creating Account';
-
+        this.showErrorDialog = true
         if (error.error) {
 
           if (error.error.errors && Array.isArray(error.error.errors)) {
@@ -54,6 +57,7 @@ export class RegisterComponent {
 
             if (firstError.includes('already taken')) {
               errorMessage = 'User Name already exists';
+              this.showErrorDialog = true
               
             } else {
               errorMessage = firstError;
@@ -63,13 +67,16 @@ export class RegisterComponent {
           else if (error.error.error) {
             if (error.error.error.includes('already taken')) {
               errorMessage = 'User Name already exists!';
+              this.showErrorDialog = true
             } else {
               errorMessage = error.error.error;
+              this.showErrorDialog = true
             }
           }
         }
 
         this.authStore.setError(errorMessage);
+        this.showErrorDialog = true
 
       } finally {
         this.authStore.setLoading(false);
