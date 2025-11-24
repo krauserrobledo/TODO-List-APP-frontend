@@ -1,5 +1,6 @@
 .app {
-    min-height: 100vh;
+  
+  height: max-content;
   }
   
   .app-header {
@@ -32,9 +33,7 @@
   }
   
   main {
-    padding: 1rem;
-    max-width: 1200px;
-    margin: 0 auto;
+    height:100%;
   }
 
   .btn-logout {
@@ -46,4 +45,6 @@
     ::ng-deep .p-button:hover {
       background: #c82333 !important;
     }
+
+    
   }

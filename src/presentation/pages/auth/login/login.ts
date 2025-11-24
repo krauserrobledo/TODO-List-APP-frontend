@@ -3,19 +3,26 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthStore } from '../../../stores/auth-store';
+import { ButtonModule } from 'primeng/button';
+import { MessageModule } from 'primeng/message';
+import { MessageService } from 'primeng/api';
+import {PasswordModule } from 'primeng/password';
+
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, ButtonModule, MessageModule, PasswordModule],
   templateUrl: './login.html',
-  styleUrl: './login.css'
+  styleUrl: './login.css',
+  providers:[MessageService]
 })
 
 export class LoginComponent {
   private fb = inject(FormBuilder);
   private authStore = inject(AuthStore);
   private router = inject(Router);
+  private messageService = inject(MessageService);
 
   isLoading = this.authStore.isLoading.asReadonly();
   error = this.authStore.error.asReadonly();
@@ -40,5 +47,14 @@ export class LoginComponent {
         console.error('Login Error:', error);
       }
     }
+  }
+
+  showErrorToast() {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Login Error',
+      detail: this.error() ?? "",
+      life: 5000
+    });
   }
 }

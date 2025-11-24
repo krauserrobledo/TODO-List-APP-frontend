@@ -21,4 +21,6 @@ export class AppComponent {
     this.authStore.logout();
     this.router.navigate(['/login']);
   }
+
+  
 }
