@@ -1,18 +1,17 @@
 <div class="app">
   <header class="app-header">
-    <nav>
+    <p-toolbar>
       <h3>TODO List App</h3>
 
       @if (authStore.currentUser(); as user) {
         <span>Welcome, {{ user.userName }}</span>
-        <button (click)="logout()">Sign Out</button>
+        <p-button severity="danger" class="btn-logout"(click)="logout()">Sign Out</p-button>
       } @else {
         <span>Please sign in</span>
       }
       
-    </nav>
+    </p-toolbar>
   </header>
-
   <main>
     <router-outlet></router-outlet>
   </main>

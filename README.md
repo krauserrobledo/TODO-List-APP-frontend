@@ -254,11 +254,41 @@ Responses tested with DevTools
 
   - Resources:
 
-  - Installing PrimeNG dependencies.
+    https://primeng.org/installation
 
-  - Configure PrimeNG.
+    https://www.youtube.com/watch?v=81NlPDiwUnQ&list=LL&index=2 
 
-  - Apply PrimeNG components on templates
+    https://www.youtube.com/watch?v=WXrKn1D3mII&list=LL&index=3 
+
+
+  - Install and configure PrimeNG dependencies:
+
+    - Installed dependency by the command :
+
+    ```
+      npm install primeng @primeuix/themes
+    ```
+
+    - Adding imports to app.config.ts:
+    
+    ```
+      import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+      import { providePrimeNG } from 'primeng/config';
+      import Aura from '@primeuix/themes/aura';
+    ```  
+      
+    - Configured providers: 
+
+    ```
+       provideAnimationsAsync(),
+        providePrimeNG({
+            theme: {
+                preset: Aura
+            }
+        })
+    ```
+
+    - Apply PrimeNG components on templates
 
 
 ### ***Reactive forms*** 

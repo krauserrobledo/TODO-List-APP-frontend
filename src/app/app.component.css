@@ -36,3 +36,14 @@
     max-width: 1200px;
     margin: 0 auto;
   }
+
+  .btn-logout {
+    ::ng-deep .p-button {
+      color: white !important;
+      transition: background-color 0.3s !important;
+    }
+  
+    ::ng-deep .p-button:hover {
+      background: #c82333 !important;
+    }
+  }
