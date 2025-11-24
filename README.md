@@ -78,28 +78,6 @@
 ## ***WEEKLY SPRINT 11/10***
 
 
-- Topics Learning.
-
-  - Ngxs Store.
-  - RxJs.
-  - PrimeNG 
-  - Reactive forms
-  - Dialogs
-  - Observables - Suscribers
-
-- Check authentication functionality.
-
-- Auth refactoring for architecture  improve.
-
-- Domain: Create entities and repositories interfaces.
-
-- Implement Task Feature:
-
-    - Dtos, mapper,  apimodels, task-api-repository for task
-
-    - Presentation : task Store, components.
-
-
 ### ***Topics Learning***
 
   - Clean Architecture : https://www.youtube.com/watch?v=pDgcQlPzRK4
@@ -178,18 +156,6 @@ Responses tested with DevTools
 ----
  
 ## ***Weekly Sprint 11/17***
-
-  - Add creation form to task list component.
-
-  - Services configuration for using usecases.
-
-  - Stores Creation for using services.
-
-  - Implement Categories components.
-
-  - Implement Tag Components
-
-  - Implement Subtask components
 
 
   ### ***Add creation form to task list component.***
@@ -270,3 +236,32 @@ Responses tested with DevTools
     - both were implemented in task details to manage subtask .
 
     - fixed model configurations in Backend (unique index).
+
+    ---- 
+
+
+## ***Weekly Sprint 11/24***
+
+	Learn and Implement the rest of required technogies properly:
+
+### ***Ngxs Store*** 
+
+
+### ***RxJs***
+
+
+### ***PrimeNG*** 
+
+  - Resources:
+
+  - Installing PrimeNG dependencies.
+
+  - Configure PrimeNG.
+
+  - Apply PrimeNG components on templates
+
+
+### ***Reactive forms*** 
+
+
+### ***Observables - Suscribers*** 
