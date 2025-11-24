@@ -5,12 +5,14 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthStore } from '../../../stores/auth-store';
 import { Dialog } from "primeng/dialog";
 import { Button } from "primeng/button";
+import { Password } from "primeng/password";
+import { FloatLabel } from "primeng/floatlabel";
 
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, Dialog, Button],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, Dialog, Button, Password, FloatLabel],
   templateUrl: './register.html' ,
   styleUrl: './register.css'
 })

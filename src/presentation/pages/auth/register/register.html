@@ -1,80 +1,82 @@
 <div class="register-container">
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
-      <h2>Create an Account</h2>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+    <h2>Create an Account</h2>
+    <label for="userName">Name</label>
+    <div class="field">
 
-      <div class="form-group">
-        <label for="userName">User Name</label>
-        <input
-          id="userName"
-          type="text"
-          formControlName="userName"
-          class="form-control"
-          [class.error]="registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched">
-        @if (registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched) {
-          <small class="error-text">Name is Required</small>
-        }
-      </div>
 
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input
-          id="email"
-          type="email"
-          formControlName="email"
-          class="form-control"
-          [class.error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
-        @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
-          <small class="error-text">Email is Required and must be a valid one</small>
-        }
-      </div>
+      <input id="userName" type="text" formControlName="userName" pInputText
+        [class]="(registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched ? 'p-invalid ' : '') + 'w-full'"
+        placeholder="Enter your Name">
 
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          formControlName="password"
-          class="form-control"
-          [class.error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
-        @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
-          <small class="error-text">Password is Required (6 chars min)</small>
-        }
-      </div>
 
-      <button 
-        type="submit" 
-        class="btn btn-primary"
-        [disabled]="registerForm.invalid || isLoading()">
-        @if (isLoading()) {
-          <span>Creating Account...</span>
-        } @else {
-          <span>Sign Up</span>
-        }
-      </button>
+      @if (registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched) {
+      <small class="p-error block">
+        <i class="pi pi-exclamation-circle"></i>
+        Name is required
+      </small>
+      }
+    </div>
 
-      <p class="login-link">
-        ¿Already have an Account? <a routerLink="/login">Sign In Here</a>
-      </p>
-    </form>
-  </div>
-  
-  <p-dialog 
-  header="Login Error" 
-  [(visible)]="showErrorDialog" 
-  [modal]="true" 
-  [style]="{ width: '450px' }"
-  [draggable]="false" 
-  [resizable]="false">
+    <label for="email">Email Address</label>
+    <div class="field">
+
+      <span class="p-input-icon-left">
+        <i class="pi pi-envelope"></i>
+        <input id="email" type="email" formControlName="email" pInputText
+          [class]="(registerForm.get('email')?.invalid && registerForm.get('email')?.touched ? 'p-invalid ' : '') + 'w-full'"
+          placeholder="Enter your email">
+      </span>
+      @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+      <small class="p-error block">
+        <i class="pi pi-exclamation-circle"></i>
+        Valid email is required
+      </small>
+      }
+    </div>
+
+    <label for="password">Password</label>
+
+    <div class="field">
+
+      <p-password id="password" formControlName="password" [feedback]="false" [toggleMask]="true" styleClass="w-full"
+        [inputStyleClass]="(registerForm.get('password')?.invalid && registerForm.get('password')?.touched ? 'p-invalid ' : '') + 'w-full'"
+        placeholder="Enter your password">
+      </p-password>
+      @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+      <small class="p-error block">
+        <i class="pi pi-exclamation-circle"></i>
+        Password must be at least 6 characters
+      </small>
+      }
+    </div>
+
+    <p-button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid || isLoading()">
+      @if (isLoading()) {
+      <span>Creating Account...</span>
+      } @else {
+      <span>Sign Up</span>
+      }
+    </p-button>
+
+    <p class="login-link">
+      ¿Already have an Account?
+      <a routerLink="/login">
+        Sign In Here
+      </a>
+    </p>
+
+  </form>
+</div>
+
+<p-dialog header="Login Error" [(visible)]="showErrorDialog" [modal]="true" [style]="{ width: '450px' }"
+  [draggable]="false" [resizable]="false">
   <div class="flex align-items-center">
     <i class="pi pi-exclamation-triangle text-red-500 text-2xl mr-3"></i>
     <span>{{ error() }}</span>
   </div>
   <ng-template pTemplate="footer">
-    <p-button 
-      label="OK" 
-      icon="pi pi-check" 
-      (click)="showErrorDialog = false" 
-      styleClass="p-button-text">
+    <p-button label="OK" icon="pi pi-check" (click)="showErrorDialog = false" styleClass="p-button-text">
     </p-button>
   </ng-template>
 </p-dialog>

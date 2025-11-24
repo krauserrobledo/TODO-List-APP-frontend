@@ -5,75 +5,54 @@
     <!--Email-->
     <div class="field">
       <label for="email" class="block">Email</label>
-      <input
-        id="email"
-        type="email"
-        formControlName="email"
-        pInputText
+      <input id="email" type="email" formControlName="email" pInputText
         [class]="(loginForm.get('email')?.invalid && loginForm.get('email')?.touched ? 'p-invalid ' : '') + 'w-full'"
         placeholder="Enter your email">
+        
       @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
-        <small class="p-error block">
-          <i class="pi pi-exclamation-circle"></i>
-          Email is required and must be valid
-        </small>
+      <small class="p-error block">
+        <i class="pi pi-exclamation-circle"></i>
+        Email is required and must be valid
+      </small>
       }
     </div>
 
     <!--Password-->
     <div class="field">
       <label for="password" class="block">Password</label>
-      <p-password 
-        id="password"
-        formControlName="password"
-        [feedback]="false"
-        [toggleMask]="true"
-        styleClass="w-full"
+      <p-password id="password" formControlName="password" [feedback]="false" [toggleMask]="true" styleClass="w-full"
         [inputStyleClass]="(loginForm.get('password')?.invalid && loginForm.get('password')?.touched ? 'p-invalid ' : '') + 'w-full'"
         placeholder="Enter your password">
       </p-password>
       @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
-        <small class="p-error block">
-          <i class="pi pi-exclamation-circle"></i>
-          Password is required
-        </small>
+      <small class="p-error block">
+        <i class="pi pi-exclamation-circle"></i>
+        Password is required
+      </small>
       }
     </div>
 
     <!-- Submit -->
-    <p-button 
-      type="submit" 
-      label="{{ isLoading() ? 'Signing in...' : 'Sign In' }}"
-      icon="{{ isLoading() ? 'pi pi-spin pi-spinner' : 'pi pi-sign-in' }}"
-      [disabled]="loginForm.invalid || isLoading()"
-      styleClass="w-full"
-      severity="primary">
+    <p-button type="submit" label="{{ isLoading() ? 'Signing in...' : 'Sign In' }}"
+      icon="{{ isLoading() ? 'pi pi-spin pi-spinner' : 'pi pi-sign-in' }}" [disabled]="loginForm.invalid || isLoading()"
+      styleClass="w-full" severity="primary">
     </p-button>
 
     <!-- Register -->
     <p class="register-link text-center">
-      Don't have an account? 
+      Don't have an account?
       <a routerLink="/register" class="text-primary no-underline hover:underline">Sign Up Here</a>
     </p>
   </form>
 </div>
-<p-dialog 
-  header="Login Error" 
-  [(visible)]="showErrorDialog" 
-  [modal]="true" 
-  [style]="{ width: '450px' }"
-  [draggable]="false" 
-  [resizable]="false">
+<p-dialog header="Login Error" [(visible)]="showErrorDialog" [modal]="true" [style]="{ width: '450px' }"
+  [draggable]="false" [resizable]="false">
   <div class="flex align-items-center">
     <i class="pi pi-exclamation-triangle text-red-500 text-2xl mr-3"></i>
     <span>{{ error() }}</span>
   </div>
   <ng-template pTemplate="footer">
-    <p-button 
-      label="OK" 
-      icon="pi pi-check" 
-      (click)="showErrorDialog = false" 
-      styleClass="p-button-text">
+    <p-button label="OK" icon="pi pi-check" (click)="showErrorDialog = false" styleClass="p-button-text">
     </p-button>
   </ng-template>
 </p-dialog>

@@ -288,17 +288,23 @@ Responses tested with DevTools
         })
     ```
 
-    - Apply PrimeNG components on templates.
+    - Apply PrimeNG components on templates:
 
+      - App Component : added p-toolbar and p-buttons.
+
+      - Login Component and Register Component: Added on both p-button, p-password and p-inputText
+
+
+### ***Dialogs***
+
+  - Implemented P-dialogs in Login and register errors.
 
 
 
 ### ***Reactive forms*** 
 
 
-### ***Dialogs***
 
-  - Implemented P-dialogs in Login and register errors.
 
 
 ### ***Observables - Suscribers*** 
