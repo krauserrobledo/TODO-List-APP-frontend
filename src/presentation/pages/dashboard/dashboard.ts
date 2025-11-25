@@ -7,11 +7,12 @@ import { TaskModel } from '../../../domain/models/task/task-model';
 import { TaskStore } from './../../stores/task-store';
 import { CategoryList } from "../../components/categories/category-list/category-list";
 import { TagList } from "../../components/tag/tag-list/tag-list";
+import { PanelModule} from "primeng/panel"
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, TaskList, TaskDetails, TaskForm, CategoryList, TagList],
+  imports: [CommonModule, TaskList, TaskDetails, TaskForm, CategoryList, TagList, PanelModule],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css'],
 })

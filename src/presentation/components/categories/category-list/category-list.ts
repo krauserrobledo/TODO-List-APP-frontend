@@ -8,6 +8,7 @@ import { DialogModule } from "primeng/dialog";
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { ColorPickerModule } from 'primeng/colorpicker';
+import { ListboxModule } from 'primeng/listbox';
 
 @Component({
   selector: 'app-category-list',
@@ -19,7 +20,8 @@ import { ColorPickerModule } from 'primeng/colorpicker';
     DialogModule,
     CardModule,
     InputTextModule,
-    ColorPickerModule
+    ColorPickerModule,
+    ListboxModule
   ],
   templateUrl: './category-list.html',
   styleUrls: ['./category-list.css']
@@ -29,7 +31,6 @@ export class CategoryList {
   showCreateDialog = false;
   name = '';
   color = '#0078d7'; 
-  @Output() create = new EventEmitter<CategoryModel>();
 
   ngOnInit() {
     this.store.loadCategories();

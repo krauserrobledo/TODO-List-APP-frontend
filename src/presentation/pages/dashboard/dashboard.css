@@ -7,36 +7,32 @@
   
   .app-header {
     padding: 0.1rem;
-    color: white;
+    color: #ffffff;
     align-self: center;
 
   }
   
   .dashboard-grid {
     display: grid;
-    grid-template-columns: 0.4fr 1fr 0.3fr; 
+    grid-template-columns: 0.3fr 1fr 0.3fr; 
     gap: 1rem;
   }
   .left {
-    background: whitesmoke;
+    background: #343a40;
     
-    border: 1px solid #ddd;
     padding: 1rem;
     border-radius: 6px;
   }
   
   .center {
-    background: whitesmoke;
-    
-    border: 1px solid #ddd;
+    background: #343a40;
     padding: 1rem;
     border-radius: 6px;
   }
   
   .right {
-    background: whitesmoke;
+    background: #343a40;
     padding: 1rem;
-    border: 1px solid #ddd;
     border-radius: 6px;
   }
   

@@ -1,13 +1,28 @@
 <div class="tag-container">
-<h4>Tags</h4>
-<app-tag-form (create)="store.createTag($event)"></app-tag-form>
-<div class="tag-list">
-  <ul>
-    @for (tag of store.tags(); track tag.id) {
-    <li class="li">
-      {{ tag.name }}
-      <button (click)="store.deleteTag(tag.id)">Delete</button>
-    </li>
-    }
-  </ul>
-</div></div>
+  <div class="header">
+    <h3 style="color: #343a40;">Add new Tag ...</h3>
+    <p-button severity="help" icon="pi pi-plus" (click)="openDialog()"></p-button>
+  </div>
+
+  <div class="tag-list">
+    <ul>
+      @for (tag of store.tags(); track tag.id) {
+      <p-card class="li">
+        {{ tag.name }}
+        <p-button severity="danger" (click)="store.deleteTag(tag.id)">
+          <i class="pi pi-trash" style="font-size: 0.9rem"></i>
+        </p-button>
+      </p-card>
+      }
+    </ul>
+  </div>
+</div>
+
+<p-dialog header="Create Category" [(visible)]="showCreateDialog" [modal]="true" [draggable]="false"
+  [resizable]="false">
+
+  <form (ngSubmit)="submit()" class="p-fluid form-container">
+    <input pInputText="name" name="name" placeholder="Tag name" />
+    <p-button type="submit" label="Save" icon="pi pi-check" severity="success"></p-button>
+  </form>
+</p-dialog>

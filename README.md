@@ -294,10 +294,22 @@ Responses tested with DevTools
 
       - Login Component and Register Component: Added on both p-button, p-password and p-inputText
 
+      - Added p-panels in dashboard to collapse tags and categories components.
+
+      - Implemented p-buttons and p-cards in categories and tags components.
+
+      - implement p-button, p-inputText and p-listbox in task list component.
+
+
 
 ### ***Dialogs***
 
-  - Implemented P-dialogs in Login and register errors.
+  - P-dialogs in Login and register errors.
+
+  - Implemented on Tag and categories creation forms.
+
+  - Used p-dialog in task-list creation form.
+
 
 
 

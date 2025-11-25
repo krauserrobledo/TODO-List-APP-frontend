@@ -2,60 +2,72 @@
   <!-- Loading -->
   <div>
     @if (isLoading()) {
-      <span>Loading tasks...</span>
-    }
-  </div>
-
-  <!-- Error -->
-  <div>
-    @if (error()) {
-      <span>{{ error() }}</span>
+    <span>Loading tasks...</span>
     }
   </div>
 
   <div class="task-list">
-    <div class="header-row">
-      <h4>Task List</h4>
-      <button (click)="showForm = !showForm"> Add New Task</button>
-    </div>
-
-    <!-- Form -->
-    @if (showForm) {
-      <form (ngSubmit)="addTask()" class="task-form">
-        <div>
-          <label>Title:</label>
-          <input type="text" [(ngModel)]="newTitle" name="title" />
-        </div>
-        <div>
-          <label>Status:</label>
-          <select [(ngModel)]="newStatus" name="status">
-            <option value="Non Started">Non Started</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Paused">Paused</option>
-            <option value="Late">Late</option>
-            <option value="Finished">Finished</option>
-          </select>
-        </div>
-        <div>
-          <label>Description:</label>
-          <input type="text" [(ngModel)]="newDescription" name="description" />
-        </div>
-        <div>
-          <label>Due Date:</label>
-          <input type="date" [(ngModel)]="newDueDate" name="dueDate" />
-        </div>
-        <button type="submit">Add</button>
-        <button type="button" (click)="showForm = false">Cancel</button>
-      </form>
-    }
-
     <!-- List-->
-    <ul>
-      @for (task of tasks(); track task.id) {
-        <li (click)="onSelect(task)">
-          <span>{{ task.title }}</span>
-        </li>
-      }
-    </ul>
+    <h3>Task List</h3>
+    <div class="header-row">
+      <h4>Add New Task...</h4>
+      <p-button (click)="showFormDialog = !showFormDialog" icon="pi pi-plus"> </p-button>
+    </div>
+    <p-listbox [options]="tasks()" [(ngModel)]="selectedTask" optionLabel="title" (onChange)="onSelect($event.value)"
+      [style]="{width:'100%'}">
+      <ng-template let-task pTemplate="item">
+        <div [ngClass]="getStatusClass(task.status)" class="task-item">
+          {{ task.title }}
+        </div>
+      </ng-template>
+    </p-listbox>
+
   </div>
 </div>
+
+<!-- Form Dialog-->
+<p-dialog header="Create Task" [(visible)]="showFormDialog" [modal]="true" [draggable]="false">
+  <div class="form-container">
+    <form (ngSubmit)="addTask()" class="p-fluid task-form">
+      <div class="p-field">
+        <input type="text" pInputText id="title" [(ngModel)]="newTitle" name="title" placeholder="Title" />
+      </div>
+
+      <div class="p-field">
+        <input type="text" pInputText id="description" [(ngModel)]="newDescription" name="description"
+          placeholder="Description" />
+      </div>
+      <div class="p-field">
+        <p-datepicker id="date" [(ngModel)]="newDueDate" name="dueDate" placeholder="Select a date" [appendTo]="'body'"/>
+      </div>
+      <div class="p-field">
+        <p-panel header="Status" [toggleable]="true">
+          <p-listbox [(ngModel)]="newStatus" name="status" [options]="statusOptions" [style]="{width:'100%'}">
+            <ng-template let-option pTemplate="item">
+              <div [ngClass]="getStatusClass(option.value)" class="task-item">
+                {{ option.label }}
+              </div>
+            </ng-template>
+          </p-listbox>
+        </p-panel>
+      </div>
+      <div class="p-dialog-footer">
+        <p-button type="submit" label="Add" icon="pi pi-check" severity="success"></p-button>
+        <p-button type="button" label="Cancel" icon="pi pi-times" severity="danger" (click)="showFormDialog = false"></p-button>
+      </div>
+    </form>
+  </div>
+</p-dialog>
+
+<!-- error Dialog-->
+<p-dialog header="Error" [(visible)]="showErrorDialog" [modal]="true" [style]="{ width: '450px' }" [draggable]="false"
+  [resizable]="false">
+  <div class="flex align-items-center">
+    <i class="pi pi-exclamation-triangle text-red-500 text-2xl mr-3"></i>
+    <span>Task already Exist!</span>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button label="OK" icon="pi pi-check" (click)="showErrorDialog = false" styleClass="p-button-text">
+    </p-button>
+  </ng-template>
+</p-dialog>

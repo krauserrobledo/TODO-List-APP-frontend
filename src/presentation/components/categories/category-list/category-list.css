@@ -23,31 +23,14 @@
   margin-top: 0.5rem;
 }
 
-.h4{
-  margin-right: 5rem;
-}
-
 .category-list {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-li {
-    padding: 0.3rem;
-}
-
 ::ng-deep .p-card {
-
   margin: 0.5rem;
-  justify-content: space-between;
-  flex-direction: row;
-}
-
-::ng-deep .p-button {
-  padding: 0.5rem;
-  
-  
 }
 
 ::ng-deep .p-field {
