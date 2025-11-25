@@ -12,21 +12,13 @@
       </div>
 
       <div class="center">
-        @if (showForm) {
-          <app-task-form
-            [task]="taskToEdit"
-            (update)="updateTask($event)"
-            (create)="createTask($event)"
-            (delete)="deleteTask($event)"
-            (cancel)="closeForm()">
-          </app-task-form>
-        }
-  
         @if (selectedTask) {
           <app-task-details
             [task]="selectedTask"
             (close)="closeDetails()"
             (edit)="editTask($event)"
+
+            (update)="updateTask($event)"
             (delete)="deleteTask($event)"
             (changeStatus)="changeStatus($event)">
           </app-task-details>

@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TaskList } from '../../components/task/task-list/task-list';
 import { TaskDetails } from '../../components/task/task-details/task-details';
-import { TaskForm } from '../../components/task/task-form/task-form';
 import { TaskModel } from '../../../domain/models/task/task-model';
 import { TaskStore } from './../../stores/task-store';
 import { CategoryList } from "../../components/categories/category-list/category-list";
@@ -12,7 +11,7 @@ import { PanelModule} from "primeng/panel";
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, TaskList, TaskDetails, TaskForm, CategoryList, TagList, PanelModule],
+  imports: [CommonModule, TaskList, TaskDetails, CategoryList, TagList, PanelModule],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css'],
 })

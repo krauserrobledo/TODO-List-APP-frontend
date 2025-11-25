@@ -6,11 +6,18 @@ import { CategoryModel } from '../../../../domain/models/category/category-model
 import { TagModel } from '../../../../domain/models/tag/tag-model';
 import { CategoryStore } from '../../../stores/category-store';
 import { TagStore } from '../../../stores/tag-store';
+import { Button } from "primeng/button";
+import { MultiSelectModule } from 'primeng/multiselect';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { DatePickerModule } from 'primeng/datepicker';
+import { TextareaModule } from 'primeng/textarea';
+import { InputTextModule } from 'primeng/inputtext';
+
 
 @Component({
   selector: 'app-task-form',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, Button, MultiSelectModule, SelectButtonModule, DatePickerModule, TextareaModule, InputTextModule],
   templateUrl: './task-form.html',
   styleUrls: ['./task-form.css'],
 })

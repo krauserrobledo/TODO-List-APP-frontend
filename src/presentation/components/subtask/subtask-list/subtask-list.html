@@ -1,33 +1,27 @@
-<div class="subtask-list chip-container">
-  <p-chip 
-    *ngFor="let sub of store.subtasks()" 
-    [label]="sub.title" 
-    styleClass="chip-item">
-    <ng-template pTemplate="icon">
-      <p-button 
-        icon="pi pi-trash" 
-        severity="danger" 
-        styleClass="p-button-rounded p-button-text p-button-sm" 
-        (click)="deleteSubtask(sub.id)">
-      </p-button>
-    </ng-template>
-  </p-chip>
+<div class="subtask-list">
+ <ul>
+    @for (sub of store.subtasks(); track sub.id) {
+      <li class="item">
+        {{ sub.title }}
+        <p-button severity="danger"(click)="deleteSubtask(sub.id)">
+          <i class="pi pi-trash" style="font-size: 0.9rem"></i>
+        </p-button>
+      </li>
+       }
+  </ul>
+  
 </div>
-
 <div class="bottom">
-  <h4 class="bottom-title">Add new Subtask...</h4>
-  <p-button severity="help" icon="pi pi-plus" label="New" (click)="openDialog()"></p-button>
+<h4 style="color: #343a40;">Add new Subtask...</h4>
+  <p-button severity="help" icon="pi pi-plus" (click)="openDialog()"></p-button>
 </div>
 
-<p-dialog header="Create Subtask" [(visible)]="showCreateDialog" [modal]="true"
-  [draggable]="false" [resizable]="false" [style]="{width:'400px'}">
+<p-dialog header="Create Category" [(visible)]="showCreateDialog" [modal]="true"
+  [draggable]="false" [resizable]="false">
   <form (ngSubmit)="submit()" class="p-fluid form-container">
     <div class="p-field">
-      <p-inputText id="title" [(ngModel)]="title" name="title" placeholder="New subtask"></p-inputText>
-    </div>
-    <div class="dialog-footer">
-      <p-button type="submit" label="Add" icon="pi pi-check" severity="success"></p-button>
-      <p-button type="button" label="Cancel" icon="pi pi-times" severity="secondary" (click)="showCreateDialog=false"></p-button>
-    </div>
+      <input type="text" pInputText id="title" [(ngModel)]="title" name="title" placeholder="New subtask" />
+    <p-button type="submit" >Add </p-button>
+       </div>
   </form>
 </p-dialog>

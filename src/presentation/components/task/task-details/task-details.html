@@ -24,24 +24,34 @@
   </div>
   <p><strong>Categories:</strong></p>
   <div class="card-container">
-    <p-card *ngFor="let cat of task.categories" styleClass="category-card">
+    <p-card *ngFor="let cat of task.categories" [style.backgroundColor]="cat.color" class="card">
       <ng-template pTemplate="title">{{ cat.name }}</ng-template>
-      <p-tag value="Category" severity="info"></p-tag>
+      
     </p-card>
   </div>
 
   <p><strong>Tags:</strong></p>
-
-  <div class="chip-container">
-    <p-chip *ngFor="let tag of task.tags" [label]="tag.name" styleClass="chip-item"></p-chip>
-  </div>
-
-  
+<div class="chip-container">
+  <p-chip 
+    *ngFor="let tag of task.tags" 
+    [label]="tag.name" 
+   >
+  </p-chip>
+</div>
 
   <div class="actions">
-    <p-button label="Edit" icon="pi pi-pencil" (click)="edit.emit(task!)"></p-button>
+    <p-button label="Edit" icon="pi pi-pencil" (click)="showEditDialog = true"></p-button>
     <p-button label="Delete" icon="pi pi-trash" severity="danger" (click)="delete.emit(task!)"></p-button>
     <p-button label="Close" icon="pi pi-times" severity="secondary" (click)="close.emit()"></p-button>
   </div>
+
+  <p-dialog header="Edit Task" [(visible)]="showEditDialog" [modal]="true" [style]="{width:'500px'}"
+  [draggable]="false" [resizable]="false">
+  <app-task-form 
+    [task]="task" 
+    (update)="onUpdate($event)" 
+    (cancel)="showEditDialog=false">
+  </app-task-form>
+</p-dialog>
 </div>
 }

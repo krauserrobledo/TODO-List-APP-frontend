@@ -302,7 +302,9 @@ Responses tested with DevTools
 
       - implemented prime ng components on task detail component.
       
-      - Used p-chips and pbutton in subtask components.
+      - Used pbutton in subtask components.
+
+      - implement primeng components in task editdit form.
       
 
 
@@ -315,7 +317,7 @@ Responses tested with DevTools
 
   - Implemented on Tag and categories creation forms.
 
-  - Used p-dialog in task-list creation form.
+  - Used p-dialog in task-list creation and edit form.
 
 
 

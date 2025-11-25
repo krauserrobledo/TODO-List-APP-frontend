@@ -1,58 +1,69 @@
 <div class="task-container">
-  <h4>Edit Task</h4>
+  <h4>{{ isEdit ? 'Edit Task' : 'Create Task' }}</h4>
+
   <form class="task-form" (ngSubmit)="submit()">
-    <div>
-      <label>Title : </label>
-      <input type="text" [(ngModel)]="newTitle" name="title" placeholder="New task..." />
+    <!-- Title -->
+    <div class="p-field">
+      <label for="title">Title</label>
+      <input pInputText id="title" [(ngModel)]="newTitle" name="title" placeholder="New task..." />
     </div>
-    <div>
-      <label>Status : </label>
-      <select [(ngModel)]="newStatus" name="status">
-        <option value="Non Started">Non Started</option>
-        <option value="In Progress">In Progress</option>
-        <option value="Paused">Paused</option>
-        <option value="Late">Late</option>
-        <option value="Finished">Finished</option>
-      </select>
-    </div>
-    <div>
-      <label>Description : </label>
-      <input type="text" [(ngModel)]="newDescription" name="description" placeholder="Describe task..." />
-    </div>
-    <div>
-      <label>Due Date : </label>
-      <input type="date" [(ngModel)]="newDueDate" name="dueDate" />
-    </div>
-    <label>Categories</label>
-    <select multiple [(ngModel)]="categories">
-      @for (cat of storeCategories.categories(); track cat.id) {
-        <option [ngValue]="cat">
-          @if (cat) {
-            {{ cat.name }}
-          } @else {
-            Not Available Categories
-          }
-        </option>
-      }
-    </select>
 
-    <label>Tags</label>
-    <select multiple [(ngModel)]="tags">
-      @for (tag of storeTags.tags(); track tag.id) {
-        <option [ngValue]="tag">
-          @if (tag) {
-            {{ tag.name }}
-          } @else {
-            Not Available Tags
-          }
-        </option>
-      }
-    </select>
-    
+    <!-- Status -->
+    <div class="p-field">
+      <label>Status</label>
+      <p-selectButton 
+        [options]="[
+          {label:'Non Started', value:'Non Started'},
+          {label:'In Progress', value:'In Progress'},
+          {label:'Paused', value:'Paused'},
+          {label:'Late', value:'Late'},
+          {label:'Finished', value:'Finished'}
+        ]"
+        [(ngModel)]="newStatus" 
+        name="status">
+      </p-selectButton>
+    </div>
 
-    <div>
-    <button class="form-button" type="submit">Add</button>
-    <button class="form-button" type="button" (click)="close()">Cancel</button>
-  </div>
+    <!-- Description -->
+    <div class="p-field">
+      <label for="description">Description</label>
+      <input type="text" pInputTextarea id="description" [(ngModel)]="newDescription" name="description" rows="3" placeholder="Describe task..." />
+    </div>
+
+    <!-- Due Date -->
+    <div class="p-field">
+      <label for="dueDate">Due Date</label>
+      <p-datepicker id="dueDate" [(ngModel)]="newDueDate" name="dueDate" dateFormat="yy-mm-dd" [showIcon]="true"></p-datepicker>
+    </div>
+
+    <!-- Categories -->
+    <div class="p-field">
+      <label>Categories</label>
+      <p-multiSelect 
+        [options]="storeCategories.categories()" 
+        optionLabel="name" 
+        [(ngModel)]="categories" 
+        name="categories"
+        placeholder="Select categories">
+      </p-multiSelect>
+    </div>
+
+    <!-- Tags -->
+    <div class="p-field">
+      <label>Tags</label>
+      <p-multiSelect 
+        [options]="storeTags.tags()" 
+        optionLabel="name" 
+        [(ngModel)]="tags" 
+        name="tags"
+        placeholder="Select tags">
+      </p-multiSelect>
+    </div>
+
+    <!-- Actions -->
+    <div class="dialog-footer">
+      <p-button type="submit" label="{{ isEdit ? 'Update' : 'Add' }}" icon="pi pi-check" severity="success"></p-button>
+      <p-button type="button" label="Cancel" icon="pi pi-times" severity="secondary" (click)="close()"></p-button>
+   </div>
   </form>
 </div>

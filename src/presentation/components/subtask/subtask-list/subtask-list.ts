@@ -6,12 +6,11 @@ import { FormsModule } from '@angular/forms';
 import { Dialog } from "primeng/dialog";
 import { Button } from "primeng/button";
 import { InputTextModule } from 'primeng/inputtext';
-import { Chip } from "primeng/chip";
 
 @Component({
   selector: 'app-subtask-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, Dialog, Button, InputTextModule, Chip],
+  imports: [CommonModule, FormsModule, Dialog, Button, InputTextModule],
   templateUrl: './subtask-list.html',
   styleUrls: ['./subtask-list.css']
 })
