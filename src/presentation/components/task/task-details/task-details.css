@@ -1,18 +1,74 @@
 .task-details {
   display: flex;
   flex-direction: column;
-    margin-top: 0.1rem;
-    padding-top: 0.1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    border: 1px solid whitesmoke;
-    background: #f9f9f9;
-    
-    border-radius: 6px;
-  }
-  .actions {
-    margin-top: 1rem;
-    display: flex;
-    gap: 0.5rem;
-  }
+  margin-top: 0.5rem;
+  padding: 1rem;
+  border: 1px solid #eee;
+  background: #f9f9f9;
+  border-radius: 6px;
+}
+.header{
+  display: flex;
+  justify-content: center;
+
+
+}
+
+.h3{
+  justify-self: center;
   
+}
+.main-detail{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.status {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.status-item, .status-wrapper {
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.status-wrapper {
+  margin-top: 0.5rem;
+}
+
+.non_started { color: #555; }
+.in_progress { color: #004a99; }
+.paused      { color: #cc6600; }
+.late        { color: #cc0000; font-weight: bold; }
+.finished    { color: #006600; text-decoration: line-through; }
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.category-card, .tag-card {
+  width: 160px;
+  text-align: center;
+}
+
+.chip-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip-item {
+  margin-bottom: 0.25rem;
+}
+
+.actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}

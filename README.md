@@ -300,6 +300,10 @@ Responses tested with DevTools
 
       - implement p-button, p-inputText and p-listbox in task list component.
 
+      - implemented prime ng components on task detail component.
+
+
+
 
 
 ### ***Dialogs***

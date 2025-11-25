@@ -1,44 +1,47 @@
 @if (task) {
-    <div class="task-details">
-      <h4>Task Details</h4>
-  
-      <p><strong>Title:</strong> {{ task.title }}</p>
-  
-      <p>
-        <strong>Status:</strong>
-        <select [(ngModel)]="selectedStatus" (change)="changeStatus.emit({ task: task!, status: selectedStatus })">
-          <option value="Non Started">Non Started</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Paused">Paused</option>
-          <option value="Late">Late</option>
-          <option value="Finished">Finished</option>
-        </select>
-      </p>
-  
-      <p><strong>Description:</strong> {{ task.description }}</p>
-      <p><strong>Due Date:</strong> {{ task.dueDate | date }}</p>
-      <p><strong>Categories:</strong> </p>
-      <div *ngFor="let cat of task.categories">
-        {{ cat.name }}
-      </div>
-      
-      <p><strong>Tags:</strong></p>
-      <div *ngFor="let tag of task.tags">
-        {{ tag.name }}
-      </div>
+<div class="task-details">
+  <div class="header">
+    <h3>Task Details</h3>
+  </div>
+  <div class="main-detail">
+    <p><strong>Title:</strong> {{ task.title }}</p>
+    <p><strong>Due Date:</strong> {{ task.dueDate | date }}</p>
+  </div>
+  <p><strong>Description:</strong> {{ task.description }}</p>
+  <div class="status">
+    <p-selectButton [options]="statusOptions" [(ngModel)]="selectedStatus"
+      (onChange)="changeStatus.emit({ task: task!, status: selectedStatus })">
+      <ng-template let-option pTemplate="item">
+        <span [ngClass]="getStatusClass(option.value)">
+          {{ option.label }}
+        </span>
+      </ng-template>
+    </p-selectButton>
+  </div>
 
-      <p><strong>Subtask:</strong></p>
-      <div class="task-details">
-        <app-subtask-list [taskId]="task.id"></app-subtask-list>
-      </div>
+  <p><strong>Categories:</strong></p>
+  <div class="card-container">
+    <p-card *ngFor="let cat of task.categories" styleClass="category-card">
+      <ng-template pTemplate="title">{{ cat.name }}</ng-template>
+      <p-tag value="Category" severity="info"></p-tag>
+    </p-card>
+  </div>
 
-      
-  
-      <div class="actions">
-        <button (click)="edit.emit(task!)">Edit</button>
-        <button (click)="delete.emit(task!)">Delete</button>
-        <button (click)="close.emit()">Close</button>
-      </div>
-    </div>
-  }
-  
+  <p><strong>Tags:</strong></p>
+
+  <div class="chip-container">
+    <p-chip *ngFor="let tag of task.tags" [label]="tag.name" styleClass="chip-item"></p-chip>
+  </div>
+
+  <p><strong>Subtask:</strong></p>
+  <div class="task-details">
+    <app-subtask-list [taskId]="task.id"></app-subtask-list>
+  </div>
+
+  <div class="actions">
+    <p-button label="Edit" icon="pi pi-pencil" (click)="edit.emit(task!)"></p-button>
+    <p-button label="Delete" icon="pi pi-trash" severity="danger" (click)="delete.emit(task!)"></p-button>
+    <p-button label="Close" icon="pi pi-times" severity="secondary" (click)="close.emit()"></p-button>
+  </div>
+</div>
+}
