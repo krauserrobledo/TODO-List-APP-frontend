@@ -1,0 +1,28 @@
+.chip-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .chip-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  .bottom {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  
+  .bottom-title {
+    color: #343a40;
+    margin: 0;
+  }
+  
+  .dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+  

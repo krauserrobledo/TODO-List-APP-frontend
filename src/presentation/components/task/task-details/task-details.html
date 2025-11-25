@@ -18,7 +18,10 @@
       </ng-template>
     </p-selectButton>
   </div>
-
+  <p><strong>Subtasks</strong></p>
+  <div class="task-details">
+    <app-subtask-list [taskId]="task.id"></app-subtask-list>
+  </div>
   <p><strong>Categories:</strong></p>
   <div class="card-container">
     <p-card *ngFor="let cat of task.categories" styleClass="category-card">
@@ -33,10 +36,7 @@
     <p-chip *ngFor="let tag of task.tags" [label]="tag.name" styleClass="chip-item"></p-chip>
   </div>
 
-  <p><strong>Subtask:</strong></p>
-  <div class="task-details">
-    <app-subtask-list [taskId]="task.id"></app-subtask-list>
-  </div>
+  
 
   <div class="actions">
     <p-button label="Edit" icon="pi pi-pencil" (click)="edit.emit(task!)"></p-button>
