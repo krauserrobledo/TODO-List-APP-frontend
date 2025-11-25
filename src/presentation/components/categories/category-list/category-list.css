@@ -5,6 +5,28 @@
     margin-bottom: 1rem;
   }
 
+  .form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1rem;
+  padding: 1rem;
+  padding-bottom: 2rem;
+  justify-content: space-between;
+}
+.header {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-inline: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.h4{
+  margin-right: 5rem;
+}
+
 .category-list {
     display: flex;
     flex-direction: column;
@@ -14,3 +36,42 @@
 li {
     padding: 0.3rem;
 }
+
+::ng-deep .p-card {
+
+  margin: 0.5rem;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+::ng-deep .p-button {
+  padding: 0.5rem;
+  
+  
+}
+
+::ng-deep .p-field {
+  padding-bottom: 1rem;
+}
+
+::ng-deep .p-colorpicker {
+  padding-left: 1rem;
+  padding-bottom: 3rem;
+}
+
+::ng-deep .cardcontent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;                  
+}
+
+::ng-deep .title {
+  flex: 1;                
+  text-align: left; 
+  padding-right: 0.5rem;           
+  overflow: hidden;    
+  text-overflow: ellipsis;        
+  white-space: nowrap;      
+}
+

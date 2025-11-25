@@ -7,11 +7,14 @@
   
   .app-header {
     padding: 0.1rem;
+    color: white;
+    align-self: center;
+
   }
   
   .dashboard-grid {
     display: grid;
-    grid-template-columns: 0.5fr 1fr 0.5fr; 
+    grid-template-columns: 0.4fr 1fr 0.3fr; 
     gap: 1rem;
   }
   .left {

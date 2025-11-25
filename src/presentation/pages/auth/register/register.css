@@ -28,6 +28,7 @@
 .field {
   padding-top: 1rem;
   padding-bottom: 2rem;
+  border-radius: 5rem;
 }
 
 .field-checkbox {
@@ -48,16 +49,14 @@
   padding-top: 0rem;
   padding-bottom: 1rem;
   font-size: 1rem;
+  border-radius: 0.3rem;
+
 }
 
 .login-link {
   margin-top: 1.5rem;
 }
 
-::ng-deep .p-float-label label {
-  font-weight: 500;
-  
-}
 
 ::ng-deep .p-checkbox .p-checkbox-box {
   border-radius: 4px;
