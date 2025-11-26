@@ -33,7 +33,7 @@
     <!-- Due Date -->
     <div class="p-field">
       <label for="dueDate">Due Date</label>
-      <p-datepicker id="dueDate" [(ngModel)]="newDueDate" name="dueDate" dateFormat="yy-mm-dd" [showIcon]="true"></p-datepicker>
+      <p-datepicker id="dueDate" [(ngModel)]="newDueDate" name="dueDate" dateFormat="yy-mm-dd" [showIcon]="true" [appendTo]="'body'"></p-datepicker>
     </div>
 
     <!-- Categories -->
@@ -44,7 +44,8 @@
         optionLabel="name" 
         [(ngModel)]="categories" 
         name="categories"
-        placeholder="Select categories">
+        placeholder="Select categories"
+        [appendTo]="'body'">
       </p-multiSelect>
     </div>
 
@@ -56,7 +57,8 @@
         optionLabel="name" 
         [(ngModel)]="tags" 
         name="tags"
-        placeholder="Select tags">
+        placeholder="Select tags"
+        [appendTo]="'body'">
       </p-multiSelect>
     </div>
 
