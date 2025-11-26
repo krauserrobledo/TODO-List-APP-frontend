@@ -18,9 +18,9 @@
 
 <p-dialog header="Create Category" [(visible)]="showCreateDialog" [modal]="true"
   [draggable]="false" [resizable]="false">
-  <form (ngSubmit)="submit()" class="p-fluid form-container">
+  <form  [formGroup]="subtaskForm" (ngSubmit)="submit()" class="p-fluid form-container">
     <div class="p-field">
-      <input type="text" pInputText id="title" [(ngModel)]="title" name="title" placeholder="New subtask" />
+      <input type="text" pInputText id="title" formControlName="title" name="title" placeholder="New subtask" />
     <p-button type="submit" >Add </p-button>
        </div>
   </form>

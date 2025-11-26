@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnChanges, Input, inject } from '@angular/core';
 import { SubtaskStore } from '../../../stores/subtask-store';
 import { SubtaskModel } from '../../../../domain/models/subtask/subtask-model';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Dialog } from "primeng/dialog";
 import { Button } from "primeng/button";
 import { InputTextModule } from 'primeng/inputtext';
@@ -10,27 +10,24 @@ import { InputTextModule } from 'primeng/inputtext';
 @Component({
   selector: 'app-subtask-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, Dialog, Button, InputTextModule],
+  imports: [CommonModule, FormsModule, Dialog, Button, InputTextModule, ReactiveFormsModule],
   templateUrl: './subtask-list.html',
   styleUrls: ['./subtask-list.css']
 })
+
 export class SubtaskList implements OnChanges {
   @Input() taskId: string | null = null;
   store = inject(SubtaskStore);
-  title = '';
+
   showCreateDialog = false;
+  subtaskForm!: FormGroup;
 
-  submit() {
-    if (!this.title.trim() || !this.taskId) return;
+  constructor(private fb: FormBuilder) {}
 
-    const model: SubtaskModel = {
-      id: crypto.randomUUID(),
-      title: this.title,
-      taskId: this.taskId
-    };
-
-    this.store.createSubtask(model);
-    this.title = '';
+  ngOnInit() {
+    this.subtaskForm = this.fb.group({
+      title: ['', Validators.required]
+    });
   }
 
   ngOnChanges() {
@@ -39,14 +36,28 @@ export class SubtaskList implements OnChanges {
     }
   }
 
-  createSubtask(model: any) {
+  openDialog() {
+    this.showCreateDialog = true;
+    this.subtaskForm.reset(); 
+  }
+
+  submit() {
+    if (this.subtaskForm.invalid || !this.taskId) {
+      this.subtaskForm.markAllAsTouched();
+      return;
+    }
+
+    const model: SubtaskModel = {
+      id: crypto.randomUUID(),
+      title: this.subtaskForm.value.title,
+      taskId: this.taskId
+    };
+
     this.store.createSubtask(model);
+    this.showCreateDialog = false;
   }
 
   deleteSubtask(id: string) {
     this.store.deleteSubtask(id);
-  }
-  openDialog() {
-    this.showCreateDialog = true;
   }
 }

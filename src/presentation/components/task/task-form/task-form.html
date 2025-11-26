@@ -1,11 +1,11 @@
 <div class="task-container">
   <h4>{{ isEdit ? 'Edit Task' : 'Create Task' }}</h4>
 
-  <form class="task-form" (ngSubmit)="submit()">
+  <form class="task-form" [formGroup]="taskForm" (ngSubmit)="submit()">
     <!-- Title -->
     <div class="p-field">
       <label for="title">Title</label>
-      <input pInputText id="title" [(ngModel)]="newTitle" name="title" placeholder="New task..." />
+      <input pInputText id="title" formControlName="newTitle" name="title" placeholder="New task..." />
     </div>
 
     <!-- Status -->
@@ -19,7 +19,7 @@
           {label:'Late', value:'Late'},
           {label:'Finished', value:'Finished'}
         ]"
-        [(ngModel)]="newStatus" 
+        formControlName="newStatus" 
         name="status">
       </p-selectButton>
     </div>
@@ -27,13 +27,13 @@
     <!-- Description -->
     <div class="p-field">
       <label for="description">Description</label>
-      <input type="text" pInputTextarea id="description" [(ngModel)]="newDescription" name="description" rows="3" placeholder="Describe task..." />
+      <input type="text" pInputTextarea id="description" formControlName="newDescription" name="description" rows="3" placeholder="Describe task..." />
     </div>
 
     <!-- Due Date -->
     <div class="p-field">
       <label for="dueDate">Due Date</label>
-      <p-datepicker id="dueDate" [(ngModel)]="newDueDate" name="dueDate" dateFormat="yy-mm-dd" [showIcon]="true" [appendTo]="'body'"></p-datepicker>
+      <p-datepicker id="dueDate" formControlName="newDueDate" name="dueDate" dateFormat="yy-mm-dd" [showIcon]="true" [appendTo]="'body'"></p-datepicker>
     </div>
 
     <!-- Categories -->
@@ -42,7 +42,7 @@
       <p-multiSelect 
         [options]="storeCategories.categories()" 
         optionLabel="name" 
-        [(ngModel)]="categories" 
+        formControlName="categories" 
         name="categories"
         placeholder="Select categories"
         [appendTo]="'body'">
@@ -55,7 +55,7 @@
       <p-multiSelect 
         [options]="storeTags.tags()" 
         optionLabel="name" 
-        [(ngModel)]="tags" 
+        formControlName="tags" 
         name="tags"
         placeholder="Select tags"
         [appendTo]="'body'">

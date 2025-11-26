@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output, Input, OnChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TaskModel } from '../../../../domain/models/task/task-model';
 import { CategoryModel } from '../../../../domain/models/category/category-model';
 import { TagModel } from '../../../../domain/models/tag/tag-model';
@@ -25,8 +25,8 @@ import { InputTextModule } from 'primeng/inputtext';
     SelectButtonModule,
     DatePickerModule,
     TextareaModule,
-    InputTextModule
-  ],
+    InputTextModule,
+    ReactiveFormsModule],
   templateUrl: './task-form.html',
   styleUrls: ['./task-form.css'],
 })
@@ -45,73 +45,64 @@ export class TaskForm implements OnChanges {
   newDueDate: string = '';
   categories: CategoryModel[] = [];
   tags: TagModel[] = [];
-
-  isEdit = false;
+  isEdit = false;  
+  taskForm!: FormGroup;
 
   // Stores 
   storeCategories = inject(CategoryStore);
   storeTags = inject(TagStore);
   taskStore = inject(TaskStore);
 
+   constructor(private fb: FormBuilder) {}
+
   ngOnInit() {
     this.storeCategories.loadCategories();
     this.storeTags.loadTags();
+
+    this.taskForm = this.fb.group({
+      newTitle: ['', Validators.required],
+      newDescription: [''],
+      newStatus: ['Non Started', Validators.required],
+      newDueDate: [null, Validators.required],
+      categories: [[]],
+      tags: [[]]
+    });
   }
 
   ngOnChanges() {
     if (this.task) {
       this.isEdit = true;
-      this.id = this.task.id;
-      this.newTitle = this.task.title;
-      this.newDescription = this.task.description ?? "";
-      this.newStatus = this.task.status;
-
-      const d = new Date(this.task.dueDate);
-      const yyyy = d.getFullYear();
-      const mm = String(d.getMonth() + 1).padStart(2, '0');
-      const dd = String(d.getDate()).padStart(2, '0');
-      this.newDueDate = `${yyyy}-${mm}-${dd}`;
-
-      this.categories = this.task.categories ?? [];
-      this.tags = this.task.tags ?? [];
+      this.taskForm.patchValue({
+        newTitle: this.task.title,
+        newDescription: this.task.description ?? '',
+        newStatus: this.task.status,
+        newDueDate: new Date(this.task.dueDate),
+        categories: this.task.categories ?? [],
+        tags: this.task.tags ?? []
+      });
     } else {
-      this.resetForm();
+      this.taskForm.reset({
+        newStatus: 'Non Started',
+        categories: [],
+        tags: []
+      });
       this.isEdit = false;
     }
   }
 
   submit() {
-    if (!this.newTitle.trim() || !this.newDescription.trim()) return;
-
-    const updatedCategories = this.categories ?? [];
-    const updatedTags = this.tags ?? [];
-
-    const originalCategories = this.task?.categories ?? [];
-    const originalTags = this.task?.tags ?? [];
-
-    const addedCategories = updatedCategories.filter(c => !originalCategories.some(o => o.id === c.id));
-    const removedCategories = originalCategories.filter(o => !updatedCategories.some(c => c.id === o.id));
-
-    const addedTags = updatedTags.filter(t => !originalTags.some(o => o.id === t.id));
-    const removedTags = originalTags.filter(o => !updatedTags.some(t => t.id === o.id));
-
-    if (this.id) {
-      addedCategories.forEach(c => this.taskStore.addCategory(this.id!, c.id));
-      removedCategories.forEach(c => this.taskStore.deleteCategory(this.id!, c.id));
-
-      addedTags.forEach(t => this.taskStore.addTag(this.id!, t.id));
-      removedTags.forEach(t => this.taskStore.deleteTag(this.id!, t.id));
+    if (this.taskForm.invalid) {
+      this.taskForm.markAllAsTouched();
+      return;
     }
 
     const model: TaskModel = {
-      id: this.id ?? crypto.randomUUID(),
-      title: this.newTitle,
-      description: this.newDescription,
-      status: this.newStatus,
-      dueDate: new Date(this.newDueDate),
+      id: this.task?.id ?? crypto.randomUUID(),
+      ...this.taskForm.value,
       userId: this.task?.userId ?? '',
-      categories: updatedCategories,
-      tags: updatedTags
+      title: '',
+      dueDate: '',
+      status: 'Non Started'
     };
 
     if (this.isEdit) {
@@ -120,6 +111,7 @@ export class TaskForm implements OnChanges {
       this.create.emit(model);
     }
   }
+
 
   remove() {
     if (this.task) this.delete.emit(this.task);

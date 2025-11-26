@@ -1,26 +1,35 @@
 import { Component, inject, Output, EventEmitter, effect } from '@angular/core';
 import { TaskStore } from '../../../stores/task-store';
-import { TaskModel } from '../../../../domain/models/task/task-model';
+import { TaskModel, TaskStatus } from '../../../../domain/models/task/task-model';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from "primeng/button";
 import { DialogModule } from "primeng/dialog";
 import { ListboxModule } from "primeng/listbox";
 import { DatePickerModule } from 'primeng/datepicker';
 import { PanelModule } from 'primeng/panel';
-
 import { InputTextModule } from 'primeng/inputtext';
-
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, ButtonModule, DialogModule, ListboxModule, DatePickerModule, PanelModule, InputTextModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    ButtonModule,
+    DialogModule,
+    ListboxModule,
+    DatePickerModule,
+    PanelModule,
+    InputTextModule
+  ],
   templateUrl: './task-list.html',
   styleUrls: ['./task-list.css']
 })
 export class TaskList {
   private store = inject(TaskStore);
+  private fb = inject(FormBuilder);
 
   tasks = this.store.tasks;
   isLoading = this.store.isLoading;
@@ -32,11 +41,6 @@ export class TaskList {
   showErrorDialog = false;
   selectedTask: TaskModel | null = null;
 
-  newTitle: string = '';
-  newDescription: string = '';
-  newStatus: TaskModel['status'] = 'Non Started';
-  newDueDate: string = '';
-
   statusOptions = [
     { label: 'Non Started', value: 'Non Started' },
     { label: 'In Progress', value: 'In Progress' },
@@ -44,6 +48,13 @@ export class TaskList {
     { label: 'Late', value: 'Late' },
     { label: 'Finished', value: 'Finished' }
   ];
+
+  listForm = this.fb.group({
+    newTitle: ['', Validators.required],
+    newDescription: [''],
+    newDueDate: [null, Validators.required],
+    newStatus: ['Non Started', Validators.required]
+  });
 
   ngOnInit() {
     this.store.loadTasks();
@@ -60,29 +71,33 @@ export class TaskList {
   }
 
   addTask() {
-    if (!this.newTitle.trim() || !this.newDescription.trim()) return;
-
-      const model: TaskModel = {
-        id: crypto.randomUUID(),
-        title: this.newTitle,
-        description: this.newDescription,
-        status: this.newStatus,
-        dueDate: new Date(this.newDueDate),
-        userId: ''
-      };
-
-      this.store.createTask(model);
-
-      if (this.store.error()) {  
-        this.showErrorDialog = true;
-      } else {
-        this.newTitle = '';
-        this.newDescription = '';
-        this.newStatus = 'Non Started';
-        this.newDueDate = '';
-        this.showFormDialog = false;
-      }
+    if (this.listForm.invalid) {
+      this.listForm.markAllAsTouched();
+      return;
     }
+
+    const { newTitle, newDescription, newStatus, newDueDate } = this.listForm.value;
+
+    const model: TaskModel = {
+      id: crypto.randomUUID(),
+      title: newTitle!,
+      description: newDescription ?? '',
+      status: newStatus as TaskStatus,
+      dueDate: new Date(newDueDate!),
+      userId: ''
+    };
+
+    this.store.createTask(model);
+
+    if (this.store.error()) {
+      this.showErrorDialog = true;
+    } else {
+      this.listForm.reset({
+        newStatus: 'Non Started'
+      });
+      this.showFormDialog = false;
+    }
+  }
 
   deleteTask(task: TaskModel) {
     this.store.deleteTask(task.id);
@@ -99,5 +114,4 @@ export class TaskList {
       default: return '';
     }
   }
-  
 }

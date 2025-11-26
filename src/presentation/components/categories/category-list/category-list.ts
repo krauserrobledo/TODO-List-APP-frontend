@@ -10,6 +10,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { ListboxModule } from 'primeng/listbox';
 
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-category-list',
   standalone: true,
@@ -21,7 +23,8 @@ import { ListboxModule } from 'primeng/listbox';
     CardModule,
     InputTextModule,
     ColorPickerModule,
-    ListboxModule
+    ListboxModule,
+    ReactiveFormsModule
   ],
   templateUrl: './category-list.html',
   styleUrls: ['./category-list.css']
@@ -31,9 +34,12 @@ export class CategoryList {
   showCreateDialog = false;
   name = '';
   color = '#0078d7'; 
+  categoryForm!: FormGroup<{}>;
 
   ngOnInit() {
     this.store.loadCategories();
+    
+    
   }
 
   submit() {
@@ -58,5 +64,6 @@ export class CategoryList {
 
   openDialog() {
     this.showCreateDialog = true;
+    this.categoryForm = new FormGroup({});
   }
 }

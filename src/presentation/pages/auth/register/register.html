@@ -4,11 +4,9 @@
     <label for="userName">Name</label>
     <div class="field">
 
-
       <input id="userName" type="text" formControlName="userName" pInputText
         [class]="(registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched ? 'p-invalid ' : '') + 'w-full'"
         placeholder="Enter your Name">
-
 
       @if (registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched) {
       <small class="p-error block">
@@ -20,7 +18,6 @@
 
     <label for="email">Email Address</label>
     <div class="field">
-
       <span class="p-input-icon-left">
         <i class="pi pi-envelope"></i>
         <input id="email" type="email" formControlName="email" pInputText
@@ -36,9 +33,7 @@
     </div>
 
     <label for="password">Password</label>
-
     <div class="field">
-
       <p-password id="password" formControlName="password" [feedback]="false" [toggleMask]="true" styleClass="w-full"
         [inputStyleClass]="(registerForm.get('password')?.invalid && registerForm.get('password')?.touched ? 'p-invalid ' : '') + 'w-full'"
         placeholder="Enter your password">
@@ -65,7 +60,6 @@
         Sign In Here
       </a>
     </p>
-
   </form>
 </div>
 

@@ -305,11 +305,6 @@ Responses tested with DevTools
       - Used pbutton in subtask components.
 
       - implement primeng components in task editdit form.
-      
-
-
-
-
 
 ### ***Dialogs***
 
@@ -320,12 +315,23 @@ Responses tested with DevTools
   - Used p-dialog in task-list creation and edit form.
 
 
-
-
 ### ***Reactive forms*** 
 
+  - Import module in app module
+
+  - Implemented on Auth
+
+  - Update category lists to use reactive form in dialog.
+
+  - Update subtask list to use reactive forms
+
+  - Implemented on task form.
+
+  - Updated task list to use reactive forms
 
 
+### ***Observables - Suscribers***
 
+  -
 
-### ***Observables - Suscribers*** 
+  -

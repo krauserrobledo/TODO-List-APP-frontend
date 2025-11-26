@@ -21,28 +21,27 @@
         </div>
       </ng-template>
     </p-listbox>
-
   </div>
 </div>
 
 <!-- Form Dialog-->
 <p-dialog header="Create Task" [(visible)]="showFormDialog" [modal]="true" [draggable]="false">
   <div class="form-container">
-    <form (ngSubmit)="addTask()" class="p-fluid task-form">
+    <form (ngSubmit)="addTask()" [formGroup]="listForm" class="p-fluid task-form">
       <div class="p-field">
-        <input type="text" pInputText id="title" [(ngModel)]="newTitle" name="title" placeholder="Title" />
+        <input type="text" pInputText id="title" formControlName="newTitle" name="title" placeholder="Title" />
       </div>
 
       <div class="p-field">
-        <input type="text" pInputText id="description" [(ngModel)]="newDescription" name="description"
+        <input type="text" pInputText id="description" formControlName="newDescription" name="description"
           placeholder="Description" />
       </div>
       <div class="p-field">
-        <p-datepicker id="date" [(ngModel)]="newDueDate" name="dueDate" placeholder="Select a date" [appendTo]="'body'"/>
+        <p-datepicker id="date" formControlName="newDueDate" name="dueDate" placeholder="Select a date" [appendTo]="'body'"/>
       </div>
       <div class="p-field">
         <p-panel header="Status" [toggleable]="true">
-          <p-listbox [(ngModel)]="newStatus" name="status" [options]="statusOptions" [style]="{width:'100%'}">
+          <p-listbox formControlName="newStatus" name="status" [options]="statusOptions" [style]="{width:'100%'}">
             <ng-template let-option pTemplate="item">
               <div [ngClass]="getStatusClass(option.value)" class="task-item">
                 {{ option.label }}
