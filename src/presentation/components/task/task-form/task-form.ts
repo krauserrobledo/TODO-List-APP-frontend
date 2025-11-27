@@ -53,7 +53,16 @@ export class TaskForm implements OnChanges {
   storeTags = inject(TagStore);
   taskStore = inject(TaskStore);
 
-   constructor(private fb: FormBuilder) {}
+   constructor(private fb: FormBuilder) {
+    this.taskForm = this.fb.group({
+      newTitle: ['', Validators.required],
+      newDescription: [''],
+      newStatus: ['Non Started', Validators.required],
+      newDueDate: [null, Validators.required],
+      categories: [[]],
+      tags: [[]]
+   })
+  }
 
   ngOnInit() {
     this.storeCategories.loadCategories();

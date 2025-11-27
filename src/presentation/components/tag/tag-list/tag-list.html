@@ -21,8 +21,8 @@
 <p-dialog header="Create Category" [(visible)]="showCreateDialog" [modal]="true" [draggable]="false"
   [resizable]="false">
 
-  <form (ngSubmit)="submit()" class="p-fluid form-container">
-    <input pInputText="name" name="name" placeholder="Tag name" />
+  <form [formGroup]="tagForm" (ngSubmit)="submit()" class="p-fluid form-container">
+    <input pInputText="name" name="name" formControlName="name" placeholder="Tag name" />
     <p-button type="submit" label="Save" icon="pi pi-check" severity="success"></p-button>
   </form>
 </p-dialog>

@@ -13,14 +13,14 @@
       <h4>Add New Task...</h4>
       <p-button (click)="showFormDialog = !showFormDialog" icon="pi pi-plus"> </p-button>
     </div>
-    <p-listbox [options]="tasks()" [(ngModel)]="selectedTask" optionLabel="title" (onChange)="onSelect($event.value)"
-      [style]="{width:'100%'}">
+    <p-listbox [options]="tasks()" optionLabel="title" (onChange)="onSelect($event.value)" [style]="{width:'100%'}">
       <ng-template let-task pTemplate="item">
         <div [ngClass]="getStatusClass(task.status)" class="task-item">
           {{ task.title }}
         </div>
       </ng-template>
     </p-listbox>
+
   </div>
 </div>
 
@@ -37,7 +37,8 @@
           placeholder="Description" />
       </div>
       <div class="p-field">
-        <p-datepicker id="date" formControlName="newDueDate" name="dueDate" placeholder="Select a date" [appendTo]="'body'"/>
+        <p-datepicker id="date" formControlName="newDueDate" name="dueDate" placeholder="Select a date"
+          [appendTo]="'body'" />
       </div>
       <div class="p-field">
         <p-panel header="Status" [toggleable]="true">
@@ -52,7 +53,8 @@
       </div>
       <div class="p-dialog-footer">
         <p-button type="submit" label="Add" icon="pi pi-check" severity="success"></p-button>
-        <p-button type="button" label="Cancel" icon="pi pi-times" severity="danger" (click)="showFormDialog = false"></p-button>
+        <p-button type="button" label="Cancel" icon="pi pi-times" severity="danger"
+          (click)="showFormDialog = false"></p-button>
       </div>
     </form>
   </div>

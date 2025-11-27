@@ -4,40 +4,47 @@ import { TagStore } from '../../../stores/tag-store';
 import { TagModel } from '../../../../domain/models/tag/tag-model';
 import { Button } from "primeng/button";
 import { Dialog } from "primeng/dialog";
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Card } from "primeng/card";
 import { InputText } from "primeng/inputtext";
 
 @Component({
   selector: 'app-tag-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, Button, Dialog, Card, InputText],
+  imports: [CommonModule, ReactiveFormsModule, Button, Dialog, Card, InputText],
   templateUrl: './tag-list.html',
   styleUrls: ['./tag-list.css'] 
 })
 export class TagList {
-  name = '';
   store = inject(TagStore);
   showCreateDialog= false;
+  tagForm!: FormGroup;
+categoryForm: any;
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
     this.store.loadTags();
+
+    this.tagForm = this.fb.group({
+      name: ['', Validators.required],
+    });
   }
 
   submit() {
-    if (!this.name.trim()) return;
+    if (this.tagForm.invalid) return;
+
+    const formValue = this.tagForm.value;
 
     const model: TagModel = {
       id: crypto.randomUUID(),
-      name: this.name,
+      name: formValue.name,
       userId: this.getUserId()
     };
 
     this.store.createTag(model);
-    this.name = '';
+    this.showCreateDialog = false;
   }
 
-  // not using ATM
   private getUserId(): string {
     return 'current-user-id';
   }

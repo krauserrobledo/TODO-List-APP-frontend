@@ -24,11 +24,9 @@ export class AuthApiRepository implements AuthRepository {
     const response = await this.http.post<any>(`${this.baseUrl}/login`, dto).toPromise();
     if (!response) throw new Error('Login failed');
   
-    // Convertimos respuesta cruda → DTO → UserModel
     const authResponseDto = this.authMapper.toAuthResponseDto(response);
     const userModel = this.authMapper.toUserModel(authResponseDto);
-  
-    // Guardamos token y usuario actual
+
     this.setToken(authResponseDto.token);
     this.setCurrentUser(userModel);
   

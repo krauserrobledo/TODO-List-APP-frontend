@@ -1,8 +1,8 @@
-import { Component, inject, Output, EventEmitter, effect } from '@angular/core';
+import { Component, inject, Output, EventEmitter, effect, Injector } from '@angular/core';
 import { TaskStore } from '../../../stores/task-store';
 import { TaskModel, TaskStatus } from '../../../../domain/models/task/task-model';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from "primeng/button";
 import { DialogModule } from "primeng/dialog";
 import { ListboxModule } from "primeng/listbox";
@@ -16,7 +16,6 @@ import { InputTextModule } from 'primeng/inputtext';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormsModule,
     ButtonModule,
     DialogModule,
     ListboxModule,
@@ -27,6 +26,7 @@ import { InputTextModule } from 'primeng/inputtext';
   templateUrl: './task-list.html',
   styleUrls: ['./task-list.css']
 })
+
 export class TaskList {
   private store = inject(TaskStore);
   private fb = inject(FormBuilder);
@@ -58,11 +58,6 @@ export class TaskList {
 
   ngOnInit() {
     this.store.loadTasks();
-    effect(() => {
-      if (this.store.error()) {
-        this.showErrorDialog = true;
-      }
-    });
   }
 
   onSelect(task: TaskModel) {
@@ -76,14 +71,14 @@ export class TaskList {
       return;
     }
 
-    const { newTitle, newDescription, newStatus, newDueDate } = this.listForm.value;
+    const formValue = this.listForm.value;
 
     const model: TaskModel = {
       id: crypto.randomUUID(),
-      title: newTitle!,
-      description: newDescription ?? '',
-      status: newStatus as TaskStatus,
-      dueDate: new Date(newDueDate!),
+      title: formValue.newTitle!,
+      description: formValue.newDescription ?? '',
+      status: formValue.newStatus as TaskStatus,
+      dueDate: new Date(formValue.newDueDate!),
       userId: ''
     };
 

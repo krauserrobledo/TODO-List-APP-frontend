@@ -1,6 +1,6 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CategoryStore } from '../../../stores/category-store';
 import { CategoryModel } from '../../../../domain/models/category/category-model';
 import { ButtonModule } from "primeng/button";
@@ -10,14 +10,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { ListboxModule } from 'primeng/listbox';
 
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-
 @Component({
   selector: 'app-category-list',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,
     ButtonModule,
     DialogModule,
     CardModule,
@@ -32,30 +29,34 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 export class CategoryList {
   store = inject(CategoryStore);
   showCreateDialog = false;
-  name = '';
-  color = '#0078d7'; 
-  categoryForm!: FormGroup<{}>;
+  categoryForm!: FormGroup;
+
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
     this.store.loadCategories();
-    
-    
+
+    this.categoryForm = this.fb.group({
+      name: ['', Validators.required],
+      color: ['#0078d7'],   
+    });
   }
 
   submit() {
-    if (!this.name.trim()) return;
+    if (this.categoryForm.invalid) return;
+
+    const formValue = this.categoryForm.value;
 
     const model: CategoryModel = {
       id: crypto.randomUUID(),
-      name: this.name,
-      color: this.color,
+      name: formValue.name,
+      color: formValue.color,
       userId: this.getUserId(),
     };
 
     this.store.createCategory(model);
     this.showCreateDialog = false;
-    this.name = '';
-    this.color = '#0078d7';
+    this.categoryForm.reset({ name: '', color: '#0078d7' }); 
   }
 
   private getUserId(): string {
@@ -64,6 +65,6 @@ export class CategoryList {
 
   openDialog() {
     this.showCreateDialog = true;
-    this.categoryForm = new FormGroup({});
+    this.categoryForm.reset({ name: '', color: '#0078d7' });
   }
 }
