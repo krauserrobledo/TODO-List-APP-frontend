@@ -4,7 +4,7 @@ import { TagModel } from "../../domain/models/tag/tag-model";
 import { TagMapper } from "../mappers/tag-mapper";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environments/environment";
-import { firstValueFrom } from "rxjs";
+import { firstValueFrom, Observable } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class TagApiRepository implements TagRepository {
@@ -14,7 +14,7 @@ export class TagApiRepository implements TagRepository {
     private baseUrl = `${environment.apiUrl}/tags`;
 
 
-    async createTag(model: TagModel): Promise<TagModel> {
+    createTag(model: TagModel): Observable<TagModel> {
         const dto = this.tagMapper.toCreateRequestDto(model);
 
         const response = await this.http.post<any>(this.baseUrl, dto).toPromise();
@@ -25,7 +25,7 @@ export class TagApiRepository implements TagRepository {
     }
 
 
-    async updateTag(id: string, model: TagModel): Promise<TagModel> {
+    updateTag(id: string, model: TagModel): Observable<TagModel> {
 
         const dto = this.tagMapper.toUpdateRequestDto(model);
 
@@ -37,19 +37,19 @@ export class TagApiRepository implements TagRepository {
     }
 
 
-    async deleteTag(id: string): Promise<void> {
-        await this.http.delete(`${this.baseUrl}/${id}`).toPromise();
+    deleteTag(id: string): Promise<Observable<void>> {
+        return await this.http.delete(`${this.baseUrl}/${id}`).toPromise()?? "";
     }
 
 
-    async getUserTags(): Promise<TagModel[]> {
+    getUserTags(): Observable<TagModel[]> {
         const response = await this.http.get<any[]>(`${this.baseUrl}/user`).toPromise();
         if (!response) return [];
         return response.map(dto => this.tagMapper.toTagModel(dto));
     }
     
 
-    async getTag(id: string): Promise<TagModel> {
+    getTag(id: string): Observable<TagModel> {
         const dto = await firstValueFrom(
             this.http.get<any>(`${this.baseUrl}/${id}`)
         );

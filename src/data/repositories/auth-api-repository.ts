@@ -7,6 +7,7 @@ import { AuthMapper } from '../mappers/auth-mapper';
 import { LoginModel } from '../../domain/models/auth/login-model';
 import { RegisterModel } from '../../domain/models/auth/register-model';
 import { ValidateTokenModel } from '../../domain/models/auth/validate-token-model';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthApiRepository implements AuthRepository {
@@ -17,7 +18,7 @@ export class AuthApiRepository implements AuthRepository {
   private readonly TOKEN_KEY = 'auth_token';
   private readonly USER_KEY = 'current_user';
 
-  async login(model: LoginModel): Promise<UserModel> {
+  login(model: LoginModel): Observable<UserModel> {
  
     const dto = this.authMapper.toLoginRequestDto(model);
 
@@ -33,7 +34,7 @@ export class AuthApiRepository implements AuthRepository {
     return userModel;
   }
   
-  async register(model: RegisterModel): Promise<UserModel> {
+  register(model: RegisterModel): Observable<UserModel> {
     const dto = this.authMapper.toRegisterRequestDto(model);
 
     const response = await this.http.post<any>(`${this.baseUrl}/register`, dto).toPromise();
@@ -48,7 +49,7 @@ export class AuthApiRepository implements AuthRepository {
     return userModel;
   }
 
-  async validateToken(model: ValidateTokenModel): Promise<{ valid: boolean }> {
+  validateToken(model: ValidateTokenModel): Observable<{ valid: boolean }> {
     const dto = this.authMapper.toValidateTokenRequestDto(model);
 
     return await this.http.post<{ valid: boolean }>(`${this.baseUrl}/validate`, dto).toPromise() 

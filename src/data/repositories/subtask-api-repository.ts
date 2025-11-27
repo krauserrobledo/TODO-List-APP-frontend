@@ -4,7 +4,7 @@ import { SubtaskModel } from "../../domain/models/subtask/subtask-model";
 import { HttpClient } from "@angular/common/http";
 import { SubtaskMapper } from "../mappers/subtask-mapper";
 import { environment } from "../../environments/environment";
-import { firstValueFrom } from "rxjs";
+import { firstValueFrom, Observable } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class SubtaskApiRepository implements SubtaskRepository {
@@ -14,7 +14,7 @@ export class SubtaskApiRepository implements SubtaskRepository {
     private baseUrl = `${environment.apiUrl}/subtasks`;
 
 
-    async createSubtask(taskId: string, model: SubtaskModel): Promise<SubtaskModel> {
+    createSubtask(taskId: string, model: SubtaskModel): Observable<SubtaskModel> {
         const dto = this.subtaskMapper.toCreateRequestDto(model);
 
         const response = await this.http.post<any>(`${this.baseUrl}/task/${taskId}`, dto).toPromise();
@@ -25,7 +25,7 @@ export class SubtaskApiRepository implements SubtaskRepository {
     }
 
 
-    async updateSubtask(id: string, model: SubtaskModel): Promise<SubtaskModel> {
+    updateSubtask(id: string, model: SubtaskModel): Observable<SubtaskModel> {
 
         const dto = this.subtaskMapper.toUpdateRequestDto(model);
 
@@ -39,12 +39,12 @@ export class SubtaskApiRepository implements SubtaskRepository {
     }
 
 
-    async deleteSubtask(id: string): Promise<void> {
+    deleteSubtask(id: string): Observable<void> {
 
         await this.http.delete(`${this.baseUrl}/${id}`).toPromise();
     }
 
-    async getSubtask(id: string): Promise<SubtaskModel> {
+    getSubtask(id: string): Observable<SubtaskModel> {
 
         const dto = await firstValueFrom(
 
@@ -55,7 +55,7 @@ export class SubtaskApiRepository implements SubtaskRepository {
     }
 
 
-    async getTaskSubtasks(taskId: string): Promise<SubtaskModel[]> {
+    getTaskSubtasks(taskId: string): Observable<SubtaskModel[]> {
         const response = await this.http.get<any[]>(`${this.baseUrl}/task/${taskId}`).toPromise();
         if (!response) return [];
         return response.map(dto => this.subtaskMapper.toSubtaskModel(dto));

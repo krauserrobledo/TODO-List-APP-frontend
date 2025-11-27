@@ -4,7 +4,7 @@ import { TaskModel } from "../../domain/models/task/task-model";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environments/environment";
 import { TaskMapper } from "../mappers/task-mapper";
-import { firstValueFrom } from "rxjs";
+import { firstValueFrom, Observable } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class TaskApiRepository implements TaskRepository {
@@ -14,7 +14,7 @@ export class TaskApiRepository implements TaskRepository {
   private baseUrl = `${environment.apiUrl}/tasks`;
 
   // Create
-  async createTask(model: TaskModel): Promise<TaskModel> {
+  createTask(model: TaskModel): Observable<TaskModel> {
 
     const dto = this.taskMapper.toCreateRequestDto(model);
 
@@ -26,7 +26,7 @@ export class TaskApiRepository implements TaskRepository {
   }
 
   //Update
-  async updateTask(id: string, model: TaskModel): Promise<TaskModel> {
+  updateTask(id: string, model: TaskModel): Observable<TaskModel> {
 
     const dto = this.taskMapper.toUpdateRequestDto(model);
 
@@ -38,12 +38,12 @@ export class TaskApiRepository implements TaskRepository {
   }
 
   //Delete
-  async deleteTask(id: string): Promise<void> {
+  deleteTask(id: string): Observable<void> {
     await firstValueFrom(this.http.delete<void>(`${this.baseUrl}/${id}`));
   }
 
   //Get Task
-  async getTask(id: string): Promise<TaskModel> {
+  getTask(id: string): Observable<TaskModel> {
 
     const response = await this.http.get<any>(`${this.baseUrl}/${id}`).toPromise();
     if (!response) throw new Error(`Task with id ${id} not found`);
@@ -52,7 +52,7 @@ export class TaskApiRepository implements TaskRepository {
   }
 
   //Get User Task
-  async getUserTasks(): Promise<TaskModel[]> {
+  getUserTasks(): Observable<TaskModel[]> {
     const token = localStorage.getItem('authToken');
     const headers = { Authorization: `Bearer ${token}` };
 
@@ -63,21 +63,21 @@ export class TaskApiRepository implements TaskRepository {
 
 
   //Add category
-  async addCategoryToTask(taskId: string, categoryId: string): Promise<TaskModel> {
+  addCategoryToTask(taskId: string, categoryId: string): Observable<TaskModel> {
 
     const response = await this.http.post<any>(`${this.baseUrl}/${taskId}/categories/${categoryId}`, {}).toPromise();
     const dto = this.taskMapper.toTaskResponseDto(response);
     return this.taskMapper.toTaskModel(dto);
   }
   // Add Tags
-  async addTagToTask(taskId: string, tagId: string): Promise<TaskModel> {
+  addTagToTask(taskId: string, tagId: string): Observable<TaskModel> {
 
     const response = await this.http.post<any>(`${this.baseUrl}/${taskId}/tags/${tagId}`, {}).toPromise();
     const dto = this.taskMapper.toTaskResponseDto(response);
     return this.taskMapper.toTaskModel(dto);
   }
   // Delete Category
-  async deleteCategoryFromTask(taskId: string, categoryId: string): Promise<TaskModel> {
+  deleteCategoryFromTask(taskId: string, categoryId: string): Observable<TaskModel> {
 
     const response = await this.http.delete<any>(`${this.baseUrl}/${taskId}/categories/${categoryId}`).toPromise();
     const dto = this.taskMapper.toTaskResponseDto(response);
@@ -85,7 +85,7 @@ export class TaskApiRepository implements TaskRepository {
   }
 
   // Delete Tags
-  async deleteTagFromTask(taskId: string, tagId: string): Promise<TaskModel> {
+  deleteTagFromTask(taskId: string, tagId: string): Observable<TaskModel> {
 
     const response = await this.http.delete<any>(`${this.baseUrl}/${taskId}/tags/${tagId}`).toPromise();
     const dto = this.taskMapper.toTaskResponseDto(response);
