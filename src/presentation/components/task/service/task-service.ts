@@ -9,6 +9,7 @@ import { GetTaskUseCase } from "../../../../domain/usecases/task/get-task-usecas
 import { GetUserTasksUseCase } from "../../../../domain/usecases/task/get-user-tasks-usecase";
 import { UpdateTaskUseCase } from "../../../../domain/usecases/task/update-task-usecase";
 import { TaskModel } from "../../../../domain/models/task/task-model";
+import { Observable } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
@@ -24,11 +25,11 @@ export class TaskService {
     private deleteTagUseCase: DeleteTagFromTaskUseCase
   ) {}
 
-  createTask(model: TaskModel): Promise<TaskModel> {
+  createTask(model: TaskModel): Observable<TaskModel> {
     return this.createUseCase.execute(model);
   }
 
-  updateTask(id: string, model: TaskModel): Promise<TaskModel> {
+  updateTask(id: string, model: TaskModel): Observable<TaskModel> {
     return this.updateUseCase.execute(id, model);
   }
 

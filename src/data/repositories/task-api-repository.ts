@@ -17,78 +17,56 @@ export class TaskApiRepository implements TaskRepository {
   createTask(model: TaskModel): Observable<TaskModel> {
 
     const dto = this.taskMapper.toCreateRequestDto(model);
-
-    const response = await this.http.post<any>(this.baseUrl, dto).toPromise();
-    if (!response) throw new Error('Creation failed');
-
-    const taskResponseDto = this.taskMapper.toTaskResponseDto(response);
-    return this.taskMapper.toTaskModel(taskResponseDto);
+    return this.http.post<TaskModel>(this.baseUrl, dto);
   }
 
   //Update
   updateTask(id: string, model: TaskModel): Observable<TaskModel> {
 
     const dto = this.taskMapper.toUpdateRequestDto(model);
-
-    const response = await this.http.put<any>(`${this.baseUrl}/${id}`, dto).toPromise();
-    if (!response) throw new Error('Update failed');
-
-    const taskResponseDto = this.taskMapper.toTaskResponseDto(response);
-    return this.taskMapper.toTaskModel(taskResponseDto);
+    return this.http.put<TaskModel>(`${this.baseUrl}/${id}`, dto);
   }
 
   //Delete
   deleteTask(id: string): Observable<void> {
-    await firstValueFrom(this.http.delete<void>(`${this.baseUrl}/${id}`));
+
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
   //Get Task
   getTask(id: string): Observable<TaskModel> {
 
-    const response = await this.http.get<any>(`${this.baseUrl}/${id}`).toPromise();
-    if (!response) throw new Error(`Task with id ${id} not found`);
-    const taskResponseDto = this.taskMapper.toTaskResponseDto(response);
-    return this.taskMapper.toTaskModel(taskResponseDto);
+    return this.http.get<TaskModel>(`${this.baseUrl}/${id}`);
   }
 
   //Get User Task
   getUserTasks(): Observable<TaskModel[]> {
+
     const token = localStorage.getItem('authToken');
     const headers = { Authorization: `Bearer ${token}` };
-
-    const response = await this.http.get<any[]>(`${this.baseUrl}/user`, { headers }).toPromise();
-    if (!response) return [];
-    return response.map(dto => this.taskMapper.toTaskModel(dto));
+    return this.http.get<TaskModel[]>(`${this.baseUrl}/user`, { headers });
   }
 
 
   //Add category
   addCategoryToTask(taskId: string, categoryId: string): Observable<TaskModel> {
 
-    const response = await this.http.post<any>(`${this.baseUrl}/${taskId}/categories/${categoryId}`, {}).toPromise();
-    const dto = this.taskMapper.toTaskResponseDto(response);
-    return this.taskMapper.toTaskModel(dto);
+    return this.http.post<TaskModel>(`${this.baseUrl}/${taskId}/categories/${categoryId}`, {});
   }
   // Add Tags
   addTagToTask(taskId: string, tagId: string): Observable<TaskModel> {
 
-    const response = await this.http.post<any>(`${this.baseUrl}/${taskId}/tags/${tagId}`, {}).toPromise();
-    const dto = this.taskMapper.toTaskResponseDto(response);
-    return this.taskMapper.toTaskModel(dto);
+    return this.http.post<TaskModel>(`${this.baseUrl}/${taskId}/tags/${tagId}`, {})
   }
   // Delete Category
   deleteCategoryFromTask(taskId: string, categoryId: string): Observable<TaskModel> {
 
-    const response = await this.http.delete<any>(`${this.baseUrl}/${taskId}/categories/${categoryId}`).toPromise();
-    const dto = this.taskMapper.toTaskResponseDto(response);
-    return this.taskMapper.toTaskModel(dto);
+    return this.http.delete<TaskModel>(`${this.baseUrl}/${taskId}/categories/${categoryId}`);
   }
 
   // Delete Tags
   deleteTagFromTask(taskId: string, tagId: string): Observable<TaskModel> {
 
-    const response = await this.http.delete<any>(`${this.baseUrl}/${taskId}/tags/${tagId}`).toPromise();
-    const dto = this.taskMapper.toTaskResponseDto(response);
-    return this.taskMapper.toTaskModel(dto);
+    return this.http.delete<TaskModel>(`${this.baseUrl}/${taskId}/tags/${tagId}`)
   }
 }

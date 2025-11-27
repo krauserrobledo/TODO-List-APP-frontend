@@ -17,12 +17,13 @@ export class AuthApiRepository implements AuthRepository {
   private baseUrl = `${environment.apiUrl}/auth`;
   private readonly TOKEN_KEY = 'auth_token';
   private readonly USER_KEY = 'current_user';
+  userModel!: Observable<UserModel>;
 
   login(model: LoginModel): Observable<UserModel> {
  
     const dto = this.authMapper.toLoginRequestDto(model);
 
-    const response = await this.http.post<any>(`${this.baseUrl}/login`, dto).toPromise();
+    const response = this.http.post<any>(`${this.baseUrl}/login`, dto);
     if (!response) throw new Error('Login failed');
   
     const authResponseDto = this.authMapper.toAuthResponseDto(response);
@@ -31,13 +32,13 @@ export class AuthApiRepository implements AuthRepository {
     this.setToken(authResponseDto.token);
     this.setCurrentUser(userModel);
   
-    return userModel;
+    return this.userModel;
   }
   
   register(model: RegisterModel): Observable<UserModel> {
     const dto = this.authMapper.toRegisterRequestDto(model);
 
-    const response = await this.http.post<any>(`${this.baseUrl}/register`, dto).toPromise();
+    const response = this.http.post<any>(`${this.baseUrl}/register`, dto);
     if (!response) throw new Error('Registration failed');
   
     const authResponseDto = this.authMapper.toAuthResponseDto(response);
@@ -46,13 +47,13 @@ export class AuthApiRepository implements AuthRepository {
     this.setToken(authResponseDto.token);
     this.setCurrentUser(userModel);
     
-    return userModel;
+    return this.userModel;
   }
 
   validateToken(model: ValidateTokenModel): Observable<{ valid: boolean }> {
     const dto = this.authMapper.toValidateTokenRequestDto(model);
 
-    return await this.http.post<{ valid: boolean }>(`${this.baseUrl}/validate`, dto).toPromise() 
+    return this.http.post<{ valid: boolean }>(`${this.baseUrl}/validate`, dto) 
       ?? { valid: false };
   }
 

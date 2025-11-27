@@ -15,45 +15,33 @@ export class TagApiRepository implements TagRepository {
 
 
     createTag(model: TagModel): Observable<TagModel> {
+    
         const dto = this.tagMapper.toCreateRequestDto(model);
-
-        const response = await this.http.post<any>(this.baseUrl, dto).toPromise();
-        if (!response) throw new Error('Creation failed');
-
-        const tagResponseDto = this.tagMapper.toTagResponseDto(response);
-        return this.tagMapper.toTagModel(tagResponseDto);
+        return this.http.post<TagModel>(this.baseUrl, dto);
     }
 
 
     updateTag(id: string, model: TagModel): Observable<TagModel> {
 
         const dto = this.tagMapper.toUpdateRequestDto(model);
-
-        const response = await this.http.put<any>(`${this.baseUrl}/${id}`, dto).toPromise();
-        if (!response) throw new Error('Update failed');
-
-        const tagResponseDto = this.tagMapper.toTagResponseDto(response);
-        return this.tagMapper.toTagModel(tagResponseDto);
+        return this.http.put<TagModel>(`${this.baseUrl}/${id}`, dto);
     }
 
 
-    deleteTag(id: string): Promise<Observable<void>> {
-        return await this.http.delete(`${this.baseUrl}/${id}`).toPromise()?? "";
+    deleteTag(id: string): Observable<void> {
+
+        return this.http.delete<void>(`${this.baseUrl}/${id}`);
     }
 
 
     getUserTags(): Observable<TagModel[]> {
-        const response = await this.http.get<any[]>(`${this.baseUrl}/user`).toPromise();
-        if (!response) return [];
-        return response.map(dto => this.tagMapper.toTagModel(dto));
+        
+        return this.http.get<TagModel[]>(`${this.baseUrl}/user`);
     }
     
 
     getTag(id: string): Observable<TagModel> {
-        const dto = await firstValueFrom(
-            this.http.get<any>(`${this.baseUrl}/${id}`)
-        );
-
-        return this.tagMapper.toTagModel(dto);
+       
+        return this.http.get<TagModel>(`${this.baseUrl}/${id}`)
     }
 }

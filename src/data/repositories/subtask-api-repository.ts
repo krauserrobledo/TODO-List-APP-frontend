@@ -15,50 +15,35 @@ export class SubtaskApiRepository implements SubtaskRepository {
 
 
     createSubtask(taskId: string, model: SubtaskModel): Observable<SubtaskModel> {
+        
         const dto = this.subtaskMapper.toCreateRequestDto(model);
 
-        const response = await this.http.post<any>(`${this.baseUrl}/task/${taskId}`, dto).toPromise();
-        if (!response) throw new Error('Creation failed');
-
-        const subtaskResponseDto = this.subtaskMapper.toSubtaskResponseDto(response);
-        return this.subtaskMapper.toSubtaskModel(subtaskResponseDto);
+        return this.http.post<SubtaskModel>(`${this.baseUrl}/task/${taskId}`, dto);
     }
 
 
     updateSubtask(id: string, model: SubtaskModel): Observable<SubtaskModel> {
 
-        const dto = this.subtaskMapper.toUpdateRequestDto(model);
+        const dto = this.subtaskMapper.toUpdateRequestDto(model)
 
-        const response = await this.http.put<any>(`${this.baseUrl}/${id}`, dto).toPromise();
-
-        if (!response) throw new Error('Update failed');
-
-        const subtaskResponseDto = this.subtaskMapper.toSubtaskResponseDto(response);
-
-        return this.subtaskMapper.toSubtaskModel(subtaskResponseDto);
+        return this.http.put<SubtaskModel>(`${this.baseUrl}/${id}`, dto);
     }
 
 
     deleteSubtask(id: string): Observable<void> {
 
-        await this.http.delete(`${this.baseUrl}/${id}`).toPromise();
+        return this.http.delete<void>(`${this.baseUrl}/${id}`);
     }
 
     getSubtask(id: string): Observable<SubtaskModel> {
 
-        const dto = await firstValueFrom(
-
-            this.http.get<any>(`${this.baseUrl}/${id}`)
-        );
-
-        return this.subtaskMapper.toSubtaskModel(dto);
+        return this.http.get<SubtaskModel>(`${this.baseUrl}/${id}`);
     }
 
 
     getTaskSubtasks(taskId: string): Observable<SubtaskModel[]> {
-        const response = await this.http.get<any[]>(`${this.baseUrl}/task/${taskId}`).toPromise();
-        if (!response) return [];
-        return response.map(dto => this.subtaskMapper.toSubtaskModel(dto));
+
+        return this.http.get<SubtaskModel[]>(`${this.baseUrl}/task/${taskId}`);
     }
 
 }

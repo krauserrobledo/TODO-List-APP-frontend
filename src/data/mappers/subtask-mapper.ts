@@ -6,6 +6,9 @@ import { SubtaskModel } from "../../domain/models/subtask/subtask-model";
 
 @Injectable({ providedIn: 'root' })
 export class SubtaskMapper {
+    static toSubtaskModel(subtaskResponseDto: SubtaskResponseDto): import("rxjs").Observable<SubtaskModel> {
+        throw new Error("Method not implemented.");
+    }
 
     // Domain Entity → DTO
     toCreateRequestDto(model: SubtaskModel): SubtaskCreateRequest {

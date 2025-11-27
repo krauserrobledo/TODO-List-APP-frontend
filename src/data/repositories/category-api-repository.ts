@@ -15,44 +15,34 @@ export class CategoryApiRepository implements CategoryRepository {
 
   
   createCategory(model: CategoryModel): Observable<CategoryModel> {
+
     const dto = this.categoryMapper.toCreateRequestDto(model);
-
-    const response = await this.http.post<any>(this.baseUrl, dto).toPromise();
-    if (!response) throw new Error('Creation failed');
-
-    const categoryResponseDto = this.categoryMapper.toCategoryResponseDto(response);
-    return this.categoryMapper.toCategoryModel(categoryResponseDto);
+    return this.http.post<CategoryModel>(this.baseUrl, dto);
   }
 
 
   updateCategory(id: string, model: CategoryModel): Observable<CategoryModel> {
+    
     const dto = this.categoryMapper.toUpdateRequestDto(model);
 
-    const response = await this.http.put<any>(`${this.baseUrl}/${id}`, dto).firsValueFrom();
-    if (!response) throw new Error('Update failed');
-
-    const categoryResponseDto = this.categoryMapper.toCategoryResponseDto(response);
-    return this.categoryMapper.toCategoryModel(categoryResponseDto);
+    return this.http.put<CategoryModel>(`${this.baseUrl}/${id}`, dto);
   }
 
   deleteCategory(id: string): Observable<void> {
-    return await this.http.delete(`${this.baseUrl}/${id}`).toPromise() ?? "";
+
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
 
   getUserCategories(): Observable<CategoryModel[]> {
-    const response = await this.http.get<any[]>(`${this.baseUrl}/user`).toPromise();
-    if (!response) return [];
-    return response.map(dto => this.categoryMapper.toCategoryModel(dto));
+    
+    return this.http.get<CategoryModel[]>(`${this.baseUrl}/user`);
   }
 
 
   getCategory(id: string): Observable<CategoryModel> {
-    const dto = await firstValueFrom(
-      this.http.get<any>(`${this.baseUrl}/${id}`)
-    );
-  
-    return this.categoryMapper.toCategoryModel(dto);
+      
+    return this.http.get<CategoryModel>(`${this.baseUrl}/${id}`)
   }
 }
 

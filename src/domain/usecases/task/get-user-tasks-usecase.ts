@@ -1,12 +1,13 @@
 import { inject, Injectable } from "@angular/core";
 import { TaskModel } from "../../models/task/task-model";
 import { TaskRepository } from "../../repositories/task-repository";
+import { Observable } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class GetUserTasksUseCase {
   private taskRepository = inject(TaskRepository);
 
-  execute(): Promise <TaskModel[]> {
+  execute(): Observable <TaskModel[]> {
     return this.taskRepository.getUserTasks();
   }
 }
