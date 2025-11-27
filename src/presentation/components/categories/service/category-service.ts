@@ -5,6 +5,7 @@ import { GetUserCategoriesUseCase } from "../../../../domain/usecases/category/g
 import { UpdateCategoryUseCase } from "../../../../domain/usecases/category/update-category-usecase";
 import { CategoryModel } from "../../../../domain/models/category/category-model";
 import { GetCategoryUseCase } from "../../../../domain/usecases/category/get-category-usecase";
+import { Observable } from "rxjs";
 
 
 @Injectable({ providedIn: 'root' })
@@ -17,11 +18,11 @@ export class CategoryService {
     private getUseCase: GetCategoryUseCase
   ) {}
 
-  createCategory(model: CategoryModel): Promise<CategoryModel> {
+  createCategory(model: CategoryModel): Observable<CategoryModel> {
     return this.createUseCase.execute(model);
   }
 
-  updateCategories(id: string, model: CategoryModel): Promise<CategoryModel> {
+  updateCategories(id: string, model: CategoryModel): Observable<CategoryModel> {
     return this.updateUseCase.execute(id, model);
   }
 
@@ -29,11 +30,11 @@ export class CategoryService {
     this.deleteUseCase.execute(categoryId);
   }
 
-  getUserCategories(): Promise<CategoryModel[]> {
+  getUserCategories(): Observable<CategoryModel[]> {
     return this.getCategoriesUseCase.execute();
   }
 
-  getCategory(id: string): Promise<CategoryModel>{
+  getCategory(id: string): Observable<CategoryModel>{
     return this.getUseCase.execute(id);
 
   }

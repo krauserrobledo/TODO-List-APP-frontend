@@ -4,6 +4,7 @@ import { AuthService } from '../pages/auth/service/auth-service';
 import { RegisterModel } from '../../domain/models/auth/register-model';
 import { LoginModel } from '../../domain/models/auth/login-model';
 import { ValidateTokenModel } from '../../domain/models/auth/validate-token-model';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthStore {
@@ -13,7 +14,7 @@ export class AuthStore {
   isLoading = signal(false);
   error = signal<string | null>(null);
 
-  async login(credentials: LoginModel): Promise<void> {
+  async login(credentials: LoginModel): Observable<void> {
     this.setLoading(true);
     this.setError(null);
 
@@ -28,7 +29,7 @@ export class AuthStore {
     }
   }
 
-  async register(userData: RegisterModel): Promise<void> {
+  async register(userData: RegisterModel): Observable<void> {
     this.setLoading(true);
     this.setError(null);
 
@@ -43,11 +44,11 @@ export class AuthStore {
     }
   }
 
-  async validateToken(token: string): Promise<void> {
+  async validateToken(token: string): Observable<void> {
     this.setLoading(true);
     try {
       const result = await this.authService.validateToken({ token } as ValidateTokenModel);
-      if (!result.valid) {
+      if (!result.) {
         this.logout();
       }
     } finally {

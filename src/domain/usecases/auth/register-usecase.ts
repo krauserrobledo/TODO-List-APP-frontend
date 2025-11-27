@@ -2,12 +2,13 @@ import { Injectable, inject } from '@angular/core';
 import { AuthRepository } from '../../repositories/auth-repository';
 import { RegisterModel } from '../../models/auth/register-model';
 import { UserModel } from '../../models/auth/user-model';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class RegisterUseCase {
   private authRepository = inject(AuthRepository);
 
-  execute(model: RegisterModel): Promise<UserModel> {
+  execute(model: RegisterModel): Observable<UserModel> {
     return this.authRepository.register(model);
   }
 }

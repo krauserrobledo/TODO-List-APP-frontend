@@ -5,6 +5,7 @@ import { DeleteTagUseCase } from "../../../../domain/usecases/tag/delete-tag-use
 import { GetTagUseCase } from "../../../../domain/usecases/tag/get-tag-usecase";
 import { UpdateTagUseCase } from "../../../../domain/usecases/tag/update-tag-usecase";
 import { GetUserTagsUseCase } from "../../../../domain/usecases/tag/get-user-tags-usecase";
+import { Observable } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class TagService {
@@ -16,11 +17,11 @@ export class TagService {
     private getUserTagsUseCase: GetUserTagsUseCase
   ) {}
 
-  createTag(model: TagModel): Promise<TagModel> {
+  createTag(model: TagModel): Observable<TagModel> {
     return this.createUseCase.execute(model);
   }
 
-  updateTag(id: string, model: TagModel): Promise<TagModel> {
+  updateTag(id: string, model: TagModel): Observable<TagModel> {
     return this.updateUseCase.execute(id, model);
   }
 
@@ -28,11 +29,11 @@ export class TagService {
     this.deleteUseCase.execute(tagId);
   }
 
-  getTag(id: string): Promise<TagModel> {
+  getTag(id: string): Observable<TagModel> {
     return this.getTagUseCase.execute(id);
   }
 
-  getUserTags(): Promise<TagModel[]> {
+  getUserTags(): Observable<TagModel[]> {
     return this.getUserTagsUseCase.execute();
   }
 }

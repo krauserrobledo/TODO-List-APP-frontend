@@ -5,6 +5,7 @@ import { DeleteSubtaskUseCase } from "../../../../domain/usecases/subtask/delete
 import { GetSubtaskUseCase } from "../../../../domain/usecases/subtask/get-subtask-usecase";
 import { UpdateSubtaskUseCase } from "../../../../domain/usecases/subtask/update-subtask-usecase";
 import { GetTaskSubtasksUseCase } from "../../../../domain/usecases/subtask/get-task-subtask-usecase";
+import { Observable } from "rxjs";
 
 
 @Injectable({ providedIn: 'root' })
@@ -17,11 +18,11 @@ export class SubtaskService {
     private getSubtasksUseCase: GetTaskSubtasksUseCase
   ) {}
 
-  createSubtask(model: SubtaskModel): Promise<SubtaskModel> {
+  createSubtask(model: SubtaskModel): Observable<SubtaskModel> {
     return this.createUseCase.execute(model.taskId, model);
   }
 
-  updateSubtask(id: string, model: SubtaskModel): Promise<SubtaskModel> {
+  updateSubtask(id: string, model: SubtaskModel): Observable<SubtaskModel> {
     return this.updateUseCase.execute(id, model);
   }
 
@@ -29,11 +30,11 @@ export class SubtaskService {
     this.deleteUseCase.execute(id);
   }
 
-  getSubtask(id: string): Promise<SubtaskModel> {
+  getSubtask(id: string): Observable<SubtaskModel> {
     return this.getUseCase.execute(id);
   }
 
-  getTaskSubtasks(taskId: string): Promise<SubtaskModel[]> {
+  getTaskSubtasks(taskId: string): Observable<SubtaskModel[]> {
     return this.getSubtasksUseCase.execute(taskId);
   }
 }

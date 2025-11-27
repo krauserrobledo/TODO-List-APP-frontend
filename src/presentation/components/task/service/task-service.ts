@@ -37,11 +37,11 @@ export class TaskService {
     this.deleteUseCase.execute(id);
   }
 
-  getTask(id: string): Promise<TaskModel> {
+  getTask(id: string): Observable<TaskModel> {
     return this.getTaskUseCase.execute(id);
   }
 
-  getUserTasks(): Promise<TaskModel[]> {
+  getUserTasks(): Observable<TaskModel[]> {
     return this.getUserTasksUseCase.execute();
   }
 
