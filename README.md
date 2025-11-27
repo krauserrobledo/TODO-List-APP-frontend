@@ -250,6 +250,13 @@ Responses tested with DevTools
 ### ***RxJs***
 
 
+### ***Observables - Suscribers***
+
+  -
+
+  -
+
+
 ### ***PrimeNG*** 
 
   - Resources:
@@ -329,10 +336,3 @@ Responses tested with DevTools
   - Implemented on task form.
 
   - Updated task list to use reactive forms
-
-
-### ***Observables - Suscribers***
-
-  -
-
-  -
