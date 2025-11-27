@@ -247,14 +247,13 @@ Responses tested with DevTools
 ### ***Ngxs Store*** 
 
 
-### ***RxJs***
+### ***RxJs - Observables - Suscribers***
 
+  - Implemented observable repository interface methods.
 
-### ***Observables - Suscribers***
+  - Adapt repositories implementations to changes in Interfaces.
 
-  -
-
-  -
+  - implement observable in usecases and services.
 
 
 ### ***PrimeNG*** 
