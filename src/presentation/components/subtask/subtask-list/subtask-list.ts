@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnChanges, Input, inject } from '@angular/core';
-import { SubtaskStore } from '../../../stores/subtask-store';
+import { SubtaskStore } from '../../../stores/subtask/subtask-store';
 import { SubtaskModel } from '../../../../domain/models/subtask/subtask-model';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Dialog } from "primeng/dialog";

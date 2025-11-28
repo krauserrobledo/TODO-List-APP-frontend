@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { CategoryStore } from '../../../stores/category-store';
+import { CategoryStore } from '../../../stores/category';
 import { CategoryModel } from '../../../../domain/models/category/category-model';
 import { ButtonModule } from "primeng/button";
 import { DialogModule } from "primeng/dialog";

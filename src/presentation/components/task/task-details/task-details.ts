@@ -11,7 +11,7 @@ import { ChipModule } from 'primeng/chip';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { TaskForm } from '../task-form/task-form';
-import { TaskStore } from '../../../stores/task-store';
+import { TaskStore } from '../../../stores/task';
 
 
 @Component({

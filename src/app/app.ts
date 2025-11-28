@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
-import { AuthStore } from '../presentation/stores/auth-store';
+import { AuthStore } from '../presentation/stores/auth-store/auth-store';
 import { ButtonModule } from 'primeng/button';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ReactiveFormsModule } from '@angular/forms';

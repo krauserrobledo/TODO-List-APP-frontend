@@ -244,20 +244,6 @@ Responses tested with DevTools
 
 	Learn and Implement the rest of required technogies properly:
 
-### ***Ngxs Store*** 
-
-
-### ***RxJs - Observables - Suscribers***
-
-  - Implemented observable repository interface methods.
-
-  - Adapt repositories implementations to changes in Interfaces.
-
-  - implement observable in usecases.
-  
-  - implement observable with mappers using in services.
-
-
 ### ***PrimeNG*** 
 
   - Resources:
@@ -336,4 +322,36 @@ Responses tested with DevTools
 
   - Implemented on task form.
 
-  - Updated task list to use reactive forms
+  - Updated task list to use reactive forms. 
+
+
+### ***RxJs - Observables - Suscribers***
+
+  - Implemented observable repository interface methods.
+
+  - Adapt repositories implementations to changes in Interfaces.
+
+  - implement observable in usecases.
+  
+  - implement observable with mappers using in services.
+
+
+### ***Ngxs Store***
+
+
+  - Documentation found : https://www.ngxs.io/.
+
+  - Installed using command : ng add @ngxs/store. 
+
+  - Created files using command : ng generate @ngxs/store:store --name name-store.
+
+  - Declared states in app.config.ts.
+
+  - Created entities state models(named entity-state-model).
+
+  - Configure Actions for entities according to use cases.
+
+  - 
+
+
+

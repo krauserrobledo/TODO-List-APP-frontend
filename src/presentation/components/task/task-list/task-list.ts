@@ -1,5 +1,5 @@
 import { Component, inject, Output, EventEmitter, effect, Injector } from '@angular/core';
-import { TaskStore } from '../../../stores/task-store';
+import { TaskStore } from '../../../stores/task';
 import { TaskModel, TaskStatus } from '../../../../domain/models/task/task-model';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';

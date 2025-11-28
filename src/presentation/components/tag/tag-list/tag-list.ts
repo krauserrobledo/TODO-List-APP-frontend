@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TagStore } from '../../../stores/tag-store';
+import { TagStore } from '../../../stores/tag';
 import { TagModel } from '../../../../domain/models/tag/tag-model';
 import { Button } from "primeng/button";
 import { Dialog } from "primeng/dialog";

@@ -1,6 +1,7 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
+
 import {  provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AuthRepository } from '../domain/repositories/auth-repository';
 import { RegisterUseCase } from '../domain/usecases/auth/register-usecase';
@@ -18,9 +19,22 @@ import { SubtaskApiRepository } from '../data/repositories/subtask-api-repositor
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
+import { withNgxsReduxDevtoolsPlugin } from '@ngxs/devtools-plugin';
+import { withNgxsFormPlugin } from '@ngxs/form-plugin';
+import { withNgxsLoggerPlugin } from '@ngxs/logger-plugin';
+import { withNgxsRouterPlugin } from '@ngxs/router-plugin';
+import { withNgxsWebSocketPlugin } from '@ngxs/websocket-plugin';
+import { provideStore } from '@ngxs/store';
+
+import { CategoryState } from '../presentation/stores/category/category.state';
+import { TagState } from '../presentation/stores/tag/tag.state';
+import { TaskState } from '../presentation/stores/task/task.state';
+import { AuthState } from '../presentation/stores/auth/auth.state';
+import { SubtaskState } from '../presentation/stores/subtask/subtask.state'
 
 export const appConfig: ApplicationConfig = {
   providers: [
+
     provideHttpClient(withInterceptors([authInterceptor])),
     {
       provide: AuthRepository,
@@ -52,6 +66,18 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideRouter(routes),
     RegisterUseCase,
-    LoginUseCase
+    LoginUseCase, 
+    provideStore(
+[CategoryState,
+  TagState,
+  TaskState,
+  AuthState,
+  SubtaskState],
+withNgxsReduxDevtoolsPlugin(),
+withNgxsFormPlugin(),
+withNgxsLoggerPlugin(),
+withNgxsRouterPlugin(),
+withNgxsWebSocketPlugin()),
   ]
 };
+

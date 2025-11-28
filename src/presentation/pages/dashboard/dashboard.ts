@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TaskList } from '../../components/task/task-list/task-list';
 import { TaskDetails } from '../../components/task/task-details/task-details';
 import { TaskModel } from '../../../domain/models/task/task-model';
-import { TaskStore } from './../../stores/task-store';
+import { TaskStore } from '../../stores/task';
 import { CategoryList } from "../../components/categories/category-list/category-list";
 import { TagList } from "../../components/tag/tag-list/tag-list";
 import { PanelModule} from "primeng/panel";

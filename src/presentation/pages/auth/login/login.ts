@@ -2,12 +2,16 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AuthStore } from '../../../stores/auth-store';
+import { Store } from '@ngxs/store';
+import { Observable, firstValueFrom } from 'rxjs';
 import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { MessageService } from 'primeng/api';
-import {PasswordModule } from 'primeng/password';
-import {DialogModule } from 'primeng/dialog';
+import { PasswordModule } from 'primeng/password';
+import { DialogModule } from 'primeng/dialog';
+
+import { AuthState } from '../../../stores/auth/auth.state';
+import { Login } from '../../../stores/auth/auth.actions';
 
 @Component({
   selector: 'app-login',
@@ -15,40 +19,35 @@ import {DialogModule } from 'primeng/dialog';
   imports: [CommonModule, ReactiveFormsModule, RouterLink, ButtonModule, MessageModule, PasswordModule, DialogModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
-  providers:[MessageService]
+  providers: [MessageService]
 })
-
 export class LoginComponent {
   private fb = inject(FormBuilder);
-  private authStore = inject(AuthStore);
+  private store = inject(Store);
   private router = inject(Router);
-  private messageService = inject(MessageService);
 
-  isLoading = this.authStore.isLoading.asReadonly();
-  error = this.authStore.error.asReadonly();
+ 
+  isLoading$: Observable<boolean> = this.store.select(AuthState.isLoading);
+  error$: Observable<string | null> = this.store.select(AuthState.error);
+
   showErrorDialog = false;
+
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required]
   });
 
   async onSubmit(): Promise<void> {
+    if (this.loginForm.invalid) return;
 
-    if (this.loginForm.valid) {
+    const request = this.loginForm.value as { email: string; password: string };
 
-      try {
-
-        const request = this.loginForm.value as { email: string; password: string };
-        await this.authStore.login(request);
-        this.router.navigate(['/dashboard']);
-
-      } catch (error: any) {
-
-        console.error('Login Error:', error);
-        this.showErrorDialog = true
-      }
+    try {
+      await firstValueFrom(this.store.dispatch(new Login(request)));
+      this.router.navigate(['/dashboard']);
+    } catch (err) {
+      console.error('Login Error:', err);
+      this.showErrorDialog = true;
     }
   }
-
-  
 }

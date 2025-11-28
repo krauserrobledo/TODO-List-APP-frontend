@@ -4,9 +4,9 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { TaskModel } from '../../../../domain/models/task/task-model';
 import { CategoryModel } from '../../../../domain/models/category/category-model';
 import { TagModel } from '../../../../domain/models/tag/tag-model';
-import { CategoryStore } from '../../../stores/category-store';
-import { TagStore } from '../../../stores/tag-store';
-import { TaskStore } from '../../../stores/task-store';  
+import { CategoryStore } from '../../../stores/category';
+import { TagStore } from '../../../stores/tag';
+import { TaskStore } from '../../../stores/task';  
 import { Button } from "primeng/button";
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SelectButtonModule } from 'primeng/selectbutton';
