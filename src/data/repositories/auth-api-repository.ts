@@ -7,54 +7,39 @@ import { AuthMapper } from '../mappers/auth-mapper';
 import { LoginModel } from '../../domain/models/auth/login-model';
 import { RegisterModel } from '../../domain/models/auth/register-model';
 import { ValidateTokenModel } from '../../domain/models/auth/validate-token-model';
-import { Observable } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthApiRepository implements AuthRepository {
-
   private http = inject(HttpClient);
-  private authMapper = inject(AuthMapper); 
+  private authMapper = inject(AuthMapper);
   private baseUrl = `${environment.apiUrl}/auth`;
-  private readonly TOKEN_KEY = 'auth_token';
+  private readonly TOKEN_KEY = 'authToken';
   private readonly USER_KEY = 'current_user';
-  userModel!: Observable<UserModel>;
 
   login(model: LoginModel): Observable<UserModel> {
- 
     const dto = this.authMapper.toLoginRequestDto(model);
-
-    const response = this.http.post<any>(`${this.baseUrl}/login`, dto);
-    if (!response) throw new Error('Login failed');
-  
-    const authResponseDto = this.authMapper.toAuthResponseDto(response);
-    const userModel = this.authMapper.toUserModel(authResponseDto);
-
-    this.setToken(authResponseDto.token);
-    this.setCurrentUser(userModel);
-  
-    return this.userModel;
+    return this.http.post<any>(`${this.baseUrl}/login`, dto).pipe(
+      map(apiRes => this.authMapper.toAuthResponseDto(apiRes)),
+      tap(authRes => this.setToken(authRes.token)),
+      map(authRes => this.authMapper.toUserModel(authRes)),
+      tap(user => this.setCurrentUser(user))
+    );
   }
-  
+
   register(model: RegisterModel): Observable<UserModel> {
     const dto = this.authMapper.toRegisterRequestDto(model);
-
-    const response = this.http.post<any>(`${this.baseUrl}/register`, dto);
-    if (!response) throw new Error('Registration failed');
-  
-    const authResponseDto = this.authMapper.toAuthResponseDto(response);
-    const userModel = this.authMapper.toUserModel(authResponseDto);
-  
-    this.setToken(authResponseDto.token);
-    this.setCurrentUser(userModel);
-    
-    return this.userModel;
+    return this.http.post<any>(`${this.baseUrl}/register`, dto).pipe(
+      map(apiRes => this.authMapper.toAuthResponseDto(apiRes)),
+      tap(authRes => this.setToken(authRes.token)),
+      map(authRes => this.authMapper.toUserModel(authRes)),
+      tap(user => this.setCurrentUser(user))
+    );
   }
 
   validateToken(model: ValidateTokenModel): Observable<{ valid: boolean }> {
     const dto = this.authMapper.toValidateTokenRequestDto(model);
-
-    return this.http.post<{ valid: boolean }>(`${this.baseUrl}/validate`, dto) 
-      ?? { valid: false };
+    return this.http.post<{ valid: boolean }>(`${this.baseUrl}/validate`, dto);
   }
 
   getCurrentUser(): UserModel | null {
