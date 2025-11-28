@@ -33,8 +33,8 @@ export class TaskService {
     return this.updateUseCase.execute(id, model);
   }
 
-  deleteTask(id: string): void {
-    this.deleteUseCase.execute(id);
+  deleteTask(id: string): Observable<void> {
+    return this.deleteUseCase.execute(id);
   }
 
   getTask(id: string): Observable<TaskModel> {
@@ -45,19 +45,19 @@ export class TaskService {
     return this.getUserTasksUseCase.execute();
   }
 
-  addCategory(taskId: string, categoryId: string): void {
-    this.addCategoryUseCase.execute(taskId, categoryId);
+  addCategory(taskId: string, categoryId: string): Observable<TaskModel> {
+    return this.addCategoryUseCase.execute(taskId, categoryId);
   }
 
-  addTag(taskId: string, tagId: string): void {
-    this.addTagUseCase.execute(taskId, tagId);
+  addTag(taskId: string, tagId: string): Observable<TaskModel> {
+    return this.addTagUseCase.execute(taskId, tagId);
   }
 
-  deleteCategory(taskId: string, categoryId: string): void {
-    this.deleteCategoryUseCase.execute(taskId, categoryId);
+  deleteCategory(taskId: string, categoryId: string): Observable<TaskModel> {
+    return this.deleteCategoryUseCase.execute(taskId, categoryId);
   }
 
-  deleteTag(taskId: string, tagId: string): void {
-    this.deleteTagUseCase.execute(taskId, tagId);
+  deleteTag(taskId: string, tagId: string): Observable<TaskModel> {
+    return this.deleteTagUseCase.execute(taskId, tagId);
   }
 }

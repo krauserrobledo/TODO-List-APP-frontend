@@ -26,8 +26,8 @@ export class SubtaskService {
     return this.updateUseCase.execute(id, model);
   }
 
-  deleteSubtask(id: string): void {
-    this.deleteUseCase.execute(id);
+  deleteSubtask(id: string): Observable<void> {
+    return this.deleteUseCase.execute(id);
   }
 
   getSubtask(id: string): Observable<SubtaskModel> {

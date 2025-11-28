@@ -26,8 +26,8 @@ export class CategoryService {
     return this.updateUseCase.execute(id, model);
   }
 
-  deleteCategory( categoryId: string): void {
-    this.deleteUseCase.execute(categoryId);
+  deleteCategory( categoryId: string): Observable<void> {
+    return this.deleteUseCase.execute(categoryId);
   }
 
   getUserCategories(): Observable<CategoryModel[]> {

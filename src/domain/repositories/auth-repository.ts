@@ -8,7 +8,7 @@ export abstract class AuthRepository {
   abstract login(model: LoginModel): Observable<UserModel>;
   abstract register(model: RegisterModel): Observable<UserModel>;
   abstract validateToken(model: ValidateTokenModel): Observable<{ valid: boolean }>;
-  abstract getCurrentUser(): UserModel | null;
-  abstract logout(): void;
-  abstract getToken(): string | null;
+  abstract getCurrentUser(): Observable<UserModel | null>;
+  abstract logout(): Observable<void>;
+  abstract getToken(): Observable<string | null>;
 }

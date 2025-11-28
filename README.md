@@ -253,7 +253,9 @@ Responses tested with DevTools
 
   - Adapt repositories implementations to changes in Interfaces.
 
-  - implement observable in usecases and services.
+  - implement observable in usecases.
+  
+  - implement observable with mappers using in services.
 
 
 ### ***PrimeNG*** 
