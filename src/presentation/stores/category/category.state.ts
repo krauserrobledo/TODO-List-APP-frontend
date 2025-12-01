@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { State, Action, Selector, StateContext } from '@ngxs/store';
-import { CategoryAction } from './category.actions';
 
 export interface CategoryStateModel {
   items: string[];
@@ -20,8 +19,8 @@ export class CategoryState {
     return state;
   }
 
-  @Action(CategoryAction)
-  add(ctx: StateContext<CategoryStateModel>, { payload }: CategoryAction) {
+  @Action(Category)
+  add(ctx: StateContext<CategoryStateModel>, { payload }: Category) {
     const stateModel = ctx.getState();
     stateModel.items = [...stateModel.items, payload];
     ctx.setState(stateModel);
