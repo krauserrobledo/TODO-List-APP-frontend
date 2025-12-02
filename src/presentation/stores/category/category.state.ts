@@ -24,7 +24,7 @@ export class CategoryState {
   }
 
   @Selector()
-  static selectedTag(state: CategoryStateModel) {
+  static selectedCategory(state: CategoryStateModel) {
     return state.selectedCategory;
   }
 

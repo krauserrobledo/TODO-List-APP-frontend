@@ -5,14 +5,14 @@
   </div>
   <div class="category-list">
     <ul>
-      @for (cat of store.categories(); track cat.id) {
+      @for (cat of (categories$ | async); track cat.id) {
         <p-card [style.backgroundColor]="cat.color" class="card">
           <div class="cardcontent">
-          <span class="title">{{ cat.name }}</span>
-          <p-button severity="danger" (click)="store.deleteCategory(cat.id)">
-            <i class="pi pi-trash" style="font-size: 0.9rem"></i>
-          </p-button>
-        </div>
+            <span class="title">{{ cat.name }}</span>
+            <p-button severity="danger" (click)="deleteCategory(cat)">
+              <i class="pi pi-trash" style="font-size: 0.9rem"></i>
+            </p-button>
+          </div>
         </p-card>
       }
     </ul>
