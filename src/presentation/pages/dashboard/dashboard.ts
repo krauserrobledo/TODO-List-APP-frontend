@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { TaskList } from '../../components/task/task-list/task-list';
 import { TaskDetails } from '../../components/task/task-details/task-details';
 import { TaskModel } from '../../../domain/models/task/task-model';
-import { TaskStore } from '../../stores/task';
 import { CategoryList } from "../../components/categories/category-list/category-list";
 import { TagList } from "../../components/tag/tag-list/tag-list";
 import { PanelModule} from "primeng/panel";
+import { Store } from '@ngxs/store';
+import { AddTask, DeleteTask, UpdateTask } from '../../stores/task/task.actions';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +17,7 @@ import { PanelModule} from "primeng/panel";
   styleUrls: ['./dashboard.css'],
 })
 export class DashboardComponent {
-  private store = inject(TaskStore);
+  private store = inject(Store);
 
   selectedTask: TaskModel | null = null;
   taskToEdit: TaskModel | null = null;
@@ -37,24 +38,24 @@ export class DashboardComponent {
   }
 
   deleteTask(task: TaskModel) {
-    this.store.deleteTask(task.id);
+    this.store.dispatch(new DeleteTask(task.id));
     if (this.selectedTask?.id === task.id) this.selectedTask = null;
   }
 
   changeStatus(event: { task: TaskModel; status: TaskModel['status'] }) {
     const updated = { ...event.task, status: event.status };
-    this.store.updateTask(event.task.id, updated);
+    this.store.dispatch(new UpdateTask(event.task.id, updated));
     this.selectedTask = updated;
   }
 
   updateTask(task: TaskModel) {
-    this.store.updateTask(task.id, task);
+    this.store.dispatch(new UpdateTask(task.id, task));
     this.selectedTask = task;
     this.closeForm();
   }
 
   createTask(task: TaskModel) {
-    this.store.createTask(task);
+    this.store.dispatch(new AddTask(task));
     this.closeForm();
   }
 

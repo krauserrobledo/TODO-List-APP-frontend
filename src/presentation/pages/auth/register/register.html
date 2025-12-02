@@ -46,13 +46,14 @@
       }
     </div>
 
-    <p-button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid || isLoading()">
-      @if (isLoading()) {
-      <span>Creating Account...</span>
-      } @else {
-      <span>Sign Up</span>
-      }
-    </p-button>
+    <p-button type="submit" class="btn btn-primary" 
+          [disabled]="registerForm.invalid || (isLoading$ | async)">
+   @if (isLoading$ | async) {
+     <span>Creating Account...</span>
+   } @else {
+     <span>Sign Up</span>
+   }
+</p-button>
 
     <p class="login-link">
       ¿Already have an Account?
@@ -63,14 +64,15 @@
   </form>
 </div>
 
-<p-dialog header="Login Error" [(visible)]="showErrorDialog" [modal]="true" [style]="{ width: '450px' }"
-  [draggable]="false" [resizable]="false">
+<p-dialog header="Register Error" [(visible)]="showErrorDialog" [modal]="true" 
+          [style]="{ width: '450px' }" [draggable]="false" [resizable]="false">
   <div class="flex align-items-center">
     <i class="pi pi-exclamation-triangle text-red-500 text-2xl mr-3"></i>
-    <span>{{ error() }}</span>
+    <span>{{ error$ | async }}</span>
   </div>
   <ng-template pTemplate="footer">
-    <p-button label="OK" icon="pi pi-check" (click)="showErrorDialog = false" styleClass="p-button-text">
+    <p-button label="OK" icon="pi pi-check" 
+              (click)="showErrorDialog = false" styleClass="p-button-text">
     </p-button>
   </ng-template>
 </p-dialog>
