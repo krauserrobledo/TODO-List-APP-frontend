@@ -1,8 +1,8 @@
 import { CategoryModel } from "./category-model";
 
 export interface CategoryStateModel {
-    tasks: CategoryModel[];
-    selectedTask: CategoryModel | null;
+    categories: CategoryModel[];
+    selectedCategory: CategoryModel | null;
     isLoading: boolean;
     error: string | null;
   }

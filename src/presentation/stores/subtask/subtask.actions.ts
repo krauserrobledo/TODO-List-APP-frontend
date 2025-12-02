@@ -1,6 +1,6 @@
 import { SubtaskModel } from "../../../domain/models/subtask/subtask-model";
 
-export class CreateSubtask {
+export class AddSubtask {
   static readonly type = '[Subtask] Create';
   constructor(public payload: SubtaskModel) {}
 }
@@ -20,7 +20,7 @@ export class LoadSubtask {
   constructor(public id: string) {}
 }
 
-export class LoadTaskSubtasks {
+export class LoadSubtasks {
   static readonly type = '[Subtask] Load All From Task';
   constructor(public taskId: string) {}
 }

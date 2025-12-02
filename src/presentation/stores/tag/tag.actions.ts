@@ -20,6 +20,6 @@ export class LoadTag {
   constructor(public id: string) {}
 }
 
-export class LoadUserTags {
+export class LoadTags {
   static readonly type = '[Tag] Load User Tags';
 }

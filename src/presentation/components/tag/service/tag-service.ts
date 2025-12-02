@@ -25,8 +25,8 @@ export class TagService {
     return this.updateUseCase.execute(id, model);
   }
 
-  deleteTag(tagId: string): void {
-    this.deleteUseCase.execute(tagId);
+  deleteTag(tagId: string): Observable<void> {
+    return this.deleteUseCase.execute(tagId);
   }
 
   getTag(id: string): Observable<TagModel> {

@@ -1,8 +1,9 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs/operators';
+import { tap, catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 import {
-  LoadTasks, AddTask, UpdateTask, DeleteTask, GetTask, AddCategoryToTask, DeleteCategoryFromTask, AddTagToTask, DeleteTagFromTask
+  LoadTasks, AddTask, UpdateTask, DeleteTask, LoadTask, AddCategoryToTask, DeleteCategoryFromTask, AddTagToTask, DeleteTagFromTask
 } from './task.actions';
 import { TaskService } from '../../components/task/service/task-service';
 import { TaskStateModel } from '../../../domain/models/task/task-state-model';
@@ -20,6 +21,7 @@ import { TaskStateModel } from '../../../domain/models/task/task-state-model';
 export class TaskState {
   constructor(private taskService: TaskService) {}
 
+  // Selectors
   @Selector()
   static tasks(state: TaskStateModel) {
     return state.tasks;
@@ -30,11 +32,26 @@ export class TaskState {
     return state.selectedTask;
   }
 
+  @Selector()
+  static isLoading(state: TaskStateModel) {
+    return state.isLoading;
+  }
+
+  @Selector()
+  static error(state: TaskStateModel) {
+    return state.error;
+  }
+
+  // Actions
   @Action(LoadTasks)
-  load(ctx: StateContext<TaskStateModel>) {
+  load(ctx: StateContext<TaskStateModel>, action: LoadTasks) {
     ctx.patchState({ isLoading: true });
     return this.taskService.getUserTasks().pipe(
-      tap(tasks => ctx.patchState({ tasks, isLoading: false }))
+      tap(tasks => ctx.patchState({ tasks, isLoading: false })),
+      catchError(err => {
+        ctx.patchState({ error: err.message, isLoading: false });
+        return throwError(() => err);
+      })
     );
   }
 
@@ -63,8 +80,8 @@ export class TaskState {
     );
   }
 
-  @Action(GetTask)
-  getTask(ctx: StateContext<TaskStateModel>, action: GetTask) {
+  @Action(LoadTask)
+  getTask(ctx: StateContext<TaskStateModel>, action: LoadTask) {
     return this.taskService.getTask(action.id).pipe(
       tap(task => ctx.patchState({ selectedTask: task }))
     );

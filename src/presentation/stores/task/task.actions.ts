@@ -19,7 +19,7 @@ export class DeleteTask {
   constructor(public id: string) {}
 }
 
-export class GetTask {
+export class LoadTask {
   static readonly type = '[Task] Get';
   constructor(public id: string) {}
 }

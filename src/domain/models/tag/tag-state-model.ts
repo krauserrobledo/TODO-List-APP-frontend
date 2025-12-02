@@ -1,8 +1,8 @@
 import { TagModel } from "./tag-model";
 
 export interface TagStateModel {
-    tasks: TagModel[];
-    selectedTask: TagModel | null;
+    tags: TagModel[];
+    selectedTag: TagModel | null;
     isLoading: boolean;
     error: string | null;
   }

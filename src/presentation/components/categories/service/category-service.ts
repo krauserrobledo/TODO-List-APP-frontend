@@ -22,7 +22,7 @@ export class CategoryService {
     return this.createUseCase.execute(model);
   }
 
-  updateCategories(id: string, model: CategoryModel): Observable<CategoryModel> {
+  updateCategory(id: string, model: CategoryModel): Observable<CategoryModel> {
     return this.updateUseCase.execute(id, model);
   }
 

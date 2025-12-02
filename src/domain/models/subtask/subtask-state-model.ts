@@ -1,8 +1,8 @@
 import { SubtaskModel } from "./subtask-model";
 
 export interface SubtaskStateModel {
-    tasks: SubtaskModel[];
-    selectedTask: SubtaskModel | null;
+    subtasks: SubtaskModel[];
+    selectedSubtask: SubtaskModel | null;
     isLoading: boolean;
     error: string | null;
   }
