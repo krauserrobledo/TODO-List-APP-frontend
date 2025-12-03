@@ -1,6 +1,6 @@
 <div class="subtask-list">
  <ul>
-    @for (sub of store.subtasks(); track sub.id) {
+    @for (sub of (subtasks$ | async); track sub.id) {
       <li class="item">
         {{ sub.title }}
         <p-button severity="danger"(click)="deleteSubtask(sub.id)">

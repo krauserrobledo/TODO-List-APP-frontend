@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
 import { CategoryModel } from "../../domain/models/category/category-model";
-import { CategoryRepository } from "../../domain/repositories/category-repository";
+import { CategoryRepository } from "../../domain/i-repositories/category-repository";
 import { environment } from "../../environments/environment";
 import { CategoryMapper } from "../mappers/category-mapper";
 import { map, Observable } from "rxjs";

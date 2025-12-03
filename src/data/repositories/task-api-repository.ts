@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { TaskRepository } from '../../domain/repositories/task-repository';
+import { TaskRepository } from '../../domain/i-repositories/task-repository';
 import { TaskModel } from '../../domain/models/task/task-model';
 import { environment } from '../../environments/environment';
 import { TaskMapper } from '../mappers/task-mapper';

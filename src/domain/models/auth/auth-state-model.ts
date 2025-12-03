@@ -5,4 +5,5 @@ export interface AuthStateModel {
     isAuthenticated: boolean;
     isLoading: boolean;
     error: string | null;
+    token: string | null;
   }

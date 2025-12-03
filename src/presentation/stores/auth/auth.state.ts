@@ -1,7 +1,7 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
-import { Login, Register, Logout, ValidateToken, GetUserProfile } from './auth.actions';
+import { Login, Register, Logout, ValidateToken, GetUserProfile, HydrateUser } from './auth.actions';
 import { AuthService } from '../../pages/auth/service/auth-service';
 import { AuthStateModel } from '../../../domain/models/auth/auth-state-model';
 
@@ -11,7 +11,8 @@ import { AuthStateModel } from '../../../domain/models/auth/auth-state-model';
     user: null,
     isAuthenticated: false,
     isLoading: false,
-    error: null
+    error: null,
+    token: ""
   }
 })
 @Injectable()
@@ -79,4 +80,17 @@ export class AuthState {
       })
     );
   }
+
+  @Action(HydrateUser)
+hydrate(ctx: StateContext<AuthStateModel>) {
+  const userData = localStorage.getItem('current_user');
+  const token = localStorage.getItem('authToken');
+  if (userData && token) {
+    ctx.patchState({
+      user: JSON.parse(userData),
+      token
+    });
+  }
+}
+
 }

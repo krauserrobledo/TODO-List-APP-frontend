@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { AuthRepository } from '../../repositories/auth-repository';
+import { AuthRepository } from '../../i-repositories/auth-repository';
 import { LoginModel } from '../../models/auth/login-model';
 import { UserModel } from '../../models/auth/user-model';
 import { Observable } from 'rxjs';

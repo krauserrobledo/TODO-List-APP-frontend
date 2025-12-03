@@ -4,15 +4,18 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { TaskModel } from '../../../../domain/models/task/task-model';
 import { CategoryModel } from '../../../../domain/models/category/category-model';
 import { TagModel } from '../../../../domain/models/tag/tag-model';
-import { CategoryStore } from '../../../stores/category';
-import { TagStore } from '../../../stores/tag';
-import { TaskStore } from '../../../stores/task';  
 import { Button } from "primeng/button";
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { DatePickerModule } from 'primeng/datepicker';
 import { TextareaModule } from 'primeng/textarea';
 import { InputTextModule } from 'primeng/inputtext';
+import { Store } from '@ngxs/store';
+import { LoadCategories } from '../../../stores/category/category.actions';
+import { LoadTags } from '../../../stores/tag/tag.actions';
+import { map, Observable } from 'rxjs';
+import { CategoryState } from '../../../stores/category/category.state';
+import { TagState } from '../../../stores/tag/tag.state';
 
 @Component({
   selector: 'app-task-form',
@@ -49,9 +52,16 @@ export class TaskForm implements OnChanges {
   taskForm!: FormGroup;
 
   // Stores 
-  storeCategories = inject(CategoryStore);
-  storeTags = inject(TagStore);
-  taskStore = inject(TaskStore);
+  store = inject(Store);
+
+
+  categories$ = this.store.select(CategoryState.categories).pipe(
+    map(categories => categories??[]));
+
+    tags$ = this.store.select(TagState.tags).pipe(
+      map(tags => tags??[]));
+  
+
 
    constructor(private fb: FormBuilder) {
     this.taskForm = this.fb.group({
@@ -65,8 +75,8 @@ export class TaskForm implements OnChanges {
   }
 
   ngOnInit() {
-    this.storeCategories.loadCategories();
-    this.storeTags.loadTags();
+    this.store.dispatch(new LoadCategories());
+    this.store.dispatch( new LoadTags());
 
     this.taskForm = this.fb.group({
       newTitle: ['', Validators.required],

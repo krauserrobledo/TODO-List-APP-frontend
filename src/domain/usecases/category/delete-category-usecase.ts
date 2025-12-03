@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { CategoryRepository } from '../../repositories/category-repository';
+import { CategoryRepository } from '../../i-repositories/category-repository';
 import { Observable } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class DeleteCategoryUseCase {

@@ -1,6 +1,6 @@
 import { TagModel } from "../../../domain/models/tag/tag-model";
 
-export class CreateTag {
+export class AddTag {
   static readonly type = '[Tag] Create';
   constructor(public payload: TagModel) {}
 }

@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { CategoryRepository } from '../../repositories/category-repository';
+import { CategoryRepository } from '../../i-repositories/category-repository';
 import { CategoryModel } from '../../models/category/category-model';
 import { Observable } from 'rxjs';
 

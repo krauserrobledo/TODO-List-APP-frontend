@@ -1,5 +1,5 @@
 import { inject, Injectable } from "@angular/core";
-import { SubtaskRepository } from "../../domain/repositories/subtask-repository";
+import { SubtaskRepository } from "../../domain/i-repositories/subtask-repository";
 import { SubtaskModel } from "../../domain/models/subtask/subtask-model";
 import { HttpClient } from "@angular/common/http";
 import { SubtaskMapper } from "../mappers/subtask-mapper";

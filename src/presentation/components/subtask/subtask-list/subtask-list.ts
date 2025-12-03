@@ -1,11 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnChanges, Input, inject } from '@angular/core';
-import { SubtaskStore } from '../../../stores/subtask/subtask-store';
 import { SubtaskModel } from '../../../../domain/models/subtask/subtask-model';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Dialog } from "primeng/dialog";
 import { Button } from "primeng/button";
 import { InputTextModule } from 'primeng/inputtext';
+import { Store } from '@ngxs/store';
+import { AddSubtask, DeleteSubtask, LoadSubtasks } from '../../../stores/subtask/subtask.actions';
+import { Observable } from 'rxjs';
+import { SubtaskState } from '../../../stores/subtask/subtask.state';
 
 @Component({
   selector: 'app-subtask-list',
@@ -17,8 +20,8 @@ import { InputTextModule } from 'primeng/inputtext';
 
 export class SubtaskList implements OnChanges {
   @Input() taskId: string | null = null;
-  store = inject(SubtaskStore);
-
+  store = inject(Store);
+  subtasks$: Observable<SubtaskModel[]> = this.store.select(SubtaskState.subtasks);
   showCreateDialog = false;
   subtaskForm!: FormGroup;
 
@@ -32,7 +35,7 @@ export class SubtaskList implements OnChanges {
 
   ngOnChanges() {
     if (this.taskId) {
-      this.store.loadSubtasks(this.taskId);
+      this.store.dispatch(new LoadSubtasks(this.taskId));
     }
   }
 
@@ -53,11 +56,11 @@ export class SubtaskList implements OnChanges {
       taskId: this.taskId
     };
 
-    this.store.createSubtask(model);
+    this.store.dispatch(new AddSubtask(model));
     this.showCreateDialog = false;
   }
 
   deleteSubtask(id: string) {
-    this.store.deleteSubtask(id);
+    this.store.dispatch(new DeleteSubtask(id));
   }
 }

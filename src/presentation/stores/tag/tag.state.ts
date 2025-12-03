@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { State, Action, Selector, StateContext } from '@ngxs/store';
-import { CreateTag, DeleteTag, LoadTag, LoadTags, UpdateTag } from './tag.actions';
+import { AddTag, DeleteTag, LoadTag, LoadTags, UpdateTag } from './tag.actions';
 import { tap, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { TagService } from '../../components/tag/service/tag-service';
@@ -41,8 +41,8 @@ export class TagState {
   }
   
   //Actions
-  @Action(CreateTag)
-  add(ctx: StateContext<TagStateModel>, action: CreateTag) {
+  @Action(AddTag)
+  add(ctx: StateContext<TagStateModel>, action: AddTag) {
     return this.tagService.createTag(action.payload).pipe(
       tap(tag => ctx.patchState({ tags: [...ctx.getState().tags, tag] }))
     );

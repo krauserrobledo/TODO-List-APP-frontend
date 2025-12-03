@@ -1,7 +1,7 @@
 import { map, Observable } from "rxjs";
 import { TagModel } from "../../domain/models/tag/tag-model";
 import { inject, Injectable } from "@angular/core";
-import { TagRepository } from "../../domain/repositories/tag-repository";
+import { TagRepository } from "../../domain/i-repositories/tag-repository";
 import { HttpClient } from "@angular/common/http";
 import { TagMapper } from "../mappers/tag-mapper";
 import { environment } from "../../environments/environment";

@@ -1,11 +1,4 @@
 <div class="task-container">
-  <!-- Loading -->
-  <div>
-    @if (isLoading()) {
-    <span>Loading tasks...</span>
-    }
-  </div>
-
   <div class="task-list">
     <!-- List-->
     <h3>Task List</h3>
@@ -13,7 +6,7 @@
       <h4>Add New Task...</h4>
       <p-button (click)="showFormDialog = !showFormDialog" icon="pi pi-plus"> </p-button>
     </div>
-    <p-listbox [options]="tasks()" optionLabel="title" (onChange)="onSelect($event.value)" [style]="{width:'100%'}">
+    <p-listbox [options]="(tasks$ | async )|| []" optionLabel="title" (onChange)="onSelect($event.value)" [style]="{width:'100%'}">
       <ng-template let-task pTemplate="item">
         <div [ngClass]="getStatusClass(task.status)" class="task-item">
           {{ task.title }}

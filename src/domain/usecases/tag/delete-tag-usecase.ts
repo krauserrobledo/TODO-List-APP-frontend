@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { TagRepository } from '../../repositories/tag-repository';
+import { TagRepository } from '../../i-repositories/tag-repository';
 import { Observable } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class DeleteTagUseCase {

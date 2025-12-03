@@ -11,8 +11,8 @@ import { ChipModule } from 'primeng/chip';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { TaskForm } from '../task-form/task-form';
-import { TaskStore } from '../../../stores/task';
-
+import { Store } from '@ngxs/store';
+import { DeleteTag } from '../../../stores/tag/tag.actions';
 
 @Component({
   selector: 'app-task-details',
@@ -37,7 +37,7 @@ export class TaskDetails implements OnChanges {
   @Output() delete = new EventEmitter<TaskModel>();
   @Output() update = new EventEmitter<TaskModel>();
 
-  private taskStore = inject(TaskStore);
+  private taskStore = inject(Store);
   selectedStatus: TaskModel['status'] = 'Non Started';
   showEditDialog = false;
 
@@ -73,7 +73,7 @@ export class TaskDetails implements OnChanges {
   deleteTag(id: string) {
     if (!this.task) return;
   
-    this.taskStore.deleteTag(this.task.id, id);
+    this.taskStore.dispatch(new DeleteTag(this.task.id));
   
     const updatedTask: TaskModel = {
       ...this.task,

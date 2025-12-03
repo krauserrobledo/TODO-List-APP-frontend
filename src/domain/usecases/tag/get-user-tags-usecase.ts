@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { TagRepository } from '../../repositories/tag-repository';
+import { TagRepository } from '../../i-repositories/tag-repository';
 import { TagModel } from '../../models/tag/tag-model';
 import { Observable } from 'rxjs';
 

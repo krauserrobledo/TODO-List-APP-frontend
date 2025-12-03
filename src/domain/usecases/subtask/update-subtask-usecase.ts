@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { SubtaskModel } from '../../models/subtask/subtask-model';
-import { SubtaskRepository } from '../../repositories/subtask-repository';
+import { SubtaskRepository } from '../../i-repositories/subtask-repository';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })

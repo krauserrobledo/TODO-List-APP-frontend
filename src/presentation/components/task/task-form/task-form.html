@@ -40,7 +40,7 @@
     <div class="p-field">
       <label>Categories</label>
       <p-multiSelect 
-        [options]="storeCategories.categories()" 
+        [options]= "(categories$ | async) || []"
         optionLabel="name" 
         formControlName="categories" 
         name="categories"
@@ -53,7 +53,7 @@
     <div class="p-field">
       <label>Tags</label>
       <p-multiSelect 
-        [options]="storeTags.tags()" 
+        [options]="(tags$ | async) || []" 
         optionLabel="name" 
         formControlName="tags" 
         name="tags"

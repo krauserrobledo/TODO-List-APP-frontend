@@ -25,3 +25,7 @@ export class ValidateToken {
 export class GetUserProfile {
   static readonly type = '[Auth] Get User Profile';
 }
+
+export class HydrateUser {
+  static readonly type = '[Auth] Hydrate User';
+}

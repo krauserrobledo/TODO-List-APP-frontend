@@ -1,5 +1,4 @@
-import { Component, inject, Output, EventEmitter, effect, Injector } from '@angular/core';
-import { TaskStore } from '../../../stores/task';
+import { Component, inject, Output, EventEmitter } from '@angular/core';
 import { TaskModel, TaskStatus } from '../../../../domain/models/task/task-model';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -9,6 +8,10 @@ import { ListboxModule } from "primeng/listbox";
 import { DatePickerModule } from 'primeng/datepicker';
 import { PanelModule } from 'primeng/panel';
 import { InputTextModule } from 'primeng/inputtext';
+import { Store } from '@ngxs/store';
+import { TaskState } from '../../../stores/task/task.state';
+import { AddTask, DeleteTask, LoadTasks } from '../../../stores/task/task.actions';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-task-list',
@@ -28,12 +31,12 @@ import { InputTextModule } from 'primeng/inputtext';
 })
 
 export class TaskList {
-  private store = inject(TaskStore);
+  private store = inject(Store);
   private fb = inject(FormBuilder);
 
-  tasks = this.store.tasks;
-  isLoading = this.store.isLoading;
-  error = this.store.error;
+  tasks$: Observable<TaskModel[]> = this.store.select(TaskState.tasks);
+  isLoading$: Observable<Boolean>  =  this.store.select(TaskState.isLoading)
+  error$: Observable<String | null> = this.store.select(TaskState.error)
 
   @Output() selectTask = new EventEmitter<TaskModel>();
 
@@ -57,7 +60,7 @@ export class TaskList {
   });
 
   ngOnInit() {
-    this.store.loadTasks();
+    this.store.dispatch(new LoadTasks());
   }
 
   onSelect(task: TaskModel) {
@@ -82,9 +85,9 @@ export class TaskList {
       userId: ''
     };
 
-    this.store.createTask(model);
+    this.store.dispatch(new AddTask(model));
 
-    if (this.store.error()) {
+    if (this.error$) {
       this.showErrorDialog = true;
     } else {
       this.listForm.reset({
@@ -95,7 +98,7 @@ export class TaskList {
   }
 
   deleteTask(task: TaskModel) {
-    this.store.deleteTask(task.id);
+    this.store.dispatch( new DeleteTask(task.id));
     if (this.selectedTask?.id === task.id) this.selectedTask = null;
   }
 

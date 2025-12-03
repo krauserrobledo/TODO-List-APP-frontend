@@ -3,12 +3,13 @@
     <p-toolbar>
       <h3>TODO List App</h3>
 
-      @if (authStore.currentUser(); as user) {
-        <span>Welcome, {{ user.userName }}</span>
-        <p-button severity="danger" class="btn-logout"(click)="logout()">Sign Out</p-button>
+      @if (currentUser$ | async; as currentUser) {
+        <span>Welcome, {{ currentUser.userName }}</span>
+        <p-button severity="danger" class="btn-logout" (click)="logout()">Sign Out</p-button>
       } @else {
         <span>Please sign in</span>
       }
+      
       
     </p-toolbar>
   </header>

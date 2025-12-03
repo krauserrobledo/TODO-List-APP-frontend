@@ -1,6 +1,6 @@
 import { Injectable, inject } from "@angular/core";
 import { TaskModel } from "../../models/task/task-model";
-import { TaskRepository } from "../../repositories/task-repository";
+import { TaskRepository } from "../../i-repositories/task-repository";
 import { Observable } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
