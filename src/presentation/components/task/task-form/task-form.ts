@@ -68,7 +68,7 @@ export class TaskForm implements OnChanges {
       newTitle: ['', Validators.required],
       newDescription: [''],
       newStatus: ['Non Started', Validators.required],
-      newDueDate: [null, Validators.required],
+      newDueDate: [null],
       categories: [[]],
       tags: [[]]
    })
@@ -82,7 +82,7 @@ export class TaskForm implements OnChanges {
       newTitle: ['', Validators.required],
       newDescription: [''],
       newStatus: ['Non Started', Validators.required],
-      newDueDate: [null, Validators.required],
+      newDueDate: [null],
       categories: [[]],
       tags: [[]]
     });
@@ -95,7 +95,7 @@ export class TaskForm implements OnChanges {
         newTitle: this.task.title,
         newDescription: this.task.description ?? '',
         newStatus: this.task.status,
-        newDueDate: new Date(this.task.dueDate),
+        newDueDate: new Date(this.task.dueDate ?? ''),
         categories: this.task.categories ?? [],
         tags: this.task.tags ?? []
       });

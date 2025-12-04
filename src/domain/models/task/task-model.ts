@@ -6,7 +6,7 @@ export interface TaskModel {
   id: string;
   title: string;
   description?: string;
-  dueDate: string | Date;
+  dueDate?: string | Date | null;
   status: TaskStatus;
   userId: string;
   subtasks?: SubtaskModel[];

@@ -58,7 +58,7 @@ export class TaskState {
   @Action(AddTask)
   add(ctx: StateContext<TaskStateModel>, action: AddTask) {
     return this.taskService.createTask(action.payload).pipe(
-      tap(task => ctx.patchState({ tasks: [...ctx.getState().tasks, task] }))
+      tap(task => ctx.patchState({ tasks: [...ctx.getState().tasks, task], error: null }))
     );
   }
 
@@ -67,7 +67,11 @@ export class TaskState {
     return this.taskService.updateTask(action.id, action.payload).pipe(
       tap(updated => ctx.patchState({
         tasks: ctx.getState().tasks.map(t => t.id === action.id ? updated : t)
-      }))
+      })),
+      catchError(err => {
+        ctx.patchState({ error: err.message || 'Unexpected error' });
+        return throwError(() => err);
+      })
     );
   }
 

@@ -55,12 +55,17 @@ export class TaskList {
   listForm = this.fb.group({
     newTitle: ['', Validators.required],
     newDescription: [''],
-    newDueDate: [null, Validators.required],
+    newDueDate: [null],
     newStatus: ['Non Started', Validators.required]
   });
 
   ngOnInit() {
+    
     this.store.dispatch(new LoadTasks());
+
+    this.error$.subscribe(error => {
+      this.showErrorDialog = !!error; 
+    })
   }
 
   onSelect(task: TaskModel) {
@@ -81,20 +86,16 @@ export class TaskList {
       title: formValue.newTitle!,
       description: formValue.newDescription ?? '',
       status: formValue.newStatus as TaskStatus,
-      dueDate: new Date(formValue.newDueDate!),
+      dueDate: formValue.newDueDate ? new Date(formValue.newDueDate): null,
       userId: ''
     };
 
-    this.store.dispatch(new AddTask(model));
-
-    if (this.error$) {
-      this.showErrorDialog = true;
-    } else {
-      this.listForm.reset({
-        newStatus: 'Non Started'
-      });
-      this.showFormDialog = false;
-    }
+    this.store.dispatch(new AddTask(model)).subscribe({
+      next: () => {
+        this.listForm.reset({ newStatus: 'Non Started' });
+        this.showFormDialog = false;
+      }
+    });
   }
 
   deleteTask(task: TaskModel) {

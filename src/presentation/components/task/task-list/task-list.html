@@ -54,11 +54,11 @@
 </p-dialog>
 
 <!-- error Dialog-->
-<p-dialog header="Error" [(visible)]="showErrorDialog" [modal]="true" [style]="{ width: '450px' }" [draggable]="false"
-  [resizable]="false">
+<p-dialog header="Error" [(visible)]="showErrorDialog" [modal]="true"
+  [style]="{ width: '450px' }" [draggable]="false" [resizable]="false">
   <div class="flex align-items-center">
     <i class="pi pi-exclamation-triangle text-red-500 text-2xl mr-3"></i>
-    <span>Task already Exist!</span>
+    <span>{{ error$ | async }}</span>
   </div>
   <ng-template pTemplate="footer">
     <p-button label="OK" icon="pi pi-check" (click)="showErrorDialog = false" styleClass="p-button-text">
