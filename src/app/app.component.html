@@ -4,14 +4,14 @@
       <p-toolbar
         class="toolbar flex ring-1 ring-white/10 bg-slate-900 rounded-full items-center justify-between">
         <div class="flex gap-0 items-center">
-          <i class="icon pi pi-pen-to-square pl-4" style="font-size: 1.5rem"></i>
+          <i class="icon pi pi-pen-to-square pl-4 pr-2" style="font-size: 1.5rem"></i>
           <span class="text-base font-semibold tracking-tight font-sans">TODO List App</span>
         </div>
         <nav class="hidden md:flex items-center gap-8 text-sm text-slate-300">
           @if (currentUser$ | async; as currentUser) {
           <span class="hover:text-white transition font-sans">Welcome, {{ currentUser.userName }}</span>}
         </nav>
-        <div class=" items-center gap-3">
+        <div class="button-container items-center gap-3">
           @if (currentUser$ | async; as currentUser) {
             <!-- Botón perfil -->
             <button 
