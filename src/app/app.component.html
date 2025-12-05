@@ -1,17 +1,76 @@
 <div class="app">
-  <header class="app-header">
-    <p-toolbar>
-      <h3>TODO List App</h3>
-
-      @if (currentUser$ | async; as currentUser) {
-        <span>Welcome, {{ currentUser.userName }}</span>
-        <p-button severity="danger" class="btn-logout" (click)="logout()">Sign Out</p-button>
-      } @else {
-        <span>Please sign in</span>
-      }
-      
-      
-    </p-toolbar>
+  <header class="header sticky top-3 z-50 text-white w-full">
+    <div class="">
+      <p-toolbar
+        class="toolbar flex ring-1 ring-white/10 bg-slate-900 rounded-full items-center justify-between">
+        <div class="flex gap-0 items-center">
+          <i class="icon pi pi-pen-to-square pl-4" style="font-size: 1.5rem"></i>
+          <span class="text-base font-semibold tracking-tight font-sans">TODO List App</span>
+        </div>
+        <nav class="hidden md:flex items-center gap-8 text-sm text-slate-300">
+          @if (currentUser$ | async; as currentUser) {
+          <span class="hover:text-white transition font-sans">Welcome, {{ currentUser.userName }}</span>}
+        </nav>
+        <div class=" items-center gap-3">
+          @if (currentUser$ | async; as currentUser) {
+            <!-- Botón perfil -->
+            <button 
+              pButton 
+              (click)="showUserMenu = !showUserMenu" 
+              class="profile-button group transition-all duration-300 hover:shadow-[0_0_40px_-5px_rgba(139,92,246,0.6)] 
+                     text-lg font-medium text-white rounded-full pt-2 mr-5 pb-2 pl-4 relative">
+              <!-- Gradient Border/Glow -->
+              <div class="absolute inset-0 rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 p-[1px] opacity-100 mask-linear">
+                <div class="h-full w-full bg-black rounded-full"></div>
+              </div>
+              <!-- Inner Fill on Hover -->
+              <div class="absolute inset-0 rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 opacity-20 group-hover:opacity-100 transition-opacity duration-500 blur-md"></div>
+              <div class="group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-violet-600 to-indigo-600 opacity-90 rounded-full absolute top-0 right-0 bottom-0 left-0"></div>
+              <!-- Top Highlight -->
+              <div class="absolute inset-x-4 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
+              <!-- Icono -->
+              <i class="pi pi-user relative z-10 flex items-center justify-center drop-shadow-md leading-none" style="font-size: 1.5rem"></i>
+            </button>
+          
+            <!-- Menú desplegable -->
+            @if (showUserMenu) {
+              <div class="absolute right-0 mt-2 w-64 rounded-lg bg-slate-900 text-white shadow-lg ring-1 ring-white/10 p-4 z-50">
+                <!-- Info usuario -->
+                <div class="flex items-center gap-3 mb-3">
+                  <i class="pi pi-user text-xl text-violet-400"></i>
+                  <div>
+                    <div class="font-semibold">{{ currentUser.userName }}</div>
+                    <div class="text-xs text-slate-400">{{ currentUser.email }}</div>
+                  </div>
+                </div>
+                <hr class="my-2 border-slate-700" />
+                <!-- Botón logout -->
+                <button 
+                  pButton 
+                  (click)="logout(); showUserMenu = false" 
+                  class="w-full h-9 text-sm rounded-md bg-red-500 text-white hover:bg-red-600 flex items-center justify-center gap-2">
+                  <i class="pi pi-sign-out"></i>
+                  <span>Log Out</span>
+                </button>
+              </div>
+            }         
+            
+          } @else {
+            <p-button 
+              (onClick)="goLogin()" 
+              class="h-9 px-4 text-sm rounded-md text-slate-300 hover:text-white transition flex items-center">
+              Sign In
+            </p-button>
+        
+            <p-button 
+              (onClick)="goRegister()" 
+              class="register liquid-glass-button h-9 px-6 text-sm font-medium rounded-full flex items-center justify-center bg-gradient-to-r from-white/10 to-white/5 border border-white/15 text-white/90 shadow-lg backdrop-blur-xl hover:from-white/15 hover:to-white/10">
+              <span class="relative z-10">Sign Up</span>
+            </p-button>
+          }
+        </div>
+      </p-toolbar>
+    </div>
   </header>
   <main>
     <router-outlet></router-outlet>

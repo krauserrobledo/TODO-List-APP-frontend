@@ -9,11 +9,12 @@
 
 .login-form {
   background: white;
-  padding: 2.5rem;
+  padding-top: 1rem;
+  padding-inline: 5rem;
+  padding-bottom: 2rem;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  width: 100%;
-  max-width: 410px;
+  width: fit-content; 
 }
 
 .login-form h2 {
@@ -75,8 +76,7 @@
 ::ng-deep .p-password .p-icon-wrapper {
   margin-right: 0.5rem;
 }
-
-::ng-deep .p-button {
+ .p-button {
   padding: 0.75rem 1.5rem !important;
   font-size: 1rem !important;
   font-weight: 500 !important;
@@ -84,7 +84,7 @@
   transition: all 0.3s ease !important;
 }
 
-::ng-deep .p-button:enabled:hover {
+.p-button:enabled:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
