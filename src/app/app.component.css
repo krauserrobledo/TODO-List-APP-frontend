@@ -21,6 +21,7 @@
 .button-container{
   display: flex;
 }
+
 ::ng-deep .p-button{
 
   margin: 0rem !important;

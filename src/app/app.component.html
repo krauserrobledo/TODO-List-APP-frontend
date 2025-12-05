@@ -1,4 +1,5 @@
 <div class="app">
+  @if (currentUser$ | async; as currentUser) {
   <header class="header sticky top-3 z-50 text-white w-full">
     <div class="">
       <p-toolbar
@@ -72,6 +73,7 @@
       </p-toolbar>
     </div>
   </header>
+}
   <main>
     <router-outlet></router-outlet>
   </main>

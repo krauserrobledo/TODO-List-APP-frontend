@@ -1,58 +1,180 @@
-<div class="login-container">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
-    <h2>Sign In</h2>
+<html lang="en">
 
-    <!--Email-->
-    <div class="field">
-      <label for="email" class="block">Email</label>
-      <input id="email" type="email" formControlName="email" pInputText
-        [class]="(loginForm.get('email')?.invalid && loginForm.get('email')?.touched ? 'p-invalid ' : '') + 'w-full'"
-        placeholder="Enter your email">
+<head>
 
-      @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
-      <small class="p-error block">
-        <i class="pi pi-exclamation-circle"></i>
-        Email is required and must be valid
-      </small>
-      }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Geist Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-[#18181c] overflow-x-hidden">
+  <div class="bg-slate-900 w-full max-w-md flex flex-col gap-6 relative border-white/10 border rounded-3xl px-8 py-8">
+    <div class="flex flex-col items-center gap-4">
+      <h2 class="text-white text-3xl pb-4 font-semibold tracking-tight text-center">
+        <i class="icon pi pi-pen-to-square pl-4 pr-2" style="font-size: 2rem"></i>
+        TODO List App
+      </h2>
+      <h3 class="text-white text-2xl font-semibold tracking-tight text-center">Welcome Back!</h3>
+      <p class="text-white/60 text-sm text-center -mt-1">Sign in to continue to your dashboard</p>
     </div>
+    <div class="border-b border-white/10"></div>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-5 z-10">
 
-    <!--Password-->
-    <div class="field">
-      <label for="password" class="block">Password</label>
-      <p-password id="password" formControlName="password" [feedback]="false" [toggleMask]="true" styleClass="w-full"
-        [inputStyleClass]="(loginForm.get('password')?.invalid && loginForm.get('password')?.touched ? 'p-invalid ' : '') + 'w-full'"
-        placeholder="Enter your password">
-      </p-password>
-      @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
-      <small class="p-error block">
-        <i class="pi pi-exclamation-circle"></i>
-        Password is required
-      </small>
-      }
+      <!-- mail -->
+      <div>
+        <label for="email" class="block text-sm font-medium text-white tracking-wide mb-1 pb-3">
+          <i class="pi pi-envelope pr-2">
+
+          </i>
+          Email</label>
+        <input id="email" type="email" required autocomplete="email"
+          class="w-full rounded-lg bg-[#232329bb] border border-white/10 px-3 py-2 text-white placeholder-white/40 focus:outline-none focus:border-[#fe53bb] transition"
+          placeholder="you@example.com" formControlName="email" pInputText
+          [class]="(loginForm.get('email')?.invalid && loginForm.get('email')?.touched ? 'p-invalid ' : '') + 'w-full'">
+
+        @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+        <small class="p-error block">
+          <i class="pi pi-exclamation-circle"></i>
+          Email is required and must be valid
+        </small>
+        }
+      </div>
+      <!--Password-->
+      <div>
+        <label for="password" class="block text-sm font-medium text-white tracking-wide pt-1 pb-4">
+          <i class="pi pi-key pr-2 pt-2"></i>
+          Password
+        </label>
+
+        <p-password id="password" formControlName="password" required autocomplete="current-password" [feedback]="false"
+          [toggleMask]="true" styleClass="w-full" [inputStyleClass]="
+            (loginForm.get('password')?.invalid && loginForm.get('password')?.touched ? 'p-invalid ' : '') +
+            'w-full pb-2 rounded-lg bg-[#232329bb] border border-white/10 px-3 py-2 text-white placeholder-white/40 focus:outline-none focus:border-[#8f51ea] transition'
+          " placeholder="Enter your password">
+        </p-password>
+
+        @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+        <small class="p-error block">
+          <i class="pi pi-exclamation-circle"></i>
+          Password is required
+        </small>
+        }
+      </div>
+
+      <!-- get Login -->
+<button pButton type="submit" class="btn mx-auto">
+  <span id="container-stars">
+    <div id="particles-js"></div>
+  </span>
+  <span id="glow">
+    <span class="circle"></span>
+    <span class="circle"></span>
+  </span>
+  <strong class="relative z-10">SIGN IN</strong>
+</button>
+
+      
+
+      
+    </form>
+    <div class="border-b border-white/10"></div>
+    <div class="text-center mt-4">
+      <span class="text-white/60 text-xs">Don't have an account?
+        <a href="/register" class="text-[#ffdb3b] underline underline-offset-2 hover:text-[#fe53bb] transition">Sign
+          up</a>
+      </span>
     </div>
-
-    <!-- Submit -->
-    <p-button type="submit" [label]="(isLoading$ | async) ? 'Signing in...' : 'Sign In'"
-      [icon]="(isLoading$ | async) ? 'pi pi-spin pi-spinner' : 'pi pi-sign-in'"
-      [disabled]="loginForm.invalid || (isLoading$ | async)" styleClass="w-full" severity="primary">
-    </p-button>
-
-    <!-- Register -->
-    <p class="register-link text-center">
-      Don't have an account?
-      <a routerLink="/register" class="text-primary no-underline hover:underline">Sign Up Here</a>
-    </p>
-  </form>
-</div>
-<p-dialog header="Login Error" [(visible)]="showErrorDialog" [modal]="true" [style]="{ width: '450px' }"
-  [draggable]="false" [resizable]="false">
-  <div class="flex align-items-center">
-    <i class="pi pi-exclamation-triangle text-red-500 text-2xl mr-3"></i>
-    <span>{{ error$ | async }}</span>
+    <p class="text-center text-white/20 text-xs mt-4 select-none">© 2025 Embrace IT</p>
   </div>
-  <ng-template pTemplate="footer">
-    <p-button label="OK" icon="pi pi-check" (click)="showErrorDialog = false" styleClass="p-button-text">
-    </p-button>
-  </ng-template>
-</p-dialog>
+  <p-dialog header="Login Error" [(visible)]="showErrorDialog" [modal]="true" [style]="{ width: '450px' }"
+    [draggable]="false" [resizable]="false">
+    <div class="flex align-items-center">
+      <i class="pi pi-exclamation-triangle text-red-500 text-2xl mr-3"></i>
+      <span>{{ error$ | async }} Error Loggin In, Please try again later</span>
+    </div>
+    <ng-template pTemplate="footer">
+      <p-button label="OK" icon="pi pi-check" (click)="showErrorDialog = false" styleClass="p-button-text">
+      </p-button>
+    </ng-template>
+  </p-dialog>
+  <script>
+    particlesJS("particles-js", {
+      "particles": {
+        "number": {
+          "value": 80,
+          "density": {
+            "enable": true,
+            "value_area": 300
+          }
+        },
+        "color": {
+          "value": ["#ffdb3b", "#fe53bb", "#8f51ea", "#fff", "#ffdb3b99"]
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#000"
+          }
+        },
+        "opacity": {
+          "value": 0.85,
+          "random": true,
+          "anim": {
+            "enable": true,
+            "speed": 0.41,
+            "opacity_min": 0.3,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 1,
+          "random": false,
+          "anim": {
+            "enable": false
+          }
+        },
+        "line_linked": {
+          "enable": false
+        },
+        "move": {
+          "enable": true,
+          "speed": 0.7,
+          "direction": "top",
+          "random": true,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": false
+          }
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": false
+          },
+          "onclick": {
+            "enable": false
+          },
+          "resize": true
+        }
+      },
+      "retina_detect": true
+    });
+  </script>
+</body>
+
+</html>

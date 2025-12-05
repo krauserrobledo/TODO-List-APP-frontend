@@ -1,78 +1,206 @@
-<div class="register-container">
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
-    <h2>Create an Account</h2>
-    <label for="userName">Name</label>
-    <div class="field">
+<html lang="en">
 
-      <input id="userName" type="text" formControlName="userName" pInputText
-        [class]="(registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched ? 'p-invalid ' : '') + 'w-full'"
-        placeholder="Enter your Name">
+<head>
 
-      @if (registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched) {
-      <small class="p-error block">
-        <i class="pi pi-exclamation-circle"></i>
-        Name is required
-      </small>
-      }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Geist Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-[#18181c] overflow-x-hidden">
+  <div class="w-full bg-slate-900 max-w-md flex flex-col gap-6 relative border-white/10 border rounded-3xl px-8 py-8">
+    <div class="flex flex-col items-center gap-2">
+      <h2 class="text-white text-3xl pb-4 font-semibold tracking-tight text-center">
+        <i class="icon pi pi-pen-to-square pl-4 pr-2" style="font-size: 2rem"></i>
+        TODO List App
+      </h2>
+      <h2 class="text-white text-2xl font-semibold tracking-tight text-center">Hello new User!</h2>
+      <p class="text-white/60 text-sm text-center -mt-1">Insert your credentials to continue to dashboard</p>
     </div>
+    <div class="border-b border-white/10"></div>
+    <form class="flex flex-col gap-5 z-10">
 
-    <label for="email">Email Address</label>
-    <div class="field">
-      <span class="p-input-icon-left">
-        <i class="pi pi-envelope"></i>
-        <input id="email" type="email" formControlName="email" pInputText
-          [class]="(registerForm.get('email')?.invalid && registerForm.get('email')?.touched ? 'p-invalid ' : '') + 'w-full'"
-          placeholder="Enter your email">
+      <!--name-->
+      <label for="userName" class="block text-sm font-medium text-white tracking-wide">
+        <i class="pi pi-user pr-2"></i>
+        Name
+      </label>
+      <div class="field">
+
+        <input id="userName" type="text" formControlName="userName" pInputText
+          class="w-full rounded-lg bg-[#232329bb] border border-white/10 px-3 py-2 text-white placeholder-white/40 focus:outline-none focus:border-[#fe53bb] transition"
+          [class]="(registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched ? 'p-invalid ' : '') + 'w-full'"
+          placeholder="Enter your Name">
+
+        @if (registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched) {
+        <small class="p-error block">
+          <i class="pi pi-exclamation-circle"></i>
+          Name is required
+        </small>
+        }
+      </div>
+
+      <!--email-->
+      <div>
+        <label for="email" class="block text-sm font-medium text-white tracking-wide pt-2">
+          <i class="pi pi-envelope pr-2"></i>
+          Email
+        </label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-envelope"></i>
+          <input
+            class="w-full rounded-lg bg-[#232329bb] border border-white/10 px-3 py-2 text-white placeholder-white/40 focus:outline-none focus:border-[#fe53bb] transition"
+            id="email" type="email" formControlName="email" pInputText
+            [class]="(registerForm.get('email')?.invalid && registerForm.get('email')?.touched ? 'p-invalid ' : '') + 'w-full'"
+            placeholder="you@example.com">
+        </span>
+        @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+        <small class="p-error block">
+          <i class="pi pi-exclamation-circle"></i>
+          Valid email is required
+        </small>
+        }
+      </div>
+
+      <!-- password -->
+      <div>
+        <label for="password" class="block text-sm font-medium text-white tracking-wide mb-1">
+          <i class="pi pi-key pr-2 pt-2"></i>
+          Password
+        </label>
+        <div class="field pt-4">
+          <input
+            class="w-full rounded-lg bg-[#232329bb] border border-white/10 px-3 py-2 text-white placeholder-white/40 focus:outline-none focus:border-[#8f51ea] transition"
+            id="password" formControlName="password" feedback="false" toggleMask="true" styleClass="w-full"
+            inputStyleClass="(registerForm.get('password')?.invalid && registerForm.get('password')?.touched ? 'p-invalid ' : '') + 'w-full'"
+            placeholder="Enter your password">
+          @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+          <small class="p-error block">
+            <i class="pi pi-exclamation-circle"></i>
+            Password must be at least 6 characters
+          </small>
+          }
+        </div>
+        @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+        <small class="p-error block">
+          <i class="pi pi-exclamation-circle"></i>
+          Password must be at least 6 characters
+        </small>
+        }
+      </div>
+
+      <!-- get Login -->
+      <button pButton type="submit" class="btn mx-auto mt-2 relative">
+        <span id="container-stars">
+          <div id="particles-js"></div>
+        </span>
+        <span id="glow">
+          <span class="circle"></span>
+          <span class="circle"></span>
+        </span>
+        <strong class="relative z-10">SIGN IN</strong>
+      </button>
+
+    </form>
+
+    <div class="border-b border-white/10"></div>
+    <div class="text-center mt-4">
+      <span class="text-white/60 text-xs">Already have an account?
+        <a href="/login" class="text-[#ffdb3b] underline underline-offset-2 hover:text-[#fe53bb] transition">Sign In</a>
       </span>
-      @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
-      <small class="p-error block">
-        <i class="pi pi-exclamation-circle"></i>
-        Valid email is required
-      </small>
-      }
     </div>
-
-    <label for="password">Password</label>
-    <div class="field">
-      <p-password id="password" formControlName="password" [feedback]="false" [toggleMask]="true" styleClass="w-full"
-        [inputStyleClass]="(registerForm.get('password')?.invalid && registerForm.get('password')?.touched ? 'p-invalid ' : '') + 'w-full'"
-        placeholder="Enter your password">
-      </p-password>
-      @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
-      <small class="p-error block">
-        <i class="pi pi-exclamation-circle"></i>
-        Password must be at least 6 characters
-      </small>
-      }
-    </div>
-
-    <p-button type="submit" class="btn btn-primary" 
-          [disabled]="registerForm.invalid || (isLoading$ | async)">
-   @if (isLoading$ | async) {
-     <span>Creating Account...</span>
-   } @else {
-     <span>Sign Up</span>
-   }
-</p-button>
-
-    <p class="login-link">
-      ¿Already have an Account?
-      <a routerLink="/login">
-        Sign In Here
-      </a>
-    </p>
-  </form>
-</div>
-
-<p-dialog header="Register Error" [(visible)]="showErrorDialog" [modal]="true" 
-          [style]="{ width: '450px' }" [draggable]="false" [resizable]="false">
-  <div class="flex align-items-center">
-    <i class="pi pi-exclamation-triangle text-red-500 text-2xl mr-3"></i>
-    <span>{{ error$ | async }}</span>
+    <p class="text-center text-white/20 text-xs mt-4 select-none">© 2025 Embrace IT</p>
   </div>
-  <ng-template pTemplate="footer">
-    <p-button label="OK" icon="pi pi-check" 
-              (click)="showErrorDialog = false" styleClass="p-button-text">
-    </p-button>
-  </ng-template>
-</p-dialog>
+
+  <p-dialog header="Register Error" [(visible)]="showErrorDialog" [modal]="true" [style]="{ width: '450px' }"
+    [draggable]="false" [resizable]="false">
+    <div class="flex align-items-center">
+      <i class="pi pi-exclamation-triangle text-red-500 text-2xl mr-3"></i>
+      <span>{{ error$ | async }}</span>
+    </div>
+    <ng-template pTemplate="footer">
+      <p-button label="OK" icon="pi pi-check" (click)="showErrorDialog = false" styleClass="p-button-text">
+      </p-button>
+    </ng-template>
+  </p-dialog>
+  <script>
+    particlesJS("particles-js", {
+      "particles": {
+        "number": {
+          "value": 80,
+          "density": {
+            "enable": true,
+            "value_area": 300
+          }
+        },
+        "color": {
+          "value": ["#ffdb3b", "#fe53bb", "#8f51ea", "#fff", "#ffdb3b99"]
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#000"
+          }
+        },
+        "opacity": {
+          "value": 0.85,
+          "random": true,
+          "anim": {
+            "enable": true,
+            "speed": 0.41,
+            "opacity_min": 0.3,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 1,
+          "random": false,
+          "anim": {
+            "enable": false
+          }
+        },
+        "line_linked": {
+          "enable": false
+        },
+        "move": {
+          "enable": true,
+          "speed": 0.7,
+          "direction": "top",
+          "random": true,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": false
+          }
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": false
+          },
+          "onclick": {
+            "enable": false
+          },
+          "resize": true
+        }
+      },
+      "retina_detect": true
+    });
+  </script>
+</body>
+
+</html>
