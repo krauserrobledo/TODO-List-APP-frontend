@@ -351,7 +351,17 @@ Responses tested with DevTools
 
   - Configure Actions for entities according to use cases.
 
-  - 
+
+## ***Weekly Sprint 12/09***
+
+	
+### ***Upgrade Dashboard Styles***
+
+  - Upgrade in Dashboard Styles for improve user experience.
+
+### ***Add Documentation to Frontend Project***
+
+### ***Advanced Functions***                      
 
 
 
