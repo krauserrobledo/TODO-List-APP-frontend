@@ -12,6 +12,7 @@ export class TagApiRepository implements TagRepository {
   private tagMapper = inject(TagMapper);
   private baseUrl = `${environment.apiUrl}/tags`;
 
+  // Create a tag for current user
   createTag(model: TagModel): Observable<TagModel> {
     const dto = this.tagMapper.toCreateRequestDto(model);
     return this.http.post<TagModel>(this.baseUrl, dto).pipe(
@@ -20,7 +21,7 @@ export class TagApiRepository implements TagRepository {
       ))
     );
   }
-
+  // Update an existing Tag for current user
   updateTag(id: string, model: TagModel): Observable<TagModel> {
     const dto = this.tagMapper.toUpdateRequestDto(model);
     return this.http.put<TagModel>(`${this.baseUrl}/${id}`, dto).pipe(
@@ -29,11 +30,11 @@ export class TagApiRepository implements TagRepository {
       ))
     );
   }
-
+  // Delete an existing user Tag
   deleteTag(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
-
+  //Get tags by user
   getUserTags(): Observable<TagModel[]> {
     return this.http.get<TagModel[]>(`${this.baseUrl}/user`).pipe(
       map(apiResponses => apiResponses.map(apiRes =>
@@ -43,7 +44,7 @@ export class TagApiRepository implements TagRepository {
       ))
     );
   }
-
+  //Get a tag by Id
   getTag(id: string): Observable<TagModel> {
     return this.http.get<TagModel>(`${this.baseUrl}/${id}`).pipe(
       map(apiRes => this.tagMapper.toTagModel(

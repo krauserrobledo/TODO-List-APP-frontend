@@ -1,38 +1,31 @@
 .app {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    padding: 1rem;
-  }
-  
-  .app-header {
-    padding: 0.1rem;
-    color: #ffffff;
-    align-self: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 1rem;
+}
 
-  }
-  
-  .dashboard-grid {
-    display: grid;
-    grid-template-columns: 0.3fr 0.8fr 0.3fr; 
-    gap: 1rem;
-  }
-  .left {
-    background: #343a40;
-    
-    padding: 1rem;
-    border-radius: 6px;
-  }
-  
-  .center {
-    background: #343a40;
-    padding: 1rem;
-    border-radius: 6px;
-  }
-  
-  .right {
-    background: #343a40;
-    padding: 1rem;
-    border-radius: 6px;
-  }
-  
+.app-header {
+  padding: 0.1rem;
+  color: #ffffff;
+  align-self: center;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 0.3fr 0.3fr 0.4fr;
+  gap: 1rem;
+}
+
+.left,
+.center,
+.right {
+  padding: 1rem;
+  border-radius: 0.75rem;
+  /* más elegante */
+  background-color: rgba(30, 30, 40, 0.75);
+  /* translúcido */
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}

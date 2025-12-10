@@ -57,11 +57,10 @@ export class AuthState {
   }
 
   @Action(Logout)
-  logout(ctx: StateContext<AuthStateModel>) {
-    return this.authService.logout().pipe(
-      tap(() => ctx.patchState({ user: null, isAuthenticated: false }))
-    );
-  }
+logout(ctx: StateContext<AuthStateModel>) {
+  ctx.patchState({ user: null, isAuthenticated: false });
+  return this.authService.logout();
+}
 
   @Action(GetUserProfile)
   getUserProfile(ctx: StateContext<AuthStateModel>) {

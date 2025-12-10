@@ -1,6 +1,6 @@
 <div class="app">
   @if (currentUser$ | async; as currentUser) {
-  <header class="header sticky top-3 z-50 text-white w-full">
+  <header class="header sticky top-3 z-50 text-white w-fuall">
     <div class="">
       <p-toolbar
         class="toolbar flex ring-1 ring-white/10 bg-slate-900 rounded-full items-center justify-between">
@@ -14,7 +14,7 @@
         </nav>
         <div class="button-container items-center gap-3">
           @if (currentUser$ | async; as currentUser) {
-            <!-- Botón perfil -->
+            <!-- Profile Button -->
             <button 
               pButton 
               (click)="showUserMenu = !showUserMenu" 
@@ -29,14 +29,14 @@
               <div class="group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-violet-600 to-indigo-600 opacity-90 rounded-full absolute top-0 right-0 bottom-0 left-0"></div>
               <!-- Top Highlight -->
               <div class="absolute inset-x-4 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
-              <!-- Icono -->
+              <!-- Icon -->
               <i class="pi pi-user relative z-10 flex items-center justify-center drop-shadow-md leading-none" style="font-size: 1.5rem"></i>
             </button>
           
-            <!-- Menú desplegable -->
+            <!-- Menu -->
             @if (showUserMenu) {
               <div class="absolute right-0 mt-2 w-64 rounded-lg bg-slate-900 text-white shadow-lg ring-1 ring-white/10 p-4 z-50">
-                <!-- Info usuario -->
+                <!-- User Info -->
                 <div class="flex items-center gap-3 mb-3">
                   <i class="pi pi-user text-xl text-violet-400"></i>
                   <div>
@@ -45,7 +45,7 @@
                   </div>
                 </div>
                 <hr class="my-2 border-slate-700" />
-                <!-- Botón logout -->
+                <!-- Logout -->
                 <button 
                   pButton 
                   (click)="logout(); showUserMenu = false" 

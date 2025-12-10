@@ -28,7 +28,8 @@
       <p class="text-white/60 text-sm text-center -mt-1">Insert your credentials to continue to dashboard</p>
     </div>
     <div class="border-b border-white/10"></div>
-    <form class="flex flex-col gap-5 z-10">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-5 z-10">
+
 
       <!--name-->
       <label for="userName" class="block text-sm font-medium text-white tracking-wide">
@@ -78,26 +79,30 @@
           <i class="pi pi-key pr-2 pt-2"></i>
           Password
         </label>
-        <div class="field pt-4">
-          <input
-            class="w-full rounded-lg bg-[#232329bb] border border-white/10 px-3 py-2 text-white placeholder-white/40 focus:outline-none focus:border-[#8f51ea] transition"
-            id="password" formControlName="password" feedback="false" toggleMask="true" styleClass="w-full"
-            inputStyleClass="(registerForm.get('password')?.invalid && registerForm.get('password')?.touched ? 'p-invalid ' : '') + 'w-full'"
+        <div class="field pt-2">
+          <p-password
+            id="password"
+            formControlName="password"
+            [toggleMask]="true"
+            [feedback]="false"
+            styleClass="w-full"
+            inputStyleClass="w-full rounded-lg bg-[#232329bb] border border-white/10 px-3 py-2 text-white placeholder-white/40 focus:outline-none focus:border-[#8f51ea] transition"
+            [inputStyle]="{
+              'background-color': '#232329bb',
+              'border-color': registerForm.get('password')?.invalid && registerForm.get('password')?.touched ? '#f87171' : 'rgba(255, 255, 255, 0.1)'
+            }"
             placeholder="Enter your password">
+          </p-password>
+          
           @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
-          <small class="p-error block">
-            <i class="pi pi-exclamation-circle"></i>
-            Password must be at least 6 characters
-          </small>
+            <small class="p-error block mt-2">
+              <i class="pi pi-exclamation-circle"></i>
+              Password must be at least 6 characters
+            </small>
           }
         </div>
-        @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
-        <small class="p-error block">
-          <i class="pi pi-exclamation-circle"></i>
-          Password must be at least 6 characters
-        </small>
-        }
       </div>
+  
 
       <!-- get Login -->
       <button pButton type="submit" class="btn mx-auto mt-2 relative">

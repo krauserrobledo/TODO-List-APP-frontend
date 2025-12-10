@@ -8,7 +8,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { HydrateUser, Logout } from '../presentation/stores/auth/auth.actions';
 import { AuthState } from '../presentation/stores/auth/auth.state';
-import { AuthService } from '../presentation/pages/auth/service/auth-service';
 import { MenuModule } from "primeng/menu";
 
 @Component({
@@ -18,9 +17,9 @@ import { MenuModule } from "primeng/menu";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
 showUserMenu: boolean = false;  
-  constructor(private authService: AuthService) {}
   store = inject(Store);
   currentUser$ = this.store.select(AuthState.user);
   private router = inject(Router);
@@ -34,9 +33,6 @@ showUserMenu: boolean = false;
   ngOnInit() {
     this.store.dispatch(new HydrateUser());
   
-  }
-
-  ngOnUpdate() {
   }
 
   goRegister() {

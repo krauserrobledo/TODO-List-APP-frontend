@@ -1,40 +1,57 @@
-<div class="app">
-    <header class="app-header">
-      <nav>
-        <h1>Manage your Tasks</h1>
-      </nav>
-    </header>
-  
-    <main class="dashboard-grid">
+<div class="app min-h-screen flex flex-col  px-6 py-6">
+  <!-- Header -->
+  <header class="app-header mb-6">
+    <nav class="flex items-center justify-between bg-slate-900/80 backdrop-blur-xl rounded-2xl px-6 py-4 shadow-lg ring-1 ring-white/10">
+      <h1 class="text-xl font-semibold text-white tracking-tight flex items-center gap-2">
+        <i class="pi pi-check-square text-violet-400"></i>
+        Manage your Tasks
+      </h1>
+    </nav>
+  </header>
 
-      <div class="left">
+  <!-- Dashboard Grid -->
+  <main class="grid grid-cols-12 gap-6 flex-1">
+    <!-- Left -->
+    <div class="left col-span-3 space-y-6">
+      <p-panel header="Categories" [toggleable]="true"
+        class="bg-slate-900/70 backdrop-blur-xl rounded-xl shadow-lg ring-1 ring-white/10 text-white">
+        <app-category-list></app-category-list>
+      </p-panel>
+
+      <p-panel header="Tags" [toggleable]="true"
+        class="bg-slate-900/70 backdrop-blur-xl rounded-xl shadow-lg ring-1 ring-white/10 text-white">
+        <app-tag-list></app-tag-list>
+      </p-panel>
+    </div>
+
+    <!-- Center -->
+    <div class="col-span-5 ">
+      <p-panel header="Tasks"
+        class="bg-slate-900/70 backdrop-blur-xl rounded-xl shadow-lg ring-1 ring-white/10 text-white">
+        <div class="flex items-center gap-4">
+          
+        </div>
+        
         <app-task-list (selectTask)="onSelectTask($event)"></app-task-list>
-      </div>
+      </p-panel>
+      
+    </div>
 
-      <div class="center">
-        @if (selectedTask) {
+    <!-- Right -->
+    <div class="col-span-4">
+      @if (selectedTask) {
+        <p-panel header="Details"
+          class="bg-slate-900/70 backdrop-blur-xl rounded-xl shadow-lg ring-1 ring-white/10 text-white">
           <app-task-details
             [task]="selectedTask"
             (close)="closeDetails()"
             (edit)="editTask($event)"
-
             (update)="updateTask($event)"
             (delete)="deleteTask($event)"
             (changeStatus)="changeStatus($event)">
           </app-task-details>
-        }
-      </div>
-
-      <div class="right">
-        <p-panel header="Categories" [toggleable]="true">
-          <app-category-list></app-category-list>
         </p-panel>
-        
-        <p-panel header="Tags" [toggleable]="true">
-          <app-tag-list></app-tag-list>
-        </p-panel>
-      </div>
-    </main>
+      }
+    </div>
+  </main>
 </div>
-
-  

@@ -16,7 +16,7 @@ export class AuthApiRepository implements AuthRepository {
   private baseUrl = `${environment.apiUrl}/auth`;
   private readonly TOKEN_KEY = 'authToken';
   private readonly USER_KEY = 'current_user';
-
+  // Get Logged in the app
   login(model: LoginModel): Observable<UserModel> {
     const dto = this.authMapper.toLoginRequestDto(model);
     return this.http.post<any>(`${this.baseUrl}/login`, dto).pipe(
@@ -26,7 +26,7 @@ export class AuthApiRepository implements AuthRepository {
       tap(user => this.setCurrentUser(user))
     );
   }
-
+  // Create a new user not existing
   register(model: RegisterModel): Observable<UserModel> {
     const dto = this.authMapper.toRegisterRequestDto(model);
     return this.http.post<any>(`${this.baseUrl}/register`, dto).pipe(
@@ -37,32 +37,38 @@ export class AuthApiRepository implements AuthRepository {
     );
   }
 
+  // Validate Token String
   validateToken(model: ValidateTokenModel): Observable<{ valid: boolean }> {
     const dto = this.authMapper.toValidateTokenRequestDto(model);
     return this.http.post<{ valid: boolean }>(`${this.baseUrl}/validate`, dto);
   }
 
+  //Get Current user Entity
   getCurrentUser(): Observable<UserModel | null> {
-  const userData = localStorage.getItem(this.USER_KEY);
-  const user: UserModel | null = userData ? JSON.parse(userData) : null;
-  return of(user);
-}
+    const userData = localStorage.getItem(this.USER_KEY);
+    const user: UserModel | null = userData ? JSON.parse(userData) : null;
+    return of(user);
+  }
 
-  logout(): Observable <void> {
+  // Deletes token and user key strings
+  logout(): Observable<void> {
     localStorage.removeItem(this.TOKEN_KEY);
     localStorage.removeItem(this.USER_KEY);
     return of();
   }
 
+  //Get Token String from local storage
   getToken(): Observable<string | null> {
     const token = localStorage.getItem(this.TOKEN_KEY);
-    return of (token);
+    return of(token);
   }
-
+  
+  //Sets token string
   private setToken(token: string): void {
     localStorage.setItem(this.TOKEN_KEY, token);
   }
 
+  //Set current user model
   private setCurrentUser(user: UserModel): void {
     localStorage.setItem(this.USER_KEY, JSON.stringify(user));
   }

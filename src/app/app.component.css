@@ -1,4 +1,4 @@
-.header{
+.header {
   margin-bottom: 2rem;
 }
 
@@ -6,24 +6,23 @@
   margin: 1rem;
 }
 
-.register{
-  box-shadow: 0 0 6px rgba(0,0,0,0.03), 
-  0 2px 6px rgba(0,0,0,0.08), 
-  inset 3px 3px 0.5px -3px rgba(255,255,255,0.2), 
-  inset -3px -3px 0.5px -3px rgba(255,255,255,0.1), 
-  inset 1px 1px 1px -0.5px rgba(255,255,255,0.3), 
-  inset -1px -1px 1px -0.5px rgba(255,255,255,0.15), 
-  inset 0 0 6px 6px rgba(255,255,255,0.05), 
-  inset 0 0 2px 2px rgba(255,255,255,0.02), 
-  0 0 12px rgba(0,0,0,0.1);
+.register {
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.03),
+    0 2px 6px rgba(0, 0, 0, 0.08),
+    inset 3px 3px 0.5px -3px rgba(255, 255, 255, 0.2),
+    inset -3px -3px 0.5px -3px rgba(255, 255, 255, 0.1),
+    inset 1px 1px 1px -0.5px rgba(255, 255, 255, 0.3),
+    inset -1px -1px 1px -0.5px rgba(255, 255, 255, 0.15),
+    inset 0 0 6px 6px rgba(255, 255, 255, 0.05),
+    inset 0 0 2px 2px rgba(255, 255, 255, 0.02),
+    0 0 12px rgba(0, 0, 0, 0.1);
 }
 
-.button-container{
+.button-container {
   display: flex;
 }
 
-::ng-deep .p-button{
-
+::ng-deep .p-button {
   margin: 0rem !important;
   padding-inline: 1rem !important;
 }

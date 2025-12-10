@@ -158,3 +158,11 @@ body, input, label {
   transform: scale(1.035);
   box-shadow: 0 4px 24px 0 #ffdb3b22, 0 0px 0px #fe53bb33;
 }
+
+button.btn,
+.p-button.btn {
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+  align-self: center;
+}

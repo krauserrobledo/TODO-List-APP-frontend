@@ -12,6 +12,7 @@ export class SubtaskApiRepository implements SubtaskRepository {
   private subtaskMapper = inject(SubtaskMapper);
   private baseUrl = `${environment.apiUrl}/subtasks`;
 
+  // Create subtask for a Task
   createSubtask(taskId: string, model: SubtaskModel): Observable<SubtaskModel> {
     const dto = this.subtaskMapper.toCreateRequestDto(model);
     return this.http.post<SubtaskModel>(`${this.baseUrl}/task/${taskId}`, dto).pipe(
@@ -20,7 +21,7 @@ export class SubtaskApiRepository implements SubtaskRepository {
       ))
     );
   }
-
+  //Update existing subtask
   updateSubtask(id: string, model: SubtaskModel): Observable<SubtaskModel> {
     const dto = this.subtaskMapper.toUpdateRequestDto(model);
     return this.http.put<SubtaskModel>(`${this.baseUrl}/${id}`, dto).pipe(
@@ -29,11 +30,11 @@ export class SubtaskApiRepository implements SubtaskRepository {
       ))
     );
   }
-
+  //Delete a existing subtask
   deleteSubtask(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
-
+  //Get a subtask by id
   getSubtask(id: string): Observable<SubtaskModel> {
     return this.http.get<SubtaskModel>(`${this.baseUrl}/${id}`).pipe(
       map(apiRes => this.subtaskMapper.toSubtaskModel(
@@ -41,7 +42,7 @@ export class SubtaskApiRepository implements SubtaskRepository {
       ))
     );
   }
-
+  //Get all subtask by task
   getTaskSubtasks(taskId: string): Observable<SubtaskModel[]> {
     return this.http.get<SubtaskModel[]>(`${this.baseUrl}/task/${taskId}`).pipe(
       map(apiResponses => apiResponses.map(apiRes =>
