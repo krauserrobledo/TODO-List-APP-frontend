@@ -1,16 +1,32 @@
 @if (task) {
-<div class="task-details">
-  <div class="header">
-    <h3>Task Details</h3>
+<div class="task-details-container">
+
+  <!-- Header -->
+  <div class="section-header">
+    <h3 class="section-title">
+      <i class="pi pi-info-circle text-violet-400"></i>
+      Task Details
+    </h3>
   </div>
-  <div class="main-detail">
-    <p><strong>Title:</strong> {{ task.title }}</p>
-    <p><strong>Due Date:</strong> {{ task.dueDate | date }}</p>
+
+  <!-- Main Info -->
+  <div class="section-block">
+    <div class="info-row">
+      <p><span class="label">Title:</span> {{ task.title }}</p>
+      <p><span class="label">Due Date:</span> {{ task.dueDate | date }}</p>
+    </div>
+
+    <p class="description">
+      <span class="label">Description:</span> {{ task.description }}
+    </p>
   </div>
-  <p><strong>Description:</strong> {{ task.description }}</p>
-  <div class="status">
+
+  <!-- Status -->
+  <div class="section-block flex justify-center w-full ">
     <p-selectButton [options]="statusOptions" [(ngModel)]="selectedStatus"
-      (onChange)="changeStatus.emit({ task: task!, status: selectedStatus })">
+      (onChange)="changeStatus.emit({ task: task!, status: selectedStatus })"
+      styleClass="status-selector w-full flex justify-center">
+
       <ng-template let-option pTemplate="item">
         <span [ngClass]="getStatusClass(option.value)">
           {{ option.label }}
@@ -18,40 +34,48 @@
       </ng-template>
     </p-selectButton>
   </div>
-  <p><strong>Subtasks</strong></p>
-  <div class="task-details">
-    <app-subtask-list [taskId]="task.id"></app-subtask-list>
-  </div>
-  <p><strong>Categories:</strong></p>
-  <div class="card-container">
-    <p-card *ngFor="let cat of task.categories" [style.backgroundColor]="cat.color" class="card">
-      <ng-template pTemplate="title">{{ cat.name }}</ng-template>
-      
-    </p-card>
+
+  <!-- Subtasks -->
+  <div class="section-block">
+    <h2 class="section-header label mb-2 text-center">Subtasks</h2>
+    <app-subtask-list [taskId]="task.id" class="text-center"></app-subtask-list>
   </div>
 
-  <p><strong>Tags:</strong></p>
-<div class="chip-container">
-  <p-chip 
-    *ngFor="let tag of task.tags" 
-    [label]="tag.name" 
-   >
-  </p-chip>
-</div>
-
-  <div class="actions">
-    <p-button label="Edit" icon="pi pi-pencil" (click)="showEditDialog = true"></p-button>
-    <p-button label="Delete" icon="pi pi-trash" severity="danger" (click)="delete.emit(task!)"></p-button>
-    <p-button label="Close" icon="pi pi-times" severity="secondary" (click)="close.emit()"></p-button>
+  <!-- Categories -->
+  <div class="section-block">
+    <p class="label mb-2">Categories</p>
+    <div class="flex flex-wrap gap-3">
+      <p-chip *ngFor="let cat of task.categories" [style.backgroundColor]="cat.color" [label]="cat.name"
+        class="category-chip"></p-chip>
+    </div>
   </div>
 
-  <p-dialog header="Edit Task" [(visible)]="showEditDialog" [modal]="true" [style]="{width:'500px'}"
-  [draggable]="false" [resizable]="false">
-  <app-task-form 
-    [task]="task" 
-    (update)="onUpdate($event)" 
-    (cancel)="showEditDialog=false">
-  </app-task-form>
-</p-dialog>
+  <!-- Tags -->
+  <div class="section-block">
+    <p class="label mb-2">Tags</p>
+    <div class="flex flex-wrap gap-3">
+      <p-chip *ngFor="let tag of task.tags" [label]="tag.name" class="tag-chip"></p-chip>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="actions-row">
+    <p-button label="Edit" icon="pi pi-pencil" styleClass="btn-edit" (click)="showEditDialog = true">
+    </p-button>
+
+    <p-button label="Delete" icon="pi pi-trash" styleClass="btn-delete" (click)="delete.emit(task!)">
+    </p-button>
+
+    <p-button label="Close" icon="pi pi-times" styleClass="btn-close" (click)="close.emit()">
+    </p-button>
+  </div>
+
+  <!-- Edit Dialog -->
+  <p-dialog header="Edit Task" [(visible)]="showEditDialog" [modal]="true" [style]="{width:'550px'}" [draggable]="false" appendTo="body"
+    [resizable]="false" styleClass="dialog-panel">
+    <app-task-form [task]="task" (update)="onUpdate($event)" (cancel)="showEditDialog=false">
+    </app-task-form>
+  </p-dialog>
+
 </div>
 }

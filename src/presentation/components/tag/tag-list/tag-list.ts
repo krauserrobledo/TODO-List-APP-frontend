@@ -4,17 +4,18 @@ import { TagModel } from '../../../../domain/models/tag/tag-model';
 import { Button } from "primeng/button";
 import { Dialog } from "primeng/dialog";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Card } from "primeng/card";
+
 import { InputText } from "primeng/inputtext";
 import { Store } from '@ngxs/store';
 import { AddTag, DeleteTag, LoadTags } from '../../../stores/tag/tag.actions';
 import { TagState } from '../../../stores/tag/tag.state';
 import { Observable } from 'rxjs';
+import { ChipModule } from 'primeng/chip';
 
 @Component({
   selector: 'app-tag-list',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, Button, Dialog, Card, InputText],
+  imports: [CommonModule, ReactiveFormsModule, Button, Dialog, InputText, ChipModule],
   templateUrl: './tag-list.html',
   styleUrls: ['./tag-list.css'] 
 })

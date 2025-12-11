@@ -9,11 +9,15 @@ export interface TaskResponseDto {
   dueDate: Date;
   status: TaskStatus;
   userId: string;
+
   subtasks?: SubtaskResponseDto[];
+  taskCategories?: { category: CategoryResponseDto }[];
+  taskTags?: { tag: TagResponseDto }[];
+
   categories?: CategoryResponseDto[];
   tags?: TagResponseDto[];
-  
 }
+
 
 export type TaskStatus =
   | 'Non Started'

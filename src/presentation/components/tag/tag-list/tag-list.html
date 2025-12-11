@@ -1,28 +1,109 @@
-<div class="tag-container">
-  <div class="header">
-    <h3 style="color: #343a40;">Add new Tag ...</h3>
-    <p-button severity="help" icon="pi pi-plus" (click)="openDialog()"></p-button>
-  </div>
-
-  <div class="tag-list">
-    <ul>
-      @for (tag of (tags$ | async); track tag.id) {
-      <p-card class="li">
-        {{ tag.name }}
-        <p-button severity="danger" (click)="deleteTag(tag.id)">
-          <i class="pi pi-trash" style="font-size: 0.9rem"></i>
-        </p-button>
-      </p-card>
+<div class="tag-container glass">
+    <!-- Tags Grid -->
+  <div class="tag-grid">
+    @if ((tags$ | async)?.length; as tagCount) {
+      @if (tagCount > 0) {
+        <div class="tag-grid-container">
+          @for (tag of (tags$ | async); track tag.id) {
+            <p-chip 
+              class="custom-chip"
+              [removable]="true"
+              (onRemove)="deleteTag(tag.id)">
+              <i class="pi pi-tag mr-2"></i>
+              <span class="tag-name">{{ tag.name }}</span>
+            </p-chip>
+          }
+        </div>
+      } @else {
+        <div class="empty-state">
+          <i class="pi pi-inbox text-4xl text-gray-400 mb-3"></i>
+          <p class="text-gray-500">No tags yet. Create your first one!</p>
+        </div>
       }
-    </ul>
+    } @else {
+      <div class="loading-state">
+        <i class="pi pi-spin pi-spinner text-xl"></i>
+        <span class="ml-2">Loading tags...</span>
+      </div>
+    }
   </div>
 </div>
+<!-- Add tag -->
+<div class="tag-footer">
+    
+  <p-button 
+    icon="pi pi-plus" 
+    label="Add Tag" 
+    severity="help"
+    size="small"
+    outlined="true"
+    (click)="openDialog()">
+  </p-button>
+</div>
 
-<p-dialog header="Create Category" [(visible)]="showCreateDialog" [modal]="true" [draggable]="false"
-  [resizable]="false">
+<!-- Dialog for new tag -->
+<p-dialog 
+  header="Create New Tag" 
+  [(visible)]="showCreateDialog" 
+  [modal]="true" 
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '420px' }"
+  appendTo="body"
+  styleClass="tag-dialog"
+>
 
-  <form [formGroup]="tagForm" (ngSubmit)="submit()" class="p-fluid form-container">
-    <input pInputText="name" name="name" formControlName="name" placeholder="Tag name" />
-    <p-button type="submit" label="Save" icon="pi pi-check" severity="success"></p-button>
+  <form 
+    [formGroup]="tagForm" 
+    (ngSubmit)="submit()" 
+    class="flex flex-col gap-6 p-4"
+  >
+
+    <!-- Input -->
+    <div class="flex flex-col gap-2">
+      <label for="name" class="text-sm font-medium text-white/90 flex items-center gap-2">
+        <i class="pi pi-tag text-violet-300"></i>
+        Tag Name
+      </label>
+
+      <span class="p-input-icon-left w-full">
+        <input 
+          pInputText 
+          id="name" 
+          formControlName="name" 
+          placeholder="e.g., Work, Personal, Urgent"
+          class="w-full bg-slate-800/60 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-white/40"
+          autofocus
+        >
+      </span>
+
+      @if (tagForm.get('name')?.invalid && tagForm.get('name')?.touched) {
+        <small class="p-error flex items-center gap-1 mt-1">
+          <i class="pi pi-exclamation-circle"></i>
+          Tag name is required
+        </small>
+      }
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-end gap-3">
+      <p-button 
+        label="Cancel" 
+        icon="pi pi-times" 
+        severity="secondary"
+        styleClass="px-4 py-2 rounded-lg"
+        (click)="showCreateDialog = false">
+      </p-button>
+
+      <p-button 
+        type="submit" 
+        label="Create" 
+        icon="pi pi-check" 
+        severity="success"
+        styleClass="px-4 py-2 rounded-lg"
+        [disabled]="tagForm.invalid">
+      </p-button>
+    </div>
+
   </form>
 </p-dialog>

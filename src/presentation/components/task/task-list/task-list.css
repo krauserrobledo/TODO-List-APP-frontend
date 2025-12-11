@@ -1,29 +1,4 @@
-.task-container {
-  padding: 0.2rem;
-  background: #f9f9f9;
-  border-radius: 8px;
-}
-.task-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: black;
-}
 
-.header-row{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-inline: 0.5rem;
-  margin-top: 0.5rem;
-}
-
-.task-columns {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  margin-top: 1rem;
-}
 
 .non_started {
   color: gray;
@@ -47,7 +22,6 @@
   padding-inline: 3rem;
 }
 
-::ng-deep .p-field {
-  padding-bottom: 1.5rem;
-  padding-inline: 2rem;
+.task{
+  font-size: 1.2rem;
 }

@@ -1,6 +1,4 @@
 .app {
-  display: flex;
-  flex-direction: column;
   min-height: 100vh;
   padding: 1rem;
 }
@@ -12,7 +10,6 @@
 }
 
 .dashboard-grid {
-  display: grid;
   grid-template-columns: 0.3fr 0.3fr 0.4fr;
   gap: 1rem;
 }

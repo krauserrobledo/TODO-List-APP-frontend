@@ -1,35 +1,92 @@
-<div class="category-container">
-  <div class="header">
-  <h3 style="color: #343a40;">Add new Category...</h3>
-  <p-button severity="help" icon="pi pi-plus" (click)="openDialog()"></p-button>
-  </div>
-  <div class="category-list">
-    <ul>
-      @for (cat of (categories$ | async); track cat.id) {
-        <p-card [style.backgroundColor]="cat.color" class="card">
-          <div class="cardcontent">
-            <span class="title">{{ cat.name }}</span>
-            <p-button severity="danger" (click)="deleteCategory(cat)">
-              <i class="pi pi-trash" style="font-size: 0.9rem"></i>
-            </p-button>
-          </div>
-        </p-card>
-      }
-    </ul>
-  </div>
+<div class="category-grid-container">
+  @for (cat of (categories$ | async); track cat.id) {
+  <p-chip class="category-chip" [style.backgroundColor]="cat.color" [removable]="true" (onRemove)="deleteCategory(cat)">
+    <i class="pi pi-folder mr-2"></i>
+    <span class="category-name">{{ cat.name }}</span>
+  </p-chip>
+  }
 </div>
 
-<p-dialog header="Create Category" [(visible)]="showCreateDialog" [modal]="true"
-  [draggable]="false" [resizable]="false">
-  <form [formGroup]="categoryForm" (ngSubmit)="submit()" class="p-fluid form-container">
-    <div class="p-field">
-      <input type="text" pInputText id="name" formControlName="name" name="name" placeholder="Category name"/>
+<div class="category-footer">
+  <p-button icon="pi pi-plus" label="Add Category" severity="help" size="small" outlined="true" (click)="openDialog()">
+  </p-button>
+</div>
+
+<!-- Dialog -->
+<p-dialog 
+  header="Create Category" 
+  [(visible)]="showCreateDialog" 
+  [modal]="true" 
+  [draggable]="false" 
+  [resizable]="false"
+  [style]="{ width: '420px' }"
+  appendTo="body"
+  styleClass="category-dialog"
+>
+  <form 
+    [formGroup]="categoryForm" 
+    (ngSubmit)="submit()" 
+    class="flex flex-col gap-6 p-4"
+  >
+    <!-- Nombre -->
+    <div class="flex flex-col gap-2">
+      <label class="text-sm font-medium text-white/90 flex items-center gap-2">
+        <i class="pi pi-folder text-violet-300"></i>
+        Category name
+      </label>
+
+      <span class="p-input-icon-left w-full">
+        <input 
+          pInputText
+          formControlName="name"
+          placeholder="e.g., Work, Home, Finance"
+          class="w-full bg-slate-800/60 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-white/40"
+          autofocus
+        />
+      </span>
+
+      @if (categoryForm.get('name')?.invalid && categoryForm.get('name')?.touched) {
+        <small class="p-error flex items-center gap-1 mt-1">
+          <i class="pi pi-exclamation-circle"></i>
+          Category name is required
+        </small>
+      }
     </div>
-    <div class="p-field">
-      <label for="color">Color</label>
-      <p-colorPicker id="color" formControlName="color" name="newcolor" [appendTo]="'body'"></p-colorPicker>
+
+    <!-- Color -->
+    <div class="flex flex-col gap-2">
+      <label class="text-sm font-medium text-white/90 flex items-center gap-2">
+        <i class="pi pi-palette text-amber-300"></i>
+        Color
+      </label>
+
+      <div class="flex items-center gap-3">
+        <p-colorPicker 
+          formControlName="color" 
+          [appendTo]="'body'">
+        </p-colorPicker>
+
+      </div>
     </div>
-    <p-button type="submit" label="Save" icon="pi pi-check" severity="success"></p-button>
+
+    <!-- Botones -->
+    <div class="flex justify-end gap-3">
+      <p-button 
+        label="Cancel" 
+        icon="pi pi-times" 
+        severity="secondary"
+        styleClass="px-4 py-2 rounded-lg"
+        (click)="showCreateDialog = false">
+      </p-button>
+
+      <p-button 
+        type="submit" 
+        label="Save" 
+        icon="pi pi-check" 
+        severity="success"
+        styleClass="px-4 py-2 rounded-lg"
+        [disabled]="categoryForm.invalid">
+      </p-button>
+    </div>
   </form>
 </p-dialog>
-

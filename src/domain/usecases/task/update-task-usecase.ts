@@ -8,6 +8,6 @@ export class UpdateTaskUseCase {
   private taskRepository = inject(TaskRepository);
 
   execute(id: string, model: TaskModel): Observable <TaskModel> {
-    return this.taskRepository.updateTask(model.id, model);
+    return this.taskRepository.updateTask(id, model);
   }
 }

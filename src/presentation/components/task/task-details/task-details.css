@@ -1,75 +1,73 @@
-.task-details {
-  display: flex;
-  flex-direction: column;
-  margin-top: 0.5rem;
-  padding: 1rem;
-  border: 1px solid #eee;
-  background: #f9f9f9;
-  border-radius: 6px;
-  color: #555;
-}
-.header{
-  display: flex;
-  justify-content: center;
-
-
+.task-details-container {
+  @apply flex flex-col gap-8 bg-slate-900/70 backdrop-blur-xl rounded-2xl shadow-xl ring-1 ring-white/10 p-8 text-white w-full;
 }
 
-.h3{
-  justify-self: center;
-  
-}
-.main-detail{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+/* Header */
+.section-header {
+  @apply text-2xl flex justify-center mb-4;
 }
 
-.status {
-  display: flex;
-  justify-content: center;
-  padding: 1rem;
+.section-title {
+  @apply text-3xl font-bold tracking-tight flex items-center gap-3;
 }
 
-.status-item, .status-wrapper {
-  padding: 0.5rem;
-  border-radius: 4px;
+/* Blocks */
+.section-block {
+  @apply bg-slate-800/40 rounded-xl p-5 shadow-md border border-white/10 flex flex-col gap-3;
 }
 
-.status-wrapper {
-  margin-top: 0.5rem;
+.info-row {
+  @apply flex justify-between text-slate-300 text-base;
 }
 
-.non_started { color: #555; }
-.in_progress { color: #004a99; }
-.paused      { color: #cc6600; }
-.late        { color: #cc0000; font-weight: bold; }
-.finished    { color: #006600; text-decoration: line-through; }
-
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+.description {
+  @apply text-slate-300 leading-relaxed;
 }
 
-.category-card, .tag-card {
-  width: 160px;
-  text-align: center;
+.label {
+  @apply font-semibold text-white;
 }
 
-.chip-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+/* Chips */
+.category-chip {
+  @apply text-white px-4 py-2 rounded-lg shadow-md font-medium;
 }
 
-.chip-item {
-  margin-bottom: 0.25rem;
+.tag-chip {
+  @apply bg-slate-800/60 text-white px-4 py-2 rounded-lg shadow;
 }
 
-.actions {
-  margin-top: 1rem;
-  display: flex;
-  gap: 0.5rem;
+/* Status selector */
+.status-selector {
+  @apply bg-slate-800/60 border border-white/10 rounded-lg text-white px-4 py-2;
 }
+
+/* Actions */
+.actions-row {
+  @apply flex justify-end gap-4 mt-6;
+}
+
+.btn-edit {
+  @apply bg-violet-600 hover:bg-violet-700 text-white px-5 py-2 rounded-lg shadow-md;
+}
+
+.btn-delete {
+  @apply bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg shadow-md;
+}
+
+.btn-close {
+  @apply bg-slate-700 hover:bg-slate-600 text-white px-5 py-2 rounded-lg shadow-md;
+}
+
+/* Dialog */
+.dialog-panel {
+  @apply bg-slate-900/90 backdrop-blur-xl text-white rounded-xl;
+}
+
+/*status colors*/
+
+.non_started { color: #9ca3af; }      /* gray-400 */
+.in_progress { color: #60a5fa; }      /* blue-400 */
+.paused      { color: #fb923c; }      /* orange-400 */
+.late        { color: #f87171; font-weight: 600; }  /* red-400 */
+.finished    { color: #4ade80; text-decoration: line-through; } /* green-400 */

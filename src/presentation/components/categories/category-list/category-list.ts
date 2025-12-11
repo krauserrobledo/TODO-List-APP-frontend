@@ -12,6 +12,7 @@ import { Store } from '@ngxs/store';
 import { CreateCategory, DeleteCategory, LoadCategories } from '../../../stores/category/category.actions';
 import { CategoryState } from '../../../stores/category/category.state';
 import { Observable } from 'rxjs';
+import { Chip } from "primeng/chip";
 
 @Component({
   selector: 'app-category-list',
@@ -24,8 +25,9 @@ import { Observable } from 'rxjs';
     InputTextModule,
     ColorPickerModule,
     ListboxModule,
-    ReactiveFormsModule
-  ],
+    ReactiveFormsModule,
+    Chip
+],
   templateUrl: './category-list.html',
   styleUrls: ['./category-list.css']
 })

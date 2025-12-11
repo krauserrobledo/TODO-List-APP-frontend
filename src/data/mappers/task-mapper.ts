@@ -20,7 +20,7 @@ export class TaskMapper {
     return {
       title: model.title,
       description: model.description,
-      dueDate: model.dueDate? new Date(model.dueDate).toISOString() : null,
+      dueDate: model.dueDate ? new Date(model.dueDate).toISOString() : null,
       status: model.status
     };
   }
@@ -29,38 +29,41 @@ export class TaskMapper {
     return {
       title: model.title,
       description: model.description,
-      dueDate: model.dueDate? new Date(model.dueDate).toISOString() : null,
-      status: model.status
+      dueDate: model.dueDate ? new Date(model.dueDate).toISOString() : null,
+      status: model.status,
+      categoryIds: model.categories?.map(c => c.id) ?? [],
+      tagIds: model.tags?.map(t => t.id) ?? []
     };
   }
 
-  // DTO → Domain
+  // DTO → Domain 
   toTaskModel(dto: TaskResponseDto): TaskModel {
     return {
       id: dto.id,
+      userId: dto.userId,
       title: dto.title,
       description: dto.description,
       dueDate: dto.dueDate,
       status: dto.status,
-      userId: dto.userId,
       subtasks: dto.subtasks?.map(st => this.subtaskMapper.toSubtaskModel(st)) ?? [],
       categories: dto.categories?.map(c => this.categoryMapper.toCategoryModel(c)) ?? [],
       tags: dto.tags?.map(t => this.tagMapper.toTagModel(t)) ?? []
     };
   }
 
-  // API Response → DTO
+  // API Response → DTO 
   toTaskResponseDto(apiResponse: any): TaskResponseDto {
     return {
-      id: apiResponse.id ?? apiResponse.data?.id ?? '',
-      title: apiResponse.title ?? apiResponse.data?.title ?? '',
-      description: apiResponse.description ?? apiResponse.data?.description,
-      dueDate: apiResponse.dueDate ?? apiResponse.data?.dueDate,
-      status: apiResponse.status ?? apiResponse.data?.status ?? '',
-      userId: apiResponse.userId ?? apiResponse.data?.userId ?? '',
-      subtasks: apiResponse.subtasks ?? apiResponse.data?.subtasks ?? [],
-      categories: apiResponse.categories ?? apiResponse.data?.categories ?? [],
-      tags: apiResponse.tags ?? apiResponse.data?.tags ?? []
+      id: apiResponse.id ?? '',
+      userId: apiResponse.userId ?? '',
+      title: apiResponse.title ?? '',
+      description: apiResponse.description,
+      dueDate: apiResponse.dueDate,
+      status: apiResponse.status ?? '',
+      subtasks: apiResponse.subtasks ?? [],
+      categories: apiResponse.categories ?? [],
+      tags: apiResponse.tags ?? []
     };
   }
 }
+

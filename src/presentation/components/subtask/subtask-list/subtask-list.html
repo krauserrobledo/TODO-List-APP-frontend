@@ -1,22 +1,29 @@
-<div class="subtask-list">
+<div >
  <ul>
     @for (sub of (subtasks$ | async); track sub.id) {
       <li class="item">
         {{ sub.title }}
         <p-button severity="danger"(click)="deleteSubtask(sub.id)">
-          <i class="pi pi-trash" style="font-size: 0.9rem"></i>
+          <i class="pi pi-trash mt-1 bg-red-500 p-1 rounded-md" style="font-size:1rem"></i>
         </p-button>
       </li>
        }
   </ul>
   
 </div>
-<div class="bottom">
-<h4 style="color: #343a40;">Add new Subtask...</h4>
-  <p-button severity="help" icon="pi pi-plus" (click)="openDialog()"></p-button>
+<div class="flex justify-end items-end">
+  <p-button
+    icon="pi pi-plus"
+    label="Add new Subtask..."
+    class="flex items-center gap-2 py-2 mt-4 rounded-lg 
+                bg-violet-600 hover:bg-violet-700 text-white font-medium
+                shadow-md transition"
+    (click)="openDialog()">
+  </p-button>
 </div>
 
-<p-dialog header="Create Category" [(visible)]="showCreateDialog" [modal]="true"
+
+<p-dialog header="Create Subtask" [(visible)]="showCreateDialog" [modal]="true"
   [draggable]="false" [resizable]="false">
   <form  [formGroup]="subtaskForm" (ngSubmit)="submit()" class="p-fluid form-container">
     <div class="p-field">

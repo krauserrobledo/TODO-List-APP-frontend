@@ -1,71 +1,94 @@
-<div class="task-container">
-  <h4>{{ isEdit ? 'Edit Task' : 'Create Task' }}</h4>
+<div class="task-panel">
+  <h4 class="task-title">
+    {{ isEdit ? 'Edit Task' : 'Create Task' }}
+  </h4>
 
   <form class="task-form" [formGroup]="taskForm" (ngSubmit)="submit()">
+
     <!-- Title -->
-    <div class="p-field">
-      <label for="title">Title</label>
-      <input pInputText id="title" formControlName="newTitle" name="title" placeholder="New task..." />
+    <div class="field-block">
+      <label class="field-label">
+        <i class="pi pi-pencil mr-2"></i>
+        Title
+      </label>
+      <input pInputText formControlName="newTitle" class="field-input" />
     </div>
 
     <!-- Status -->
-    <div class="p-field">
-      <label>Status</label>
+    <div class="field-block">
+      <label class="field-label">
+        <i class="pi pi-flag mr-2"></i>
+        Status
+      </label>
       <p-selectButton 
-        [options]="[
-          {label:'Non Started', value:'Non Started'},
-          {label:'In Progress', value:'In Progress'},
-          {label:'Paused', value:'Paused'},
-          {label:'Late', value:'Late'},
-          {label:'Finished', value:'Finished'}
-        ]"
-        formControlName="newStatus" 
-        name="status">
-      </p-selectButton>
+        [options]="statusOptions"
+        formControlName="newStatus"
+        styleClass="status-select"
+      ></p-selectButton>
     </div>
 
     <!-- Description -->
-    <div class="p-field">
-      <label for="description">Description</label>
-      <input type="text" pInputTextarea id="description" formControlName="newDescription" name="description" rows="3" placeholder="Describe task..." />
+    <div class="field-block">
+      <label class="field-label">
+        <i class="pi pi-align-left mr-2"></i>
+        Description
+      </label>
+      <textarea pInputTextarea formControlName="newDescription" rows="3" class="field-input"></textarea>
     </div>
 
     <!-- Due Date -->
-    <div class="p-field">
-      <label for="dueDate">Due Date</label>
-      <p-datepicker id="dueDate" formControlName="newDueDate" name="dueDate" dateFormat="yy-mm-dd" [showIcon]="true" [appendTo]="'body'"></p-datepicker>
+    <div class="field-block">
+      <label class="field-label">
+        <i class="pi pi-calendar mr-2"></i>
+        Due Date
+      </label>
+      <p-datepicker 
+        formControlName="newDueDate"
+        dateFormat="yy-mm-dd"
+        [showIcon]="true"
+        appendTo="body"
+        styleClass="w-full"
+        inputStyleClass="field-input"
+      ></p-datepicker>
     </div>
 
     <!-- Categories -->
-    <div class="p-field">
-      <label>Categories</label>
+    <div class="field-block">
+      <label class="field-label">
+        <i class="pi pi-folder-open mr-2"></i>
+        Categories
+      </label>
       <p-multiSelect 
-        [options]= "(categories$ | async) || []"
-        optionLabel="name" 
-        formControlName="categories" 
-        name="categories"
+        [options]="(categories$ | async) || []"
+        optionLabel="name"
+        [(ngModel)]="selectedCategories"
+        (onChange)="onCategoriesChanged(selectedCategories)"
         placeholder="Select categories"
-        [appendTo]="'body'">
-      </p-multiSelect>
+        [appendTo]="'body'"
+      ></p-multiSelect>
     </div>
 
     <!-- Tags -->
-    <div class="p-field">
-      <label>Tags</label>
+    <div class="field-block">
+      <label class="field-label">
+        <i class="pi pi-tags mr-2"></i>
+        Tags
+      </label>
       <p-multiSelect 
-        [options]="(tags$ | async) || []" 
-        optionLabel="name" 
-        formControlName="tags" 
-        name="tags"
+        [options]="(tags$ | async) || []"
+        optionLabel="name"
+        [(ngModel)]="selectedTags"
+        (onChange)="onTagsChanged(selectedTags)"
         placeholder="Select tags"
-        [appendTo]="'body'">
-      </p-multiSelect>
+        [appendTo]="'body'"
+      ></p-multiSelect>
     </div>
 
     <!-- Actions -->
-    <div class="dialog-footer">
-      <p-button type="submit" label="{{ isEdit ? 'Update' : 'Add' }}" icon="pi pi-check" severity="success"></p-button>
+    <div class="task-dialog-footer">
       <p-button type="button" label="Cancel" icon="pi pi-times" severity="secondary" (click)="close()"></p-button>
-   </div>
+      <p-button type="submit" [label]="isEdit ? 'Update' : 'Add'" icon="pi pi-check" severity="success"></p-button>
+    </div>
+
   </form>
 </div>

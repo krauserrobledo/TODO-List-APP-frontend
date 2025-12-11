@@ -1,33 +1,57 @@
-.tag-container {
-    padding: 0.2rem;
-    background: #f9f9f9;
-    border-radius: 8px;
-  }
-
-.form-container {
-  margin: 3rem;
+/* GRID */
+.tag-grid-container {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem; 
+  padding: 0.5rem 0;
 }
 
-.tag-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+/* CHIP PRIME CUSTOM */
+.custom-chip {
+  padding: 0.5rem !important;
+  border-radius: 9999px !important;
+  background: rgba(255,255,255,0.12) !important;
+  border: 1px solid rgba(255,255,255,0.18) !important;
+  min-height: 32px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  transition: all 0.25s ease;
+}
 
-  ::ng-deep .p-button {
+.custom-chip:hover {
+  background: rgba(255,255,255,0.22) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+  transform: translateY(-1px);
+}
 
-    margin-left: 1rem;
+.tag-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1rem;
+}
 
-  }
+/* ADD TAG BUTTON */
+.add-tag-btn {
+  @apply bg-violet-600 hover:bg-violet-700 text-white font-medium shadow-md transition rounded-lg px-4 py-2;
+}
 
-  .header {
+/* DIALOG WRAPPER */
+.tag-dialog {
+  @apply bg-slate-900/90 backdrop-blur-xl text-white rounded-2xl shadow-2xl border border-white/10;
+}
 
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-inline: 0.5rem;
-    margin-top: 0.5rem;
-  }
+/* HEADER */
+.tag-dialog .p-dialog-header {
+  @apply bg-transparent text-white border-b border-white/10 pb-3;
+}
+
+/* CONTENT */
+.tag-dialog .p-dialog-content {
+  @apply bg-transparent pt-4;
+}
+
+/* FOOTER */
+.tag-dialog .p-dialog-footer {
+  @apply bg-transparent border-t border-white/10 pt-3;
+}
+

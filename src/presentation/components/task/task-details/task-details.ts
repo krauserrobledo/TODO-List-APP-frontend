@@ -13,6 +13,7 @@ import { DialogModule } from 'primeng/dialog';
 import { TaskForm } from '../task-form/task-form';
 import { Store } from '@ngxs/store';
 import { DeleteTag } from '../../../stores/tag/tag.actions';
+import { DeleteTagFromTask, UpdateTask } from '../../../stores/task/task.actions';
 
 @Component({
   selector: 'app-task-details',
@@ -54,10 +55,21 @@ export class TaskDetails implements OnChanges {
   }
 
   onUpdate(updated: TaskModel) {
-    this.task = updated;
-    this.edit.emit(updated);
-    this.showEditDialog = false;  
+    
+    this.taskStore.dispatch(new UpdateTask(updated.id, updated)).subscribe(() => {
+      const refreshed = this.taskStore.selectSnapshot(state =>
+        state.tasks.tasks.find((t: TaskModel) => t.id === updated.id)
+      );
+      
+      if (refreshed) {
+        this.task = refreshed;
+        this.update.emit(refreshed);
+      }
+      this.update.emit(updated);
+      this.showEditDialog = false;
+    });
   }
+  
 
   getStatusClass(status: string) {
     switch (status) {
@@ -70,19 +82,23 @@ export class TaskDetails implements OnChanges {
     }
   }
 
-  deleteTag(id: string) {
+  deleteTag(tagId: string) {
     if (!this.task) return;
   
-    this.taskStore.dispatch(new DeleteTag(this.task.id));
+    this.taskStore.dispatch(new DeleteTagFromTask(this.task.id, tagId)).subscribe(() => {
   
-    const updatedTask: TaskModel = {
-      ...this.task,
-      tags: (this.task.tags ?? []).filter(t => t.id !== id)
-    };
+     
+      const updated = this.taskStore.selectSnapshot(state =>
+        state.tasks.tasks.find((t: { id: string; }) => t.id === this.task!.id)
+      );
   
-    this.task = updatedTask;
-  
-    this.update.emit(updatedTask);
+      if (updated) {
+        this.task = updated;
+        this.update.emit(updated);
+      }
+    });
   }
+  
+  
   
 }

@@ -1,45 +1,39 @@
-.task-container {
-  background: #f9f9f9;
-  border-radius: 8px;
-  color: black;
-  padding: 0.5rem;
+.task-panel {
+  @apply flex flex-col gap-4 bg-slate-900/70 backdrop-blur-xl 
+         rounded-xl shadow-lg ring-1 ring-white/10 p-6 text-white;
+}
+
+.task-title {
+  @apply text-xl font-semibold tracking-tight mb-2;
 }
 
 .task-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  @apply flex flex-col gap-4;
 }
 
-.p-field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+.field-block {
+  @apply flex flex-col gap-2;
 }
 
-.dialog-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.75rem;
-  margin-top: 1rem;
+.field-label {
+  @apply text-sm font-medium text-white/80 flex items-center;
 }
 
+.field-input {
+  @apply w-full bg-slate-800/60 border border-white/10 rounded-lg 
+         px-3 py-2 text-white placeholder-white/40 focus:outline-none;
+}
 
-/* Estados */
-.non_started {
-  color: gray;
+/* SelectButton de estado */
+.status-select {
+  @apply w-full;
 }
-.in_progress {
-  color: blue;
+
+/* MultiSelect */
+.field-multiselect {
+  @apply w-full;
 }
-.paused {
-  color: orange;
-}
-.late {
-  color: red;
-  font-weight: bold;
-}
-.finished {
-  color: green;
-  text-decoration: line-through;
+
+.task-dialog-footer {
+  @apply flex justify-end gap-3 mt-4;
 }

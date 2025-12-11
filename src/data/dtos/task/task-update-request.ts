@@ -1,7 +1,9 @@
-export interface TaskUpdateRequest 
-{
-    title: string;
+export interface TaskUpdateRequest {
+    title?: string;
     description?: string;
-    dueDate: string | null;
-    status: string;
-}
+    dueDate?: Date | string | null;
+    status?: string;
+    categoryIds?: string[];
+    tagIds?: string[];
+  }
+  

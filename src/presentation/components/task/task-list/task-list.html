@@ -1,67 +1,101 @@
-<div class="task-container">
-  <div class="task-list">
-    <!-- List-->
-    <h3>Task List</h3>
-    <div class="header-row">
-      <h4>Add New Task...</h4>
-      <p-button (click)="showFormDialog = !showFormDialog" icon="pi pi-plus"> </p-button>
-    </div>
-    <p-listbox [options]="(tasks$ | async )|| []" optionLabel="title" (onChange)="onSelect($event.value)" [style]="{width:'100%'}">
-      <ng-template let-task pTemplate="item">
-        <div [ngClass]="getStatusClass(task.status)" class="task-item">
-          {{ task.title }}
-        </div>
-      </ng-template>
-    </p-listbox>
+<div
+  class="w-full h-full flex flex-col bg-slate-900/70 backdrop-blur-xl rounded-xl shadow-lg ring-1 ring-white/10 p-6 text-white">
+
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-xl font-semibold tracking-tight flex items-center gap-2">
+      <i class="pi pi-list text-violet-400"></i>
+      Task List
+    </h2>
+
+    <p-button icon="pi pi-plus" label="Add new Task" styleClass="
+      flex items-center gap-3 px-6 py-2 rounded-xl
+      bg-gradient-to-r from-violet-600 to-indigo-600
+      hover:from-violet-500 hover:to-indigo-500
+      text-white font-semibold tracking-wide
+      shadow-[0_0_20px_rgba(139,92,246,0.5)]
+      hover:shadow-[0_0_35px_rgba(139,92,246,0.8)]
+      transition-all duration-300
+    " (click)="showFormDialog = true">
+    </p-button>
 
   </div>
+
+  <!-- Listbox -->
+  <p-listbox 
+  [options]="(tasks$ | async) || []" 
+  optionLabel="title" 
+  (onChange)="onSelect($event.value)"
+  class="w-full bg-transparent text-white"
+>
+  <ng-template let-task pTemplate="item">
+    <div 
+      class="w-full px-4 py-2 rounded-lg transition flex items-center justify-between"
+      [ngClass]="getStatusClass(task.status)"
+    >
+      <span class="task">{{ task.title }}</span>
+      <i class="pi pi-ellipsis-h text-white/70 hover:text-white transition"></i>
+    </div>
+  </ng-template>
+</p-listbox>
+
 </div>
 
 <!-- Form Dialog-->
-<p-dialog header="Create Task" [(visible)]="showFormDialog" [modal]="true" [draggable]="false">
-  <div class="form-container">
-    <form (ngSubmit)="addTask()" [formGroup]="listForm" class="p-fluid task-form">
-      <div class="p-field">
-        <input type="text" pInputText id="title" formControlName="newTitle" name="title" placeholder="Title" />
-      </div>
+<p-dialog header="Create Task" [(visible)]="showFormDialog" [modal]="true" [draggable]="false" appendTo="body"
+  styleClass="bg-slate-900/90 backdrop-blur-xl text-white rounded-xl">
+  <form (ngSubmit)="addTask()" [formGroup]="listForm" class="flex flex-col gap-4 p-4">
 
-      <div class="p-field">
-        <input type="text" pInputText id="description" formControlName="newDescription" name="description"
-          placeholder="Description" />
-      </div>
-      <div class="p-field">
-        <p-datepicker id="date" formControlName="newDueDate" name="dueDate" placeholder="Select a date"
-          [appendTo]="'body'" />
-      </div>
-      <div class="p-field">
-        <p-panel header="Status" [toggleable]="true">
-          <p-listbox formControlName="newStatus" name="status" [options]="statusOptions" [style]="{width:'100%'}">
-            <ng-template let-option pTemplate="item">
-              <div [ngClass]="getStatusClass(option.value)" class="task-item">
-                {{ option.label }}
-              </div>
-            </ng-template>
-          </p-listbox>
-        </p-panel>
-      </div>
-      <div class="p-dialog-footer">
-        <p-button type="submit" label="Add" icon="pi pi-check" severity="success"></p-button>
-        <p-button type="button" label="Cancel" icon="pi pi-times" severity="danger"
-          (click)="showFormDialog = false"></p-button>
-      </div>
-    </form>
-  </div>
+    <input pInputText formControlName="newTitle" placeholder="Title"
+      class="w-full bg-slate-800/60 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-white/40" />
+
+    <input pInputText formControlName="newDescription" placeholder="Description"
+      class="w-full bg-slate-800/60 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-white/40" />
+
+    <p-datepicker formControlName="newDueDate" placeholder="Select a date" [appendTo]="'body'" styleClass="w-full"
+      inputStyleClass="w-full bg-slate-800/60 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-white/40">
+    </p-datepicker>
+
+    <p-panel header="Status" [toggleable]="true"
+      styleClass="bg-slate-800/60 backdrop-blur-xl border border-white/10 rounded-lg text-white">
+      <p-listbox formControlName="newStatus" [options]="statusOptions" styleClass="w-full bg-transparent text-white">
+        <ng-template let-option pTemplate="item">
+          <div class="px-3 py-2 rounded-lg" [ngClass]="{
+              'text-gray-400': option.value === 'non_started',
+              'text-blue-400': option.value === 'in_progress',
+              'text-orange-400': option.value === 'paused',
+              'text-red-400 font-semibold': option.value === 'late',
+              'text-green-400 line-through': option.value === 'finished'
+            }">
+            {{ option.label }}
+          </div>
+        </ng-template>
+      </p-listbox>
+    </p-panel>
+
+    <div class="flex justify-end gap-3 mt-4">
+      <button pButton type="submit" label="Add" icon="pi pi-check"
+        class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"></button>
+
+      <button pButton type="button" label="Cancel" icon="pi pi-times"
+        class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg" (click)="showFormDialog = false"></button>
+    </div>
+
+  </form>
 </p-dialog>
 
+
 <!-- error Dialog-->
-<p-dialog header="Error" [(visible)]="showErrorDialog" [modal]="true"
-  [style]="{ width: '450px' }" [draggable]="false" [resizable]="false">
-  <div class="flex align-items-center">
-    <i class="pi pi-exclamation-triangle text-red-500 text-2xl mr-3"></i>
+<p-dialog header="Error" [(visible)]="showErrorDialog" [modal]="true" [style]="{ width: '450px' }"
+  styleClass="bg-slate-900/90 backdrop-blur-xl text-white rounded-xl">
+  <div class="flex items-center gap-3">
+    <i class="pi pi-exclamation-triangle text-red-500 text-2xl"></i>
     <span>{{ error$ | async }}</span>
   </div>
+
   <ng-template pTemplate="footer">
-    <p-button label="OK" icon="pi pi-check" (click)="showErrorDialog = false" styleClass="p-button-text">
-    </p-button>
+    <button pButton label="OK" icon="pi pi-check"
+      class="bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded-lg"
+      (click)="showErrorDialog = false"></button>
   </ng-template>
 </p-dialog>
