@@ -9,11 +9,12 @@ import { PanelModule} from "primeng/panel";
 import { Store } from '@ngxs/store';
 import { AddTask, DeleteTask, UpdateTask } from '../../stores/task/task.actions';
 import { ButtonModule } from 'primeng/button';
+import { CalendarTaskComponent } from '../../components/calendar/calendar';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, TaskList, TaskDetails, CategoryList, TagList, PanelModule, ButtonModule],
+  imports: [CommonModule, TaskList, TaskDetails, CategoryList, TagList, PanelModule, ButtonModule, CalendarTaskComponent],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css'],
 })

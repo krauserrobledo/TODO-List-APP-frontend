@@ -1,0 +1,14 @@
+.custom-calendar .p-datepicker {
+    background: transparent !important;
+    border: none !important;
+    color: white;
+  }
+  
+  .custom-calendar .p-datepicker table td {
+    position: relative;
+  }
+  
+  .custom-calendar .p-datepicker table td span {
+    color: white;
+  }
+  
