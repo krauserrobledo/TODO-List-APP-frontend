@@ -13,41 +13,40 @@
   <main class="grid grid-cols-12 gap-6 flex-1">
 
     <!-- Left -->
-    <div class="left col-span-3 space-y-2">
+    <div class="col-span-3 space-y-2">
   
       <p-panel header="Categories" [toggleable]="true"
-        class="bg-slate-900/70 backdrop-blur-xl rounded-xl shadow-lg ring-1 ring-white/10 text-white">
+        class="bg-slate-900/80 backdrop-blur-xl rounded-xl shadow-lg ring-1 ring-white/10 text-white">
         <app-category-list></app-category-list>
       </p-panel>
   
       <p-panel header="Tags" [toggleable]="true"
-        class="bg-slate-900/70 backdrop-blur-xl rounded-xl shadow-lg ring-1 ring-white/10 text-white">
+        class="bg-slate-900/80 backdrop-blur-xl rounded-xl shadow-lg ring-1 ring-white/10 text-white">
         <app-tag-list></app-tag-list>
       </p-panel>
 
       <p-panel header="Calendar" [toggleable]="true"
-        class="bg-slate-900/70 backdrop-blur-xl rounded-xl shadow-lg ring-1 ring-white/10 text-white">
+        class="bg-slate-900/80 backdrop-blur-xl rounded-xl shadow-lg ring-1 ring-white/10 text-white">
         <app-calendar-task></app-calendar-task>
       </p-panel>
     </div>
   
     <!-- Center -->
-    <div class="col-span-4 min-w-[380px]">
+    <div class="col-span-4 ">
       <p-panel 
-        class="bg-slate-900/70 backdrop-blur-xl rounded-xl shadow-lg ring-1 ring-white/10 text-white">        
-        <app-task-list (selectTask)="onSelectTask($event)"></app-task-list>
+        class="bg-slate-900/90 backdrop-blur-xl rounded-xl shadow-lg ring-1 ring-white/10 text-white ">        
+        <app-task-list class="h-full" (selectTask)="onSelectTask($event)"></app-task-list>
       </p-panel>
     </div>
   
     <!-- Right -->
-    <div class="col-span-5 min-w-[420px]">
+    <div class="col-span-5 backdrop-blur-xl">
       @if (selectedTask) {
         <p-panel 
-          class="bg-slate-900/70 backdrop-blur-xl rounded-xl shadow-lg ring-1 ring-white/10 text-white">
+          class="bg-slate-900/90 backdrop-blur-xl rounded-xl shadow-lg ring-1 ring-white/10 text-white">
           <app-task-details
             [task]="selectedTask"
             (close)="closeDetails()"
-            (edit)="editTask($event)"
             (update)="updateTask($event)"
             (delete)="deleteTask($event)"
             (changeStatus)="changeStatus($event)">

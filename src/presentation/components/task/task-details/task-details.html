@@ -1,38 +1,46 @@
 @if (task) {
-<div class="task-details-container">
 
   <!-- Header -->
   <div class="section-header">
     <h3 class="section-title">
       <i class="pi pi-info-circle text-violet-400"></i>
-      Task Details
+      {{ task.title }}
     </h3>
   </div>
 
-  <!-- Main Info -->
   <div class="section-block">
-    <div class="info-row">
-      <p><span class="label">Title:</span> {{ task.title }}</p>
-      <p><span class="label">Due Date:</span> {{ task.dueDate | date }}</p>
+
+    <!-- Status -->
+    <div class="flex justify-center w-full ">
+      <p-selectButton [options]="statusOptions" [(ngModel)]="selectedStatus"
+        (onChange)="changeStatus.emit({ task: task!, status: selectedStatus })"
+        class=" w-full flex justify-center ">
+
+        <ng-template let-option pTemplate="item" >
+          <span [ngClass]="getStatusClass(option.value) ">
+            {{ option.label }}
+          </span>
+        </ng-template>
+
+      </p-selectButton>
     </div>
 
-    <p class="description">
-      <span class="label">Description:</span> {{ task.description }}
+    <!-- Main Info -->
+    <div class="info-row pt-4">
+      <p><span class="label text-xl">Due Date : </span> {{ task.dueDate | date }}</p>
+    </div>
+
+    <p class="description pt-4">
+      <span class="label">Description : </span> {{ task.description }}
     </p>
-  </div>
 
-  <!-- Status -->
-  <div class="section-block flex justify-center w-full ">
-    <p-selectButton [options]="statusOptions" [(ngModel)]="selectedStatus"
-      (onChange)="changeStatus.emit({ task: task!, status: selectedStatus })"
-      styleClass="status-selector w-full flex justify-center">
-
-      <ng-template let-option pTemplate="item">
-        <span [ngClass]="getStatusClass(option.value)">
-          {{ option.label }}
-        </span>
-      </ng-template>
-    </p-selectButton>
+    <!-- Actions -->
+    <div class="actions-row">
+      <p-button label="Edit Details" icon="pi pi-pencil" class="flex items-center gap-2 py-2 mt-4 rounded-lg 
+      bg-violet-600 hover:bg-violet-700 text-white font-medium
+      shadow-md transition" (click)="showEditDialog = true">
+      </p-button>
+    </div>
   </div>
 
   <!-- Subtasks -->
@@ -43,39 +51,130 @@
 
   <!-- Categories -->
   <div class="section-block">
-    <p class="label mb-2">Categories</p>
+    <p class="label mb-2 text-xl">Assigned categories</p>
+
     <div class="flex flex-wrap gap-3">
       <p-chip *ngFor="let cat of task.categories" [style.backgroundColor]="cat.color" [label]="cat.name"
-        class="category-chip"></p-chip>
+        removable="true" (onRemove)="removeCategory(cat.id)" class="category-chip">
+      </p-chip>
+
+      
+    </div>
+    <!-- Actions -->
+    <div class="actions-row">
+    <p-button icon="pi pi-plus" class="flex items-center gap-2 py-2 mt-4 rounded-lg 
+    bg-violet-600 hover:bg-violet-700 text-white font-medium
+    shadow-md transition" label="Add" size="small" (click)="showCategoryDialog = true">
+    </p-button>
     </div>
   </div>
 
   <!-- Tags -->
   <div class="section-block">
-    <p class="label mb-2">Tags</p>
+    <p class="label mb-2 text-xl">Assigned Tags</p>
+
     <div class="flex flex-wrap gap-3">
-      <p-chip *ngFor="let tag of task.tags" [label]="tag.name" class="tag-chip"></p-chip>
+      <p-chip *ngFor="let tag of task.tags" [label]="tag.name" removable="true" (onRemove)="removeTag(tag.id)"
+        class="tag-chip">
+      </p-chip>
+
+      
+    </div>
+    <!-- Actions -->
+    <div class="actions-row">
+    <p-button icon="pi pi-plus" label="Add" size="small" class="flex items-center gap-2 py-2 mt-4 rounded-lg 
+    bg-violet-600 hover:bg-violet-700 text-white font-medium
+    shadow-md transition" (click)="showTagDialog = true">
+      </p-button>
     </div>
   </div>
 
   <!-- Actions -->
   <div class="actions-row">
-    <p-button label="Edit" icon="pi pi-pencil" styleClass="btn-edit" (click)="showEditDialog = true">
+    <p-button label="Delete" icon="pi pi-trash" class="btn-delete" (click)="delete.emit(task!)">
     </p-button>
 
-    <p-button label="Delete" icon="pi pi-trash" styleClass="btn-delete" (click)="delete.emit(task!)">
-    </p-button>
-
-    <p-button label="Close" icon="pi pi-times" styleClass="btn-close" (click)="close.emit()">
+    <p-button label="Close" icon="pi pi-times" class="btn-close" (click)="close.emit()">
     </p-button>
   </div>
 
   <!-- Edit Dialog -->
-  <p-dialog header="Edit Task" [(visible)]="showEditDialog" [modal]="true" [style]="{width:'550px'}" [draggable]="false" appendTo="body"
-    [resizable]="false" styleClass="dialog-panel">
+  <p-dialog header="Edit Task" [(visible)]="showEditDialog" [modal]="true" [style]="{width:'550px'}" [draggable]="false"
+    appendTo="body" [resizable]="false" class="dialog-panel">
+
     <app-task-form [task]="task" (update)="onUpdate($event)" (cancel)="showEditDialog=false">
     </app-task-form>
+
   </p-dialog>
 
-</div>
+  <!-- CATEGORY SELECTOR -->
+  <p-dialog header="Add Category" [(visible)]="showCategoryDialog" [modal]="true" [style]="{width:'380px'}"
+    [draggable]="false" [resizable]="false" styleClass="dialog-panel" appendTo="body">
+
+    <div class="space-y-4">
+
+      <p class="text-gray-200 text-sm">
+        Select a category to assign to this task.
+      </p>
+
+      <div class="flex flex-col gap-2">
+
+        <div *ngFor="let c of allCategories" class="flex items-center justify-between p-3 rounded-lg cursor-pointer transition
+        bg-slate-900/70 hover:bg-blue-300 border border-gray-300 hover:border-violet-400"
+          (click)="addCategory(c.id)">
+
+          <div class="flex items-center gap-3">
+            <div class="w-4 h-4 rounded-full" [style.background]="c.color"></div>
+            <span class="font-medium">{{ c.name }}</span>
+          </div>
+
+          <i class="pi pi-plus text-violet-500"></i>
+        </div>
+
+      </div>
+
+      <div class="flex justify-end pt-2">
+        <p-button label="Cancel" icon="pi pi-times" severity="secondary" (click)="showCategoryDialog = false">
+        </p-button>
+      </div>
+
+    </div>
+
+  </p-dialog>
+
+
+  <!-- TAG SELECTOR -->
+  <p-dialog header="Add Tag" [(visible)]="showTagDialog" [modal]="true" [style]="{width:'380px'}" [draggable]="false"
+    [resizable]="false" styleClass="dialog-panel" appendTo="body">
+
+    <div class="space-y-4">
+
+      <p class="text-gray-200 text-sm">
+        Select a tag to assign to this task.
+      </p>
+
+      <div class="flex flex-col gap-2">
+
+        <div *ngFor="let t of allTags" class="flex items-center justify-between p-3 rounded-lg cursor-pointer transition
+        bg-slate-900/70 hover:bg-blue-300 border border-gray-300 hover:border-blue-400" (click)="addTag(t.id)">
+
+          <div class="flex items-center gap-3">
+            <i class="pi pi-tag text-blue-500"></i>
+            <span class="font-medium">{{ t.name }}</span>
+          </div>
+
+          <i class="pi pi-plus text-blue-500"></i>
+        </div>
+
+      </div>
+
+      <div class="flex justify-end pt-2">
+        <p-button label="Cancel" icon="pi pi-times" severity="secondary" (click)="showTagDialog = false">
+        </p-button>
+      </div>
+
+    </div>
+
+  </p-dialog>
+
 }

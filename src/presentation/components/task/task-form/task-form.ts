@@ -11,10 +11,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { Store } from '@ngxs/store';
 import { LoadCategories } from '../../../stores/category/category.actions';
 import { LoadTags } from '../../../stores/tag/tag.actions';
-import { map } from 'rxjs';
-import { CategoryState } from '../../../stores/category/category.state';
-import { TagState } from '../../../stores/tag/tag.state';
-import { AddCategoryToTask, DeleteCategoryFromTask, AddTagToTask, DeleteTagFromTask } from '../../../stores/task/task.actions';
 
 @Component({
   selector: 'app-task-form',
@@ -57,13 +53,6 @@ export class TaskForm implements OnChanges {
     { label: 'Finished', value: 'Finished' }
   ];
 
-  categories$ = this.store.select(CategoryState.categories).pipe(
-    map(categories => categories ?? [])
-  );
-
-  tags$ = this.store.select(TagState.tags).pipe(
-    map(tags => tags ?? [])
-  );
 
   constructor(private fb: FormBuilder) {
     this.taskForm = this.fb.group({
@@ -83,17 +72,6 @@ export class TaskForm implements OnChanges {
     if (this.task) {
       this.isEdit = true;
 
-      const allCategories = this.store.selectSnapshot(CategoryState.categories) ?? [];
-      const allTags = this.store.selectSnapshot(TagState.tags) ?? [];
-
-      this.selectedCategories = (this.task.categories ?? []).map(c =>
-        allCategories.find(ac => ac.id === c.id)
-      );
-
-      this.selectedTags = (this.task.tags ?? []).map(t =>
-        allTags.find(at => at.id === t.id)
-      );
-
       this.taskForm.patchValue({
         newTitle: this.task.title,
         newDescription: this.task.description ?? '',
@@ -112,40 +90,6 @@ export class TaskForm implements OnChanges {
         newDueDate: null
       });
     }
-  }
-
-  onCategoriesChanged(selected: any[]) {
-    if (!this.task) return;
-
-    const current = this.task.categories ?? [];
-
-    const added = selected.filter(s => !current.some(c => c.id === s.id));
-    const removed = current.filter(c => !selected.some(s => s.id === c.id));
-
-    added.forEach(cat =>
-      this.store.dispatch(new AddCategoryToTask(this.task!.id, cat.id))
-    );
-
-    removed.forEach(cat =>
-      this.store.dispatch(new DeleteCategoryFromTask(this.task!.id, cat.id))
-    );
-  }
-
-  onTagsChanged(selected: any[]) {
-    if (!this.task) return;
-
-    const current = this.task.tags ?? [];
-
-    const added = selected.filter(s => !current.some(c => c.id === s.id));
-    const removed = current.filter(c => !selected.some(s => s.id === c.id));
-
-    added.forEach(tag =>
-      this.store.dispatch(new AddTagToTask(this.task!.id, tag.id))
-    );
-
-    removed.forEach(tag =>
-      this.store.dispatch(new DeleteTagFromTask(this.task!.id, tag.id))
-    );
   }
 
   submit() {

@@ -1,3 +1,8 @@
+.part{
+  display: flex;
+  justify-content:space-between
+}
+
 .task-panel {
   @apply flex flex-col gap-4 bg-slate-900/70 backdrop-blur-xl 
          rounded-xl shadow-lg ring-1 ring-white/10 p-6 text-white;

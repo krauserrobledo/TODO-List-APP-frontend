@@ -1,10 +1,6 @@
 <div class="task-panel">
-  <h4 class="task-title">
-    {{ isEdit ? 'Edit Task' : 'Create Task' }}
-  </h4>
-
-  <form class="task-form" [formGroup]="taskForm" (ngSubmit)="submit()">
-
+   <form class="task-form" [formGroup]="taskForm" (ngSubmit)="submit()">
+    <div class="part">
     <!-- Title -->
     <div class="field-block">
       <label class="field-label">
@@ -14,6 +10,22 @@
       <input pInputText formControlName="newTitle" class="field-input" />
     </div>
 
+    <!-- Due Date -->
+    <div class="field-block">
+      <label class="field-label">
+        <i class="pi pi-calendar mr-2"></i>
+        Due Date
+      </label>
+      <p-datepicker 
+        formControlName="newDueDate"
+        dateFormat="yy-mm-dd"
+        [showIcon]="true"
+        appendTo="body"
+        class="w-full"
+        inputStyleClass="field-input"
+      ></p-datepicker>
+    </div>
+  </div>
     <!-- Status -->
     <div class="field-block">
       <label class="field-label">
@@ -36,58 +48,11 @@
       <textarea pInputTextarea formControlName="newDescription" rows="3" class="field-input"></textarea>
     </div>
 
-    <!-- Due Date -->
-    <div class="field-block">
-      <label class="field-label">
-        <i class="pi pi-calendar mr-2"></i>
-        Due Date
-      </label>
-      <p-datepicker 
-        formControlName="newDueDate"
-        dateFormat="yy-mm-dd"
-        [showIcon]="true"
-        appendTo="body"
-        styleClass="w-full"
-        inputStyleClass="field-input"
-      ></p-datepicker>
-    </div>
-
-    <!-- Categories -->
-    <div class="field-block">
-      <label class="field-label">
-        <i class="pi pi-folder-open mr-2"></i>
-        Categories
-      </label>
-      <p-multiSelect 
-        [options]="(categories$ | async) || []"
-        optionLabel="name"
-        [(ngModel)]="selectedCategories"
-        (onChange)="onCategoriesChanged(selectedCategories)"
-        placeholder="Select categories"
-        [appendTo]="'body'"
-      ></p-multiSelect>
-    </div>
-
-    <!-- Tags -->
-    <div class="field-block">
-      <label class="field-label">
-        <i class="pi pi-tags mr-2"></i>
-        Tags
-      </label>
-      <p-multiSelect 
-        [options]="(tags$ | async) || []"
-        optionLabel="name"
-        [(ngModel)]="selectedTags"
-        (onChange)="onTagsChanged(selectedTags)"
-        placeholder="Select tags"
-        [appendTo]="'body'"
-      ></p-multiSelect>
-    </div>
-
+    
     <!-- Actions -->
     <div class="task-dialog-footer">
       <p-button type="button" label="Cancel" icon="pi pi-times" severity="secondary" (click)="close()"></p-button>
-      <p-button type="submit" [label]="isEdit ? 'Update' : 'Add'" icon="pi pi-check" severity="success"></p-button>
+      <p-button type="submit" [label]="'Update'" icon="pi pi-check" severity="success"></p-button>
     </div>
 
   </form>

@@ -23,12 +23,13 @@
 </div>
 
 
-<p-dialog header="Create Subtask" [(visible)]="showCreateDialog" [modal]="true"
+<p-dialog header="Create Subtask" [(visible)]="showCreateDialog" [modal]="true" appendTo="body"
   [draggable]="false" [resizable]="false">
   <form  [formGroup]="subtaskForm" (ngSubmit)="submit()" class="p-fluid form-container">
     <div class="p-field">
       <input type="text" pInputText id="title" formControlName="title" name="title" placeholder="New subtask" />
-    <p-button type="submit" >Add </p-button>
+    <p-button type="submit" icon="pi pi-plus">
+    </p-button>
        </div>
   </form>
 </p-dialog>

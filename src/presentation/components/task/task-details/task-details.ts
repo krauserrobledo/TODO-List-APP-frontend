@@ -1,31 +1,32 @@
-import { Component, Input, Output, EventEmitter, OnChanges, Inject, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TaskModel } from '../../../../domain/models/task/task-model';
 import { SubtaskList } from "../../subtask/subtask-list/subtask-list";
-import { ListboxModule } from 'primeng/listbox';
 import { SelectButtonModule } from 'primeng/selectbutton';
-import { CardModule } from 'primeng/card';
-import { TagModule } from 'primeng/tag';
 import { ChipModule } from 'primeng/chip';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { TaskForm } from '../task-form/task-form';
 import { Store } from '@ngxs/store';
-import { DeleteTag } from '../../../stores/tag/tag.actions';
-import { DeleteTagFromTask, UpdateTask } from '../../../stores/task/task.actions';
+import { 
+  AddCategoryToTask, 
+  DeleteCategoryFromTask, 
+  AddTagToTask, 
+  DeleteTagFromTask, 
+  UpdateTask 
+} from '../../../stores/task/task.actions';
+import { CategoryState } from '../../../stores/category/category.state';
+import { TagState } from '../../../stores/tag/tag.state';
 
 @Component({
   selector: 'app-task-details',
   standalone: true,
-  imports: [CommonModule, FormsModule, SubtaskList, ListboxModule,
-    SelectButtonModule,
-    CardModule,
-    TagModule,
-    ChipModule,
-    ButtonModule,
-    DialogModule,
-    TaskForm],
+  imports: [
+    CommonModule, FormsModule, SubtaskList,
+    SelectButtonModule, ChipModule, ButtonModule,
+    DialogModule, TaskForm
+  ],
   templateUrl: './task-details.html',
   styleUrls: ['./task-details.css']
 })
@@ -33,14 +34,20 @@ export class TaskDetails implements OnChanges {
   @Input() task: TaskModel | null = null;
 
   @Output() close = new EventEmitter<void>();
-  @Output() edit = new EventEmitter<TaskModel>();
   @Output() changeStatus = new EventEmitter<{ task: TaskModel; status: TaskModel['status'] }>();
   @Output() delete = new EventEmitter<TaskModel>();
   @Output() update = new EventEmitter<TaskModel>();
 
-  private taskStore = inject(Store);
+  private store = inject(Store);
+
   selectedStatus: TaskModel['status'] = 'Non Started';
   showEditDialog = false;
+
+  showCategoryDialog = false;
+  showTagDialog = false;
+
+  allCategories = this.store.selectSnapshot(CategoryState.categories);
+  allTags = this.store.selectSnapshot(TagState.tags);
 
   statusOptions = [
     { label: 'Non Started', value: 'Non Started' },
@@ -51,25 +58,103 @@ export class TaskDetails implements OnChanges {
   ];
 
   ngOnChanges() {
-    if (this.task) this.selectedStatus = this.task.status;
+    if (this.task) {
+      this.selectedStatus = this.task.status;
+    }
   }
 
   onUpdate(updated: TaskModel) {
-    
-    this.taskStore.dispatch(new UpdateTask(updated.id, updated)).subscribe(() => {
-      const refreshed = this.taskStore.selectSnapshot(state =>
+    this.store.dispatch(new UpdateTask(updated.id, updated)).subscribe(() => {
+      const refreshed = this.store.selectSnapshot(state =>
         state.tasks.tasks.find((t: TaskModel) => t.id === updated.id)
       );
-      
+
       if (refreshed) {
         this.task = refreshed;
         this.update.emit(refreshed);
       }
-      this.update.emit(updated);
+
       this.showEditDialog = false;
     });
   }
-  
+
+  // -------------------------
+  // CATEGORY MANAGEMENT
+  // -------------------------
+  removeCategory(categoryId: string) {
+    if (!this.task) return;
+
+    this.store.dispatch(
+      new DeleteCategoryFromTask(this.task.id, categoryId)
+    ).subscribe(() => {
+      const updated = this.store.selectSnapshot(state =>
+        state.tasks.tasks.find((t: { id: string; }) => t.id === this.task!.id)
+      );
+
+      if (updated) {
+        this.task = updated;
+        this.update.emit(updated);
+      }
+    });
+  }
+
+  addCategory(categoryId: string) {
+    if (!this.task) return;
+
+    this.store.dispatch(
+      new AddCategoryToTask(this.task.id, categoryId)
+    ).subscribe(() => {
+      const updated = this.store.selectSnapshot(state =>
+        state.tasks.tasks.find((t: { id: string; }) => t.id === this.task!.id)
+      );
+
+      if (updated) {
+        this.task = updated;
+        this.update.emit(updated);
+      }
+
+      this.showCategoryDialog = false;
+    });
+  }
+
+  // -------------------------
+  // TAG MANAGEMENT
+  // -------------------------
+  removeTag(tagId: string) {
+    if (!this.task) return;
+
+    this.store.dispatch(
+      new DeleteTagFromTask(this.task.id, tagId)
+    ).subscribe(() => {
+      const updated = this.store.selectSnapshot(state =>
+        state.tasks.tasks.find((t: { id: string; }) => t.id === this.task!.id)
+      );
+
+      if (updated) {
+        this.task = updated;
+        this.update.emit(updated);
+      }
+    });
+  }
+
+  addTag(tagId: string) {
+    if (!this.task) return;
+
+    this.store.dispatch(
+      new AddTagToTask(this.task.id, tagId)
+    ).subscribe(() => {
+      const updated = this.store.selectSnapshot(state =>
+        state.tasks.tasks.find((t: { id: string; }) => t.id === this.task!.id)
+      );
+
+      if (updated) {
+        this.task = updated;
+        this.update.emit(updated);
+      }
+
+      this.showTagDialog = false;
+    });
+  }
 
   getStatusClass(status: string) {
     switch (status) {
@@ -81,24 +166,4 @@ export class TaskDetails implements OnChanges {
       default: return '';
     }
   }
-
-  deleteTag(tagId: string) {
-    if (!this.task) return;
-  
-    this.taskStore.dispatch(new DeleteTagFromTask(this.task.id, tagId)).subscribe(() => {
-  
-     
-      const updated = this.taskStore.selectSnapshot(state =>
-        state.tasks.tasks.find((t: { id: string; }) => t.id === this.task!.id)
-      );
-  
-      if (updated) {
-        this.task = updated;
-        this.update.emit(updated);
-      }
-    });
-  }
-  
-  
-  
 }
