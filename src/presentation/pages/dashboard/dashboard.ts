@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TaskList } from '../../components/task/task-list/task-list';
 import { TaskDetails } from '../../components/task/task-details/task-details';
@@ -10,15 +10,19 @@ import { Store } from '@ngxs/store';
 import { AddTask, DeleteTask, UpdateTask } from '../../stores/task/task.actions';
 import { ButtonModule } from 'primeng/button';
 import { CalendarTaskComponent } from '../../components/calendar/calendar';
+import { TaskFiltersComponent } from "../../components/filter/filters";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, TaskList, TaskDetails, CategoryList, TagList, PanelModule, ButtonModule, CalendarTaskComponent],
+  imports: [CommonModule, TaskList, TaskDetails, CategoryList, TagList, PanelModule, ButtonModule, CalendarTaskComponent, TaskFiltersComponent],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css'],
 })
 export class DashboardComponent {
+
+  @ViewChild(TaskList) taskList!: TaskList;
+  
   private store = inject(Store);
 
   selectedTask: TaskModel | null = null;
@@ -63,5 +67,9 @@ export class DashboardComponent {
 
   closeDetails() {
     this.selectedTask = null;
+  }
+
+  onFilterChange(state: string) {
+    this.taskList.applyFilter(state);
   }
 }

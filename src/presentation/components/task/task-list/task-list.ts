@@ -34,6 +34,9 @@ export class TaskList {
   private store = inject(Store);
   private fb = inject(FormBuilder);
 
+  tasks: TaskModel[] = [];
+  filtered: TaskModel[] = [];
+
   tasks$: Observable<TaskModel[]> = this.store.select(TaskState.tasks);
   isLoading$: Observable<Boolean>  =  this.store.select(TaskState.isLoading)
   error$: Observable<String | null> = this.store.select(TaskState.error)
@@ -62,6 +65,11 @@ export class TaskList {
   ngOnInit() {
     
     this.store.dispatch(new LoadTasks());
+
+    this.tasks$.subscribe(tasks => {
+      this.tasks = tasks;
+      this.filtered = tasks; 
+    });
 
     this.error$.subscribe(error => {
       this.showErrorDialog = !!error; 
@@ -112,5 +120,14 @@ export class TaskList {
       case 'Finished': return 'finished';
       default: return '';
     }
+  }
+
+  applyFilter(state: string) {
+    if (!state) {
+      this.filtered = this.tasks;
+      return;
+    }
+
+    this.filtered = this.tasks.filter(t => t.status === state);
   }
 }

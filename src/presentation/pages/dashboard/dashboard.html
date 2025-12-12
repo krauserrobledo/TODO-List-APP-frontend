@@ -14,6 +14,11 @@
 
     <!-- Left -->
     <div class="col-span-3 space-y-2">
+
+      <p-panel header="Filters" [toggleable]="true"
+        class="bg-slate-900/80 backdrop-blur-xl rounded-xl shadow-lg ring-1 ring-white/10 text-white">
+        <app-filters (filterChange)="onFilterChange($event)"></app-filters>
+      </p-panel>
   
       <p-panel header="Categories" [toggleable]="true"
         class="bg-slate-900/80 backdrop-blur-xl rounded-xl shadow-lg ring-1 ring-white/10 text-white">
@@ -35,7 +40,7 @@
     <div class="col-span-4 ">
       <p-panel 
         class="bg-slate-900/90 backdrop-blur-xl rounded-xl shadow-lg ring-1 ring-white/10 text-white ">        
-        <app-task-list class="h-full" (selectTask)="onSelectTask($event)"></app-task-list>
+        <app-task-list #taskList class="h-full" (selectTask)="onSelectTask($event)"></app-task-list>
       </p-panel>
     </div>
   

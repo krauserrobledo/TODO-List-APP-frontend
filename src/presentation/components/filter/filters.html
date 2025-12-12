@@ -1,0 +1,17 @@
+<div class="flex flex-col gap-1 p-4 text-sm select-none">
+
+    @for (s of states; track s.value) {
+      <div
+        class="px-3 py-2 rounded-md cursor-pointer transition
+               hover:bg-violet-100 hover:text-violet-700 flex justify-between"
+        [class.bg-violet-200]="active === s.value"
+        [class.text-violet-800]="active === s.value"
+        (click)="selectFilter(s.value)"
+      >
+        <span>{{ s.label }}</span>
+        <span class="opacity-70">{{ count(s.value) }}</span>
+      </div>
+    }
+  
+  </div>
+  
