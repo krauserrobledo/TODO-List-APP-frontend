@@ -1,367 +1,162 @@
-# ***TODOListApp Frontend Project***
+# **TODOListApp — Frontend**
+
+**TODOListApp** is a modular, scalable task‑management application built with **Angular 20**, later upgraded to **Angular 21**, following a strict **Clean Architecture** approach.  
+It uses **NGXS** for predictable state management, **PrimeNG** for enterprise‑grade UI components, and **TailwindCSS** for modern styling.
+
+The application is designed to be maintainable, testable, and extensible — suitable for real‑world production environments.
+
+---
+
+# **Tech Stack**
+
+| Layer | Technology |
+|-------|------------|
+| Framework | **Angular 20 → upgraded to Angular 21** |
+| UI Library | **PrimeNG + PrimeUIX Themes** |
+| Styling | **TailwindCSS** |
+| State Management | **NGXS** |
+| Architecture | **Clean Architecture** |
+| Forms | **Reactive Forms** |
+| Language | **TypeScript (strict mode)** |
+| Build | Angular CLI |
+
+---
+
+# **Architecture Overview**
+
+The project follows a **Clean Architecture** structure to ensure separation of concerns and long‑term maintainability.
+
+```
+src/
+│
+├── Base/               # Cross-cutting concerns (services, guards, interceptors, mappers)
+├── Data/               # DTOs, API models, repository implementations
+├── Domain/             # Entities, repository interfaces, use cases
+├── Presentation/       # Components, pages, stores, UI logic
+├── Environments/       # Environment configuration
+└── app/                # App bootstrap
+```
+
+### **Layer Responsibilities**
+
+#### **Domain Layer**
+- Pure business logic  
+- Entities, repository interfaces, use cases  
+- No Angular dependencies  
+
+#### **Data Layer**
+- DTOs  
+- API response models  
+- Repository implementations  
+- Mappers between DTOs ↔ Domain models  
+
+#### **Base Layer**
+- Shared services  
+- Interceptors  
+- Guards  
+- Utility mappers  
+
+#### **Presentation Layer**
+- Angular components  
+- Pages  
+- NGXS stores  
+- UI logic  
+
+---
+
+# **Key Features**
+
+### Authentication
+- Login / Register  
+- NGXS Auth Store  
+- DTO mapping and domain‑driven use cases  
+
+### Task Management
+- Create, edit, delete tasks  
+- Task details panel  
+- Subtasks  
+- Tags  
+- Categories  
+- Status updates  
+
+### Dashboard
+- Modular layout  
+- PrimeNG panels  
+- TailwindCSS styling  
+- Glassmorphism UI  
+
+### Advanced Filtering
+- **Calendar with task highlighting**  
+- **Date filtering**  
+- **Status filtering**  
+- **Combined filtering (date + status)**  
+- Fully integrated with NGXS  
+
+### UI/UX
+- PrimeNG components  
+- TailwindCSS utility classes  
+- Responsive layout  
+- Dialog‑based forms  
+- Smooth interactions  
+
+---
 
-## ***WEEKLY SPRINT 11/03***
+# **State Management (NGXS)**
 
-#### ***Initialize Angular project:***
+The application uses NGXS for predictable, scalable state management.
 
-- start new project :
+Stores implemented:
 
-  - ng new frontend.
+- **AuthStore**
+- **TaskStore**
+- **CategoryStore**
+- **TagStore**
+- **SubtaskStore**
 
+Each store:
+- Uses domain use cases  
+- Maps DTOs to domain models  
+- Handles async operations with Observables  
+- Emits UI‑friendly state slices  
 
-- Install angular/material :
+---
 
-  - ng add @angular/material
+# **UI Technology**
 
+### **PrimeNG**
+Used for:
+- Buttons  
+- Panels  
+- Dialogs  
+- Listboxes  
+- Datepicker  
+- Cards  
+- Inputs  
 
-- Configure environments :
+### **TailwindCSS**
+Used for:
+- Layout  
+- Spacing  
+- Typography  
+- Glassmorphism  
+- Responsive design  
 
-  - Created Environments new folder.
-    
-  - Created Environment.js class.
+The combination gives a **clean, modern, enterprise‑grade UI**.
 
+---
 
-### ***Frontend clean arch learning:***
+# **Installation & Setup**
 
-  - https://medium.com/taager-tech-blog/clean-architecture-for-angular-applications-b7ab140f0d5a
-  
-  - https://gitlab.com/taager-com/examples/-/tree/main/clean-architecture-angular/src/base
-  
-  - https://www.youtube.com/watch?v=LswOKQAulfM&list=LL&index=2 
+```bash
+npm install
+npm start
+```
 
+Build:
 
-### ***Set project structure:***
+```bash
+npm run build
+```
 
- - app
-    
- - Base
-    - guards
-    - interceptors
-    - services
- 
- - Data
-     - repositories
-         - user
-    
- - Environments
- 
- - Domain
-    - models
-    - repositories
-    - usecases
- 
- - Presentation
-     - assets
-     - components
-     - pages
-     - stores
-
-### ***Create Auth Module.***
-
-  - Domain Layer:
-
-    - Entities:  User, Auth.
-    - Repositories : auth-repository, user-repository.
-    - Use Cases:  Login, Register, Get User.
-
-
-  - Data Layer:
-
-    - Response Models : user, api.
-    - Repositories Implementation : auth-api-repository, user repository.
-
-  - Presentation:
-
-    - pages : login register.
-    - Stores: auth store.
-
-## ***WEEKLY SPRINT 11/10***
-
-
-### ***Topics Learning***
-
-  - Clean Architecture : https://www.youtube.com/watch?v=pDgcQlPzRK4
-  - Ngrx Store : https://www.youtube.com/watch?v=VGY6Raqpoc0
-
-
-### ***Auth Functionallity Checking***
-
-Responses tested with DevTools
-
-  - Dependency Injection Issue: 
-      
-    Problem: NG0201 - No provider for AuthRepository
-    
-    Fix: Configure providers in app.config.ts
-
-  - Error 400 - Wrong request format
-
-    Problem: userName vs UserName
-
-    Fix: DTOs and Mapper Implement
-
-  - Error 400 - UserName already exist
-
-    Problem: ASP.NET Identity validates unique UserName
-
-    Fix: fixes in backend and front
-
-
-### ***Auth Refactoring.***
-
-  - Delete duplicate DTOs
-  
-  - Create DTOs and Response models in Data/Models.
-  
-  - Created AuthMappers in Base/Mappers.
-
-  - Created Use Cases.
-
-  - Created service for auth.
-
-  - Using mappers and usecases in auth-service.
-
-  - Add Mappers to Repository Implementation auth-api-implementation.
-
-  - Added Mapper and Use Cases to providers.
-
-  - using models and service in auth-store(not DTOs)
-
-
-### ***Create entities and repositories.***
-
-  - Created Dtos for every request and response in data/dtos.
-
-  - Created Repository interfaces in domain/repository.
-
-  - Created Mappers in Data/
-
-  - Created usecases in Domain/ 
-
-
-### ***Implement Task Feature.***
-
-  - Implement task repository.
-  
-  - Create Service for task.
-
-  - Create Store for Task.
-
-  - Create Task Component.
-
-  - Integrate Task Component in Dashboard.
-
-  - Configure component.
-
-----
- 
-## ***Weekly Sprint 11/17***
-
-
-  ### ***Add creation form to task list component.***
-
-    - Separate responsabilities in task list and task form components
-
-    - Created components for details and creation.
-    
-    - Created layout in dashboard for task details.
-    
-    - Integrate creation in list using button 
-    
-    - Configure cliking in task to show details for each task in details component
-
-    - added task options in details component
-
-    - Configured creation form to edit if selected.
-
-
-  ### ***Services configuration for using usecases.***
-
-    - created services for remaining usecases :
-
-      - Tags usecases.
-
-      - Categories usecases.
-
-      - subtask usecases.
-
-  
-    - Fixed issues between repository and category use cases.
-
-
-    - Repository implementation for remaining repository interfaces.
-
-      - tag repository.
-
-      - subtask repository.
-
-
-  ### ***Stores creation for using Services.***
-
-    - created stores for using remaining services :
-
-      - Category Store (uses category service).
-
-      - Tag Store (uses tag service).
-
-      - Subtask Store (uses subtask service).
-
-  
-  ### ***Implement Categories components.***
-
-    - Created Category list and form component.
-
-    - Implement form in list and added both in dashboard.
-
-    - Created task-category list and form component.
-
-
-  ### ***Implement Tags components.***
-
-    - Created Tags list and form component.
-
-    - Implement form in list .
-
-    - Implement form in list and added both in dashboard.
-
-    - Created task-tag list and form component.
-
-  
-  ### ***Implement Subtask components.***
-
-    - Created Subtask list component.
-
-    - Created Subtask form component.
-
-    - both were implemented in task details to manage subtask .
-
-    - fixed model configurations in Backend (unique index).
-
-    ---- 
-
-
-## ***Weekly Sprint 11/24***
-
-	Learn and Implement the rest of required technogies properly:
-
-### ***PrimeNG*** 
-
-  - Resources:
-
-    https://primeng.org/installation
-
-    https://www.youtube.com/watch?v=81NlPDiwUnQ&list=LL&index=2 
-
-    https://www.youtube.com/watch?v=WXrKn1D3mII&list=LL&index=3 
-
-
-  - Install and configure PrimeNG dependencies:
-
-    - Installed dependency by the command :
-
-    ```
-      npm install primeng @primeuix/themes
-    ```
-
-    - Adding imports to app.config.ts:
-    
-    ```
-      import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-      import { providePrimeNG } from 'primeng/config';
-      import Aura from '@primeuix/themes/aura';
-    ```  
-      
-    - Configured providers: 
-
-    ```
-       provideAnimationsAsync(),
-        providePrimeNG({
-            theme: {
-                preset: Aura
-            }
-        })
-    ```
-
-    - Apply PrimeNG components on templates:
-
-      - App Component : added p-toolbar and p-buttons.
-
-      - Login Component and Register Component: Added on both p-button, p-password and p-inputText
-
-      - Added p-panels in dashboard to collapse tags and categories components.
-
-      - Implemented p-buttons and p-cards in categories and tags components.
-
-      - implement p-button, p-inputText and p-listbox in task list component.
-
-      - implemented prime ng components on task detail component.
-      
-      - Used pbutton in subtask components.
-
-      - implement primeng components in task editdit form.
-      
-
-### ***Dialogs***
-
-  - P-dialogs in Login and register errors.
-
-  - Implemented on Tag and categories creation forms.
-
-  - Used p-dialog in task-list creation and edit form.
-
-
-### ***Reactive forms*** 
-
-  - Import module in app module
-
-  - Implemented on Auth
-
-  - Update category lists to use reactive form in dialog.
-
-  - Update subtask list to use reactive forms
-
-  - Implemented on task form.
-
-  - Updated task list to use reactive forms. 
-
-
-### ***RxJs - Observables - Suscribers***
-
-  - Implemented observable repository interface methods.
-
-  - Adapt repositories implementations to changes in Interfaces.
-
-  - implement observable in usecases.
-  
-  - implement observable with mappers using in services.
-
-
-### ***Ngxs Store***
-
-
-  - Documentation found : https://www.ngxs.io/.
-
-  - Installed using command : ng add @ngxs/store. 
-
-  - Created files using command : ng generate @ngxs/store:store --name name-store.
-
-  - Declared states in app.config.ts.
-
-  - Created entities state models(named entity-state-model).
-
-  - Configure Actions for entities according to use cases.
-
-
-## ***Weekly Sprint 12/09***
-
-	
-### ***Upgrade Dashboard Styles***
-
-  - Upgrade in Dashboard Styles for improve user experience.
-
-### ***Add Documentation to Frontend Project***
-
-### ***Advanced Functions***                      
-
-
+---
 
