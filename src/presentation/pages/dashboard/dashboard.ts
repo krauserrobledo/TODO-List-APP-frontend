@@ -11,6 +11,7 @@ import { AddTask, DeleteTask, UpdateTask } from '../../stores/task/task.actions'
 import { ButtonModule } from 'primeng/button';
 import { CalendarTaskComponent } from '../../components/calendar/calendar';
 import { TaskFiltersComponent } from "../../components/filter/filters";
+import { TaskState } from '../../stores/task/task.state';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,12 +23,21 @@ import { TaskFiltersComponent } from "../../components/filter/filters";
 export class DashboardComponent {
 
   @ViewChild(TaskList) taskList!: TaskList;
-  
+
   private store = inject(Store);
 
   selectedTask: TaskModel | null = null;
   taskToEdit: TaskModel | null = null;
   showForm = false;
+  filteredTasks: TaskModel[] = [];
+  tasks: TaskModel[] = [];
+
+  ngOnInit() {
+  this.store.select(TaskState.tasks).subscribe(tasks => {
+    this.tasks = tasks;
+    this.filteredTasks = tasks;
+  });
+}
 
   onSelectTask(task: TaskModel) {
     this.selectedTask = task;
@@ -72,4 +82,8 @@ export class DashboardComponent {
   onFilterChange(state: string) {
     this.taskList.applyFilter(state);
   }
+
+  onCalendarFilter(dateKey: string | null) {
+  this.taskList.applyDateFilter(dateKey);
+}
 }

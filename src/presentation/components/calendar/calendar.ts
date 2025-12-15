@@ -1,5 +1,4 @@
-import { Component, inject } from '@angular/core';
-
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { DatePickerModule } from 'primeng/datepicker';
 import { Store } from '@ngxs/store';
 import { TaskState } from '../../stores/task/task.state';
@@ -16,38 +15,51 @@ import { FormsModule } from '@angular/forms';
 export class CalendarTaskComponent {
   private store = inject(Store);
 
+  @Output() daySelected = new EventEmitter<string | null>();
+
+
   tasks: TaskModel[] = [];
   taskDates = new Set<string>();
 
-  constructor() {
-    const tasks: TaskModel[] = this.store.selectSnapshot(TaskState.tasks) ?? [];
-
-    tasks.forEach(t => {
-      if (t.dueDate) {
-        const key = new Date(t.dueDate).toISOString().split('T')[0];
-        this.taskDates.add(key);
-      }
-    });
-  }
-
-  hasTask(date: Date | undefined): boolean {
-    if (!date) return false;
-  
-    const key = date.toLocaleDateString('en-CA'); // YYYY-MM-DD
-    return this.taskDates.has(key);
-  }
-  
   ngOnInit() {
     this.store.select(TaskState.tasks).subscribe(tasks => {
       this.tasks = tasks;
-  
+
       this.taskDates = new Set(
         tasks
           .filter(t => t.dueDate)
-          .map(t => new Date(t.dueDate?? "").toLocaleDateString('en-CA'))
+          .map(t => this.toKey(new Date(t.dueDate!)))
       );
     });
   }
-  
-  
+
+  // turns date into YYYY-MM-DD
+  private toKey(date: Date): string {
+    return `${date.getFullYear()}-${
+      (date.getMonth() + 1).toString().padStart(2, '0')
+    }-${date.getDate().toString().padStart(2, '0')}`;
+  }
+
+  hasTask(meta: any): boolean {
+    if (!meta) return false;
+
+    const jsDate = new Date(meta.year, meta.month, meta.day);
+    const key = this.toKey(jsDate);
+
+    return this.taskDates.has(key);
+  }
+
+ onDaySelected(date: Date) {
+  const key = this.toKey(date);
+
+  // Si NO hay tareas → quitar filtro
+  if (!this.taskDates.has(key)) {
+    this.daySelected.emit(null);
+    return;
+  }
+
+  // Si hay tareas → filtrar
+  this.daySelected.emit(key);
+}
+
 }

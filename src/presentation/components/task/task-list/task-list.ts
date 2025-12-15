@@ -1,4 +1,4 @@
-import { Component, inject, Output, EventEmitter } from '@angular/core';
+import { Component, inject, Output, EventEmitter, ViewChild } from '@angular/core';
 import { TaskModel } from '../../../../domain/models/task/task-model';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -9,10 +9,10 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { PanelModule } from 'primeng/panel';
 import { InputTextModule } from 'primeng/inputtext';
 import { Store } from '@ngxs/store';
-import { TaskState } from '../../../stores/task/task.state';
 import { AddTask, DeleteTask, LoadTasks } from '../../../stores/task/task.actions';
-import { Observable } from 'rxjs';
 import { TaskStatus } from '../../../../domain/models/task/task-status';
+import { Observable } from 'rxjs';
+import { TaskState } from '../../../stores/task/task.state';
 
 @Component({
   selector: 'app-task-list',
@@ -30,23 +30,25 @@ import { TaskStatus } from '../../../../domain/models/task/task-status';
   templateUrl: './task-list.html',
   styleUrls: ['./task-list.css']
 })
-
 export class TaskList {
+
   private store = inject(Store);
   private fb = inject(FormBuilder);
 
   tasks: TaskModel[] = [];
   filtered: TaskModel[] = [];
 
-  tasks$: Observable<TaskModel[]> = this.store.select(TaskState.tasks);
-  isLoading$: Observable<Boolean>  =  this.store.select(TaskState.isLoading)
-  error$: Observable<String | null> = this.store.select(TaskState.error)
+  // filtros activos
+  private statusFilter: TaskStatus | '' = '';
+  private dateFilter: string | null = null; // YYYY-MM-DD
 
   @Output() selectTask = new EventEmitter<TaskModel>();
 
   showFormDialog = false;
   showErrorDialog = false;
   selectedTask: TaskModel | null = null;
+
+  error$: Observable<String | null> = this.store.select(TaskState.error);
 
   statusOptions = [
     { label: 'Non Started', value: 'Non Started' },
@@ -64,17 +66,44 @@ export class TaskList {
   });
 
   ngOnInit() {
-    
     this.store.dispatch(new LoadTasks());
 
-    this.tasks$.subscribe(tasks => {
+    this.store.select(TaskState.tasks).subscribe(tasks => {
       this.tasks = tasks;
-      this.filtered = tasks; 
+      this.applyAllFilters();
     });
+  }
 
-    this.error$.subscribe(error => {
-      this.showErrorDialog = !!error; 
-    })
+  // FILTRO UNIFICADO
+  private applyAllFilters() {
+    let result = [...this.tasks];
+
+    // filtro por estado
+    if (this.statusFilter) {
+      result = result.filter(t => t.status === this.statusFilter);
+    }
+
+    // filtro por fecha
+    if (this.dateFilter) {
+      result = result.filter(t =>
+        t.dueDate &&
+        new Date(t.dueDate).toISOString().split('T')[0] === this.dateFilter
+      );
+    }
+
+    this.filtered = result;
+  }
+
+  // llamado desde Filters
+  applyFilter(state: string) {
+    this.statusFilter = (state || '') as TaskStatus | '';
+    this.applyAllFilters();
+  }
+
+  // llamado desde Dashboard (cuando Calendar emite)
+  applyDateFilter(dateKey: string | null) {
+    this.dateFilter = dateKey;
+    this.applyAllFilters();
   }
 
   onSelect(task: TaskModel) {
@@ -95,7 +124,7 @@ export class TaskList {
       title: formValue.newTitle!,
       description: formValue.newDescription ?? '',
       status: formValue.newStatus as TaskStatus,
-      dueDate: formValue.newDueDate ? new Date(formValue.newDueDate): null,
+      dueDate: formValue.newDueDate ? new Date(formValue.newDueDate) : null,
       userId: ''
     };
 
@@ -108,7 +137,7 @@ export class TaskList {
   }
 
   deleteTask(task: TaskModel) {
-    this.store.dispatch( new DeleteTask(task.id));
+    this.store.dispatch(new DeleteTask(task.id));
     if (this.selectedTask?.id === task.id) this.selectedTask = null;
   }
 
@@ -121,14 +150,5 @@ export class TaskList {
       case 'Finished': return 'finished';
       default: return '';
     }
-  }
-
-  applyFilter(state: string) {
-    if (!state) {
-      this.filtered = this.tasks;
-      return;
-    }
-
-    this.filtered = this.tasks.filter(t => t.status === state);
   }
 }

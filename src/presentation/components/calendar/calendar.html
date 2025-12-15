@@ -1,10 +1,14 @@
-<p-datepicker [inline]="true" class="w-full custom-calendar">
+<p-datepicker
+  [inline]="true"
+  class="w-full custom-calendar"
+  (onSelect)="onDaySelected($event)"
+>
   <ng-template pTemplate="date" let-date>
     <div class="relative flex items-center justify-center w-full h-full">
       <span>{{ date.day }}</span>
 
-      @if (hasTask(date.date)) {
-        <div class="absolute bottom-1 w-2 h-2 rounded-full bg-violet-400 shadow-md"></div>
+      @if (hasTask(date)) {
+        <div class="absolute w-8 h-8 rounded-full bg-red-400 shadow-md opacity-30 pointer-events-none"></div>
       }
     </div>
   </ng-template>

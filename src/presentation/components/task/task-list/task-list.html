@@ -23,9 +23,9 @@
 
   <!-- Listbox -->
   <div class="flex-1 overflow-y-auto min-h-0 ">
-  <p-listbox 
-  [options]="filtered || []" 
-  optionLabel="title" 
+  <p-listbox
+  [options]="filtered || []"
+  optionLabel="title"
   [dragdrop]="true"
   (onChange)="onSelect($event.value)"
   [style]="{ width: '100%', height: '100%' }"
@@ -33,7 +33,7 @@
   class="w-full h-full bg-transparent text-white "
 >
   <ng-template let-task pTemplate="item">
-    <div 
+    <div
       class="w-full px-4 py-2 rounded-lg transition flex items-center justify-between"
       [ngClass]="getStatusClass(task.status)"
     >
@@ -56,12 +56,12 @@
     <input pInputText formControlName="newDescription" placeholder="Description"
       class="w-full bg-slate-800/60 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-white/40" />
 
-    <p-datepicker formControlName="newDueDate" placeholder="Select a date" [appendTo]="'body'" styleClass="w-full"
+    <p-datepicker formControlName="newDueDate" placeholder="Select a date" [appendTo]="'body'" class="w-full"
       inputStyleClass="w-full bg-slate-800/60 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-white/40">
     </p-datepicker>
 
     <p-panel header="Status" [toggleable]="true"
-      styleClass="bg-slate-800/60 backdrop-blur-xl border border-white/10 rounded-lg text-white">
+      class="bg-slate-800/60 backdrop-blur-xl border border-white/10 rounded-lg text-white">
       <p-listbox formControlName="newStatus" [options]="statusOptions" styleClass="w-full bg-transparent text-white">
         <ng-template let-option pTemplate="item">
           <div class="px-3 py-2 rounded-lg" [ngClass]="{
@@ -91,7 +91,7 @@
 
 <!-- error Dialog-->
 <p-dialog header="Error" [(visible)]="showErrorDialog" [modal]="true" [style]="{ width: '450px' }"
-  styleClass="bg-slate-900/90 backdrop-blur-xl text-white rounded-xl">
+  class="bg-slate-900/90 backdrop-blur-xl text-white rounded-xl">
   <div class="flex items-center gap-3">
     <i class="pi pi-exclamation-triangle text-red-500 text-2xl"></i>
     <span>{{ error$ | async }}</span>
