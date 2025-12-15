@@ -52,13 +52,11 @@ export class CalendarTaskComponent {
  onDaySelected(date: Date) {
   const key = this.toKey(date);
 
-  // Si NO hay tareas → quitar filtro
   if (!this.taskDates.has(key)) {
     this.daySelected.emit(null);
     return;
   }
 
-  // Si hay tareas → filtrar
   this.daySelected.emit(key);
 }
 
