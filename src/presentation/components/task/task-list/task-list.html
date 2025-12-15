@@ -24,7 +24,7 @@
   <!-- Listbox -->
   <div class="flex-1 overflow-y-auto min-h-0 ">
   <p-listbox 
-  [options]="(tasks$ | async) || []" 
+  [options]="filtered || []" 
   optionLabel="title" 
   [dragdrop]="true"
   (onChange)="onSelect($event.value)"

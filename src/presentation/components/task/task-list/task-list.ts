@@ -1,5 +1,5 @@
 import { Component, inject, Output, EventEmitter } from '@angular/core';
-import { TaskModel, TaskStatus } from '../../../../domain/models/task/task-model';
+import { TaskModel } from '../../../../domain/models/task/task-model';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from "primeng/button";
@@ -12,6 +12,7 @@ import { Store } from '@ngxs/store';
 import { TaskState } from '../../../stores/task/task.state';
 import { AddTask, DeleteTask, LoadTasks } from '../../../stores/task/task.actions';
 import { Observable } from 'rxjs';
+import { TaskStatus } from '../../../../domain/models/task/task-status';
 
 @Component({
   selector: 'app-task-list',

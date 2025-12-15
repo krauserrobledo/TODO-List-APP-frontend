@@ -2,11 +2,13 @@ import { Component, Output, EventEmitter, inject } from "@angular/core";
 import { Store } from '@ngxs/store';
 import { TaskState } from '../../stores/task/task.state';
 import { TaskModel } from '../../../domain/models/task/task-model';
+import { Divider } from "primeng/divider";
 
 @Component({
   selector: 'app-filters',
   standalone: true,
-  templateUrl: './filters.html'
+  templateUrl: './filters.html',
+  imports: [Divider]
 })
 export class TaskFiltersComponent {
   private store = inject(Store);
@@ -19,6 +21,7 @@ export class TaskFiltersComponent {
     { label: 'All', value: "" },
     { label: 'Non Started', value: 'Non Started' },
     { label: 'In Progress', value: 'In Progress' },
+    { label: 'Paused', value: 'Paused' },
     { label: 'Finished', value: 'Finished' },
     { label: 'Late', value: 'Late' }
   ];

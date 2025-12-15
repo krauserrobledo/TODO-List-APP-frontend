@@ -1,6 +1,7 @@
 import { SubtaskModel } from "../subtask/subtask-model";
 import { TagModel } from "../tag/tag-model";
 import { CategoryModel } from "../category/category-model";
+import { TaskStatus } from "./task-status";
 
 export interface TaskModel {
   id: string;
@@ -13,10 +14,3 @@ export interface TaskModel {
   categories?: CategoryModel[];
   tags?: TagModel[];
 }
-
-export type TaskStatus =
-  | 'Non Started'
-  | 'In Progress'
-  | 'Paused'
-  | 'Late'
-  | 'Finished';
