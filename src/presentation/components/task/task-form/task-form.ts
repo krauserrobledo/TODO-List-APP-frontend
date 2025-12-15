@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, Input, OnChanges, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TaskModel } from '../../../../domain/models/task/task-model';
 import { Button } from "primeng/button";
@@ -16,7 +16,6 @@ import { LoadTags } from '../../../stores/tag/tag.actions';
   selector: 'app-task-form',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     Button,
     MultiSelectModule,
@@ -25,7 +24,7 @@ import { LoadTags } from '../../../stores/tag/tag.actions';
     TextareaModule,
     InputTextModule,
     ReactiveFormsModule
-  ],
+],
   templateUrl: './task-form.html',
   styleUrls: ['./task-form.css'],
 })

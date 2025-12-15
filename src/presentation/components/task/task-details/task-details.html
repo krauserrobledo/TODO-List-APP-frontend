@@ -54,18 +54,20 @@
     <p class="label mb-2 text-xl">Assigned categories</p>
 
     <div class="flex flex-wrap gap-3">
-      <p-chip *ngFor="let cat of task.categories" [style.backgroundColor]="cat.color" [label]="cat.name"
-        removable="true" (onRemove)="removeCategory(cat.id)" class="category-chip">
-      </p-chip>
+      @for (cat of task.categories; track cat) {
+        <p-chip [style.backgroundColor]="cat.color" [label]="cat.name"
+          removable="true" (onRemove)="removeCategory(cat.id)" class="category-chip">
+        </p-chip>
+      }
 
-      
+
     </div>
     <!-- Actions -->
     <div class="actions-row">
     <p-button icon="pi pi-plus" class="flex items-center gap-2 py-2 mt-4 rounded-lg 
     bg-violet-600 hover:bg-violet-700 text-white font-medium
     shadow-md transition" label="Add" size="small" (click)="showCategoryDialog = true">
-    </p-button>
+      </p-button>
     </div>
   </div>
 
@@ -74,11 +76,13 @@
     <p class="label mb-2 text-xl">Assigned Tags</p>
 
     <div class="flex flex-wrap gap-3">
-      <p-chip *ngFor="let tag of task.tags" [label]="tag.name" removable="true" (onRemove)="removeTag(tag.id)"
-        class="tag-chip">
-      </p-chip>
+      @for (tag of task.tags; track tag) {
+        <p-chip [label]="tag.name" removable="true" (onRemove)="removeTag(tag.id)"
+          class="tag-chip">
+        </p-chip>
+      }
 
-      
+
     </div>
     <!-- Actions -->
     <div class="actions-row">
@@ -119,17 +123,17 @@
 
       <div class="flex flex-col gap-2">
 
-        <div *ngFor="let c of allCategories" class="flex items-center justify-between p-3 rounded-lg cursor-pointer transition
+        @for (c of allCategories; track c) {
+<div class="flex items-center justify-between p-3 rounded-lg cursor-pointer transition
         bg-slate-900/70 hover:bg-blue-300 border border-gray-300 hover:border-violet-400"
-          (click)="addCategory(c.id)">
-
-          <div class="flex items-center gap-3">
-            <div class="w-4 h-4 rounded-full" [style.background]="c.color"></div>
-            <span class="font-medium">{{ c.name }}</span>
+            (click)="addCategory(c.id)">
+            <div class="flex items-center gap-3">
+              <div class="w-4 h-4 rounded-full" [style.background]="c.color"></div>
+              <span class="font-medium">{{ c.name }}</span>
+            </div>
+            <i class="pi pi-plus text-violet-500"></i>
           </div>
-
-          <i class="pi pi-plus text-violet-500"></i>
-        </div>
+        }
 
       </div>
 
@@ -155,16 +159,16 @@
 
       <div class="flex flex-col gap-2">
 
-        <div *ngFor="let t of allTags" class="flex items-center justify-between p-3 rounded-lg cursor-pointer transition
+        @for (t of allTags; track t) {
+<div class="flex items-center justify-between p-3 rounded-lg cursor-pointer transition
         bg-slate-900/70 hover:bg-blue-300 border border-gray-300 hover:border-blue-400" (click)="addTag(t.id)">
-
-          <div class="flex items-center gap-3">
-            <i class="pi pi-tag text-blue-500"></i>
-            <span class="font-medium">{{ t.name }}</span>
+            <div class="flex items-center gap-3">
+              <i class="pi pi-tag text-blue-500"></i>
+              <span class="font-medium">{{ t.name }}</span>
+            </div>
+            <i class="pi pi-plus text-blue-500"></i>
           </div>
-
-          <i class="pi pi-plus text-blue-500"></i>
-        </div>
+        }
 
       </div>
 

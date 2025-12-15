@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { DatePickerModule } from 'primeng/datepicker';
 import { Store } from '@ngxs/store';
 import { TaskState } from '../../stores/task/task.state';
@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-calendar-task',
   standalone: true,
-  imports: [CommonModule, DatePickerModule, FormsModule],
+  imports: [DatePickerModule, FormsModule],
   templateUrl: './calendar.html',
   styleUrls: ['./calendar.css']
 })

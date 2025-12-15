@@ -2,13 +2,12 @@ import { Component, Output, EventEmitter, inject } from "@angular/core";
 import { Store } from '@ngxs/store';
 import { TaskState } from '../../stores/task/task.state';
 import { TaskModel } from '../../../domain/models/task/task-model';
-import { Divider } from "primeng/divider";
 
 @Component({
   selector: 'app-filters',
   standalone: true,
   templateUrl: './filters.html',
-  imports: [Divider]
+  imports: []
 })
 export class TaskFiltersComponent {
   private store = inject(Store);

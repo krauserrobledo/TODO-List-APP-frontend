@@ -1,5 +1,5 @@
 import { Component, inject, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { TaskList } from '../../components/task/task-list/task-list';
 import { TaskDetails } from '../../components/task/task-details/task-details';
 import { TaskModel } from '../../../domain/models/task/task-model';
@@ -15,7 +15,7 @@ import { TaskFiltersComponent } from "../../components/filter/filters";
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, TaskList, TaskDetails, CategoryList, TagList, PanelModule, ButtonModule, CalendarTaskComponent, TaskFiltersComponent],
+  imports: [TaskList, TaskDetails, CategoryList, TagList, PanelModule, ButtonModule, CalendarTaskComponent, TaskFiltersComponent],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css'],
 })
