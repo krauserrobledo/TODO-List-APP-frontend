@@ -71,7 +71,7 @@
   background: rgba(255,255,255,0.4) !important;
 }
 
-.category-footer {
+.category-actions {
   display: flex;
   justify-content: flex-end;
   padding-top: 1rem;

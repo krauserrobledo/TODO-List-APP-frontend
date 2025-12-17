@@ -2,6 +2,7 @@
   @if (currentUser$ | async; as currentUser) {
   <header class="header sticky top-3 z-50 text-white w-full">
     <div class="">
+      <!-- Toolbar when logged with user button to logout menu -->
       <p-toolbar
         class="toolbar flex ring-1 ring-white/10 bg-slate-900 rounded-full items-center justify-between">
         <div class="flex gap-0 items-center">
@@ -55,7 +56,7 @@
                 </button>
               </div>
             }         
-            
+            <!-- Buttons if not logged -->
           } @else {
             <p-button 
               (onClick)="goLogin()" 

@@ -9,10 +9,10 @@
     </nav>
   </header>
 
-  <!-- Dashboard Grid -->
+  <!-- Dashboard Grid holds columns-->
   <main class="grid grid-cols-12 gap-6 flex-1">
 
-    <!-- Left -->
+    <!-- Left Column-->
     <div class="col-span-3 space-y-2">
 
       <p-panel header="Filters" [toggleable]="true"
@@ -36,7 +36,7 @@
       </p-panel>
     </div>
 
-    <!-- Center -->
+    <!-- Center column-->
     <div class="col-span-4 ">
       <p-panel
         class="bg-slate-900/90 backdrop-blur-xl rounded-xl shadow-lg ring-1 ring-white/10 text-white ">
@@ -50,7 +50,7 @@
       </p-panel>
     </div>
 
-    <!-- Right -->
+    <!-- Right column -->
     <div class="col-span-5 backdrop-blur-xl">
       @if (selectedTask) {
         <p-panel

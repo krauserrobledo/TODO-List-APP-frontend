@@ -7,7 +7,7 @@
   }
 </div>
 
-<div class="category-footer">
+<div class="category-actions">
   <p-button icon="pi pi-plus" label="Add Category" severity="help" size="small" outlined="true" (click)="openDialog()">
   </p-button>
 </div>
@@ -21,14 +21,14 @@
   [resizable]="false"
   [style]="{ width: '420px' }"
   appendTo="body"
-  styleClass="category-dialog"
+  class="category-dialog"
 >
   <form 
     [formGroup]="categoryForm" 
     (ngSubmit)="submit()" 
     class="flex flex-col gap-6 p-4"
   >
-    <!-- Nombre -->
+    <!-- Name -->
     <div class="flex flex-col gap-2">
       <label class="text-sm font-medium text-white/90 flex items-center gap-2">
         <i class="pi pi-folder text-violet-300"></i>
@@ -44,7 +44,7 @@
           autofocus
         />
       </span>
-
+      <!-- Handle if cat has no name -->
       @if (categoryForm.get('name')?.invalid && categoryForm.get('name')?.touched) {
         <small class="p-error flex items-center gap-1 mt-1">
           <i class="pi pi-exclamation-circle"></i>
@@ -59,7 +59,7 @@
         <i class="pi pi-palette text-amber-300"></i>
         Color
       </label>
-
+      <!-- Color  component for choosing colours -->
       <div class="flex items-center gap-3">
         <p-colorPicker 
           formControlName="color" 
@@ -69,7 +69,7 @@
       </div>
     </div>
 
-    <!-- Botones -->
+    <!-- Buttons -->
     <div class="flex justify-end gap-3">
       <p-button 
         label="Cancel" 

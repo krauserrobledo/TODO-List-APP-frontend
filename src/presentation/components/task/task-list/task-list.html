@@ -7,8 +7,8 @@
       <i class="pi pi-list text-violet-400"></i>
       Task List
     </h2>
-
-    <p-button icon="pi pi-plus" label="Add new Task" styleClass="
+    <!-- New Task Button -->
+    <p-button icon="pi pi-plus" label="Add new Task" class="
       flex items-center gap-3 px-6 py-2 rounded-xl
       bg-gradient-to-r from-violet-600 to-indigo-600
       hover:from-violet-500 hover:to-indigo-500
@@ -16,12 +16,13 @@
       shadow-[0_0_20px_rgba(139,92,246,0.5)]
       hover:shadow-[0_0_35px_rgba(139,92,246,0.8)]
       transition-all duration-300
-    " (click)="showFormDialog = true">
+    " 
+    (click)="openCreateForm()">
     </p-button>
 
   </div>
 
-  <!-- Listbox -->
+  <!-- Listbox for showing task -->
   <div class="flex-1 overflow-y-auto min-h-0 ">
   <p-listbox
   [options]="filtered || []"
@@ -48,44 +49,7 @@
 <!-- Form Dialog-->
 <p-dialog header="Create Task" [(visible)]="showFormDialog" [modal]="true" [draggable]="false" appendTo="body"
   styleClass="bg-slate-900/90 backdrop-blur-xl text-white rounded-xl">
-  <form (ngSubmit)="addTask()" [formGroup]="listForm" class="flex flex-col gap-4 p-4">
-
-    <input pInputText formControlName="newTitle" placeholder="Title"
-      class="w-full bg-slate-800/60 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-white/40" />
-
-    <input pInputText formControlName="newDescription" placeholder="Description"
-      class="w-full bg-slate-800/60 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-white/40" />
-
-    <p-datepicker formControlName="newDueDate" placeholder="Select a date" [appendTo]="'body'" class="w-full"
-      inputStyleClass="w-full bg-slate-800/60 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-white/40">
-    </p-datepicker>
-
-    <p-panel header="Status" [toggleable]="true"
-      class="bg-slate-800/60 backdrop-blur-xl border border-white/10 rounded-lg text-white">
-      <p-listbox formControlName="newStatus" [options]="statusOptions" styleClass="w-full bg-transparent text-white">
-        <ng-template let-option pTemplate="item">
-          <div class="px-3 py-2 rounded-lg" [ngClass]="{
-              'text-gray-400': option.value === 'non_started',
-              'text-blue-400': option.value === 'in_progress',
-              'text-orange-400': option.value === 'paused',
-              'text-red-400 font-semibold': option.value === 'late',
-              'text-green-400 line-through': option.value === 'finished'
-            }">
-            {{ option.label }}
-          </div>
-        </ng-template>
-      </p-listbox>
-    </p-panel>
-
-    <div class="flex justify-end gap-3 mt-4">
-      <button pButton type="submit" label="Add" icon="pi pi-check"
-        class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"></button>
-
-      <button pButton type="button" label="Cancel" icon="pi pi-times"
-        class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg" (click)="showFormDialog = false"></button>
-    </div>
-
-  </form>
+  <app-task-form [task]="selectedTask" (create)="onCreateTask($event)" (update)="onUpdateTask($event)" (delete)="onDeleteTask($event)" (cancel)="closeForm()" ></app-task-form>
 </p-dialog>
 
 

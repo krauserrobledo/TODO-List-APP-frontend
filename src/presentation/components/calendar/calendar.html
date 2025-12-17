@@ -1,12 +1,12 @@
 <p-datepicker
   [inline]="true"
   class="w-full custom-calendar"
-  (onSelect)="onDaySelected($event)"
->
+  (onSelect)="onDaySelected($event)">
+  <!--NG Template for days with tasks-->
   <ng-template pTemplate="date" let-date>
     <div class="relative flex items-center justify-center w-full h-full">
       <span>{{ date.day }}</span>
-
+      <!-- if day has task makes difference -->
       @if (hasTask(date)) {
         <div class="absolute w-8 h-8 rounded-full bg-red-400 shadow-md opacity-30 pointer-events-none"></div>
       }

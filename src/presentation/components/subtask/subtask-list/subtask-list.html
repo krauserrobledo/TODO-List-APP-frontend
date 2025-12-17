@@ -1,35 +1,33 @@
-<div >
- <ul>
+<div>
+  <!-- List for subtask -->
+  <ul>
     @for (sub of (subtasks$ | async); track sub.id) {
-      <li class="item">
-        {{ sub.title }}
-        <p-button severity="danger"(click)="deleteSubtask(sub.id)">
-          <i class="pi pi-trash mt-1 bg-red-500 p-1 rounded-md" style="font-size:1rem"></i>
-        </p-button>
-      </li>
-       }
+    <li class="item">
+      {{ sub.title }}
+      <!-- Delete Button -->
+      <p-button severity="danger" (click)="deleteSubtask(sub.id)">
+        <i class="pi pi-trash mt-1 bg-red-500 p-1 rounded-md" style="font-size:1rem"></i>
+      </p-button>
+    </li>
+    }
   </ul>
-  
+<!-- Button for new subtask -->
 </div>
 <div class="flex justify-end items-end">
-  <p-button
-    icon="pi pi-plus"
-    label="Add new Subtask..."
-    class="flex items-center gap-2 py-2 mt-4 rounded-lg 
+  <p-button icon="pi pi-plus" label="Add new Subtask..." class="flex items-center gap-2 py-2 mt-4 rounded-lg 
                 bg-violet-600 hover:bg-violet-700 text-white font-medium
-                shadow-md transition"
-    (click)="openDialog()">
+                shadow-md transition" (click)="openDialog()">
   </p-button>
 </div>
 
-
-<p-dialog header="Create Subtask" [(visible)]="showCreateDialog" [modal]="true" appendTo="body"
-  [draggable]="false" [resizable]="false">
-  <form  [formGroup]="subtaskForm" (ngSubmit)="submit()" class="p-fluid form-container">
+<!-- creation Dialog -->
+<p-dialog header="Create Subtask" [(visible)]="showCreateDialog" [modal]="true" appendTo="body" [draggable]="false"
+  [resizable]="false">
+  <form [formGroup]="subtaskForm" (ngSubmit)="submit()" class="p-fluid form-container">
     <div class="p-field">
       <input type="text" pInputText id="title" formControlName="title" name="title" placeholder="New subtask" />
-    <p-button type="submit" icon="pi pi-plus">
-    </p-button>
-       </div>
+      <p-button type="submit" icon="pi pi-plus">
+      </p-button>
+    </div>
   </form>
 </p-dialog>

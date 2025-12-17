@@ -9,10 +9,11 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { PanelModule } from 'primeng/panel';
 import { InputTextModule } from 'primeng/inputtext';
 import { Store } from '@ngxs/store';
-import { AddTask, DeleteTask, LoadTasks } from '../../../stores/task/task.actions';
+import { AddTask, DeleteTask, LoadTasks, UpdateTask } from '../../../stores/task/task.actions';
 import { TaskStatus } from '../../../../domain/models/task/task-status';
 import { Observable } from 'rxjs';
 import { TaskState } from '../../../stores/task/task.state';
+import { TaskForm } from "../task-form/task-form";
 
 @Component({
   selector: 'app-task-list',
@@ -25,8 +26,9 @@ import { TaskState } from '../../../stores/task/task.state';
     ListboxModule,
     DatePickerModule,
     PanelModule,
-    InputTextModule
-  ],
+    InputTextModule,
+    TaskForm
+],
   templateUrl: './task-list.html',
   styleUrls: ['./task-list.css']
 })
@@ -38,7 +40,7 @@ export class TaskList {
   tasks: TaskModel[] = [];
   filtered: TaskModel[] = [];
 
-  // filtros activos
+  // filters
   private statusFilter: TaskStatus | '' = '';
   private dateFilter: string | null = null; // YYYY-MM-DD
 
@@ -74,16 +76,16 @@ export class TaskList {
     });
   }
 
-  // FILTRO UNIFICADO
+  // filter mixing
   private applyAllFilters() {
     let result = [...this.tasks];
 
-    // filtro por estado
+    // by status
     if (this.statusFilter) {
       result = result.filter(t => t.status === this.statusFilter);
     }
 
-    // filtro por fecha
+    // by date
     if (this.dateFilter) {
       result = result.filter(t =>
         t.dueDate &&
@@ -94,18 +96,19 @@ export class TaskList {
     this.filtered = result;
   }
 
-  // llamado desde Filters
+  // apply filters method
   applyFilter(state: string) {
     this.statusFilter = (state || '') as TaskStatus | '';
     this.applyAllFilters();
   }
 
-  // llamado desde Dashboard (cuando Calendar emite)
+  // from dashboard
   applyDateFilter(dateKey: string | null) {
     this.dateFilter = dateKey;
     this.applyAllFilters();
   }
 
+  // emit for selected task
   onSelect(task: TaskModel) {
     this.selectedTask = task;
     this.selectTask.emit(task);
@@ -136,10 +139,34 @@ export class TaskList {
     });
   }
 
-  deleteTask(task: TaskModel) {
-    this.store.dispatch(new DeleteTask(task.id));
-    if (this.selectedTask?.id === task.id) this.selectedTask = null;
+  openCreateForm() {
+    this.selectedTask = null;
+    this.showFormDialog = true;
   }
+  
+  closeForm() {
+    this.showFormDialog = false;
+    this.selectedTask = null;
+  }
+  
+  onCreateTask(model: TaskModel) {
+    this.store.dispatch(new AddTask(model)).subscribe(() => {
+      this.closeForm();
+    });
+  }
+  
+  onUpdateTask(model: TaskModel) {
+    this.store.dispatch(new UpdateTask(model.id, model)).subscribe(() => {
+      this.closeForm();
+    });
+  }
+  
+  onDeleteTask(model: TaskModel) {
+    this.store.dispatch(new DeleteTask(model.id)).subscribe(() => {
+      this.closeForm();
+    });
+  }
+  
 
   getStatusClass(status: string) {
     switch (status) {

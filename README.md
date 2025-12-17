@@ -90,7 +90,6 @@ src/
 - **Date filtering**  
 - **Status filtering**  
 - **Combined filtering (date + status)**  
-- Fully integrated with NGXS  
 
 ### UI/UX
 - PrimeNG components  
