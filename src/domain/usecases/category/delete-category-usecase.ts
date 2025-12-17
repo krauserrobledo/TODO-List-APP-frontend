@@ -1,6 +1,10 @@
 import { Injectable, inject } from '@angular/core';
 import { CategoryRepository } from '../../i-repositories/category-repository';
 import { Observable } from 'rxjs';
+
+/**
+ * Use case for deleting a category.
+ */
 @Injectable({ providedIn: 'root' })
 export class DeleteCategoryUseCase {
   private categoryRepository = inject(CategoryRepository);

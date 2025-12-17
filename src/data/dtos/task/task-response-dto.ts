@@ -1,8 +1,13 @@
+import { TaskStatus } from "../../../domain/models/task/task-status";
 import { CategoryResponseDto } from "../category/category-response-dto";
 import { SubtaskResponseDto } from "../subtask/subtask-response-dto";
 import { TagResponseDto } from "../tag/tag-response-dto";
 
+/**
+ * Data Transfer Object representing a task response.
+ */
 export interface TaskResponseDto {
+  // Task properties
   id: string;
   title: string;
   description?: string;
@@ -10,19 +15,14 @@ export interface TaskResponseDto {
   status: TaskStatus;
   userId: string;
 
+  // Relations
   subtasks?: SubtaskResponseDto[];
   taskCategories?: { category: CategoryResponseDto }[];
   taskTags?: { tag: TagResponseDto }[];
-
+  
+  // Flattened relations
   categories?: CategoryResponseDto[];
   tags?: TagResponseDto[];
 }
 
 
-export type TaskStatus =
-  | 'Non Started'
-  | 'In Progress'
-  | 'Paused'
-  | 'Late'
-  | 'Finished';
-  

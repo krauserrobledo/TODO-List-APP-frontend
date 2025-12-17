@@ -6,6 +6,9 @@ import { environment } from "../../environments/environment";
 import { CategoryMapper } from "../mappers/category-mapper";
 import { map, Observable } from "rxjs";
 
+/**
+ * API repository implementation for managing categories.
+ */
 @Injectable({ providedIn: 'root' })
 export class CategoryApiRepository implements CategoryRepository {
   private http = inject(HttpClient);
@@ -46,6 +49,7 @@ export class CategoryApiRepository implements CategoryRepository {
       ))
     );
   }
+
   // Get category by id
   getCategory(id: string): Observable<CategoryModel> {
     return this.http.get<CategoryModel>(`${this.baseUrl}/${id}`).pipe(

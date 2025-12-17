@@ -6,6 +6,9 @@ import { HttpClient } from "@angular/common/http";
 import { TagMapper } from "../mappers/tag-mapper";
 import { environment } from "../../environments/environment";
 
+/**
+ * API repository implementation for managing tags.
+ */
 @Injectable({ providedIn: 'root' })
 export class TagApiRepository implements TagRepository {
   private http = inject(HttpClient);
@@ -21,6 +24,7 @@ export class TagApiRepository implements TagRepository {
       ))
     );
   }
+
   // Update an existing Tag for current user
   updateTag(id: string, model: TagModel): Observable<TagModel> {
     const dto = this.tagMapper.toUpdateRequestDto(model);
@@ -30,10 +34,12 @@ export class TagApiRepository implements TagRepository {
       ))
     );
   }
+
   // Delete an existing user Tag
   deleteTag(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
+
   //Get tags by user
   getUserTags(): Observable<TagModel[]> {
     return this.http.get<TagModel[]>(`${this.baseUrl}/user`).pipe(
@@ -44,6 +50,7 @@ export class TagApiRepository implements TagRepository {
       ))
     );
   }
+
   //Get a tag by Id
   getTag(id: string): Observable<TagModel> {
     return this.http.get<TagModel>(`${this.baseUrl}/${id}`).pipe(

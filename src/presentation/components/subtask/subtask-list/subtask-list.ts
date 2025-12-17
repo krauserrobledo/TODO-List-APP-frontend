@@ -10,6 +10,16 @@ import { AddSubtask, DeleteSubtask, LoadSubtasks } from '../../../stores/subtask
 import { Observable } from 'rxjs';
 import { SubtaskState } from '../../../stores/subtask/subtask.state';
 
+/**
+ * Component for displaying and managing the list of subtasks for a specific task.
+ * Allows creating and deleting subtasks.
+ * Uses a dialog for creating new subtasks.
+ * Integrates with NGXS store for state management.
+ * @see SubtaskModel
+ * @see AddSubtask
+ * @see DeleteSubtask
+ * @see LoadSubtasks
+ */
 @Component({
   selector: 'app-subtask-list',
   standalone: true,
@@ -25,25 +35,29 @@ export class SubtaskList implements OnChanges {
   showCreateDialog = false;
   subtaskForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) { }
 
+  // Initialize the component and the subtask form
   ngOnInit() {
     this.subtaskForm = this.fb.group({
       title: ['', Validators.required]
     });
   }
 
+  // Load subtasks when the taskId input changes
   ngOnChanges() {
     if (this.taskId) {
       this.store.dispatch(new LoadSubtasks(this.taskId));
     }
   }
 
+  // Open the dialog to create a new subtask
   openDialog() {
     this.showCreateDialog = true;
-    this.subtaskForm.reset(); 
+    this.subtaskForm.reset();
   }
 
+  // Submit the new subtask form
   submit() {
     if (this.subtaskForm.invalid || !this.taskId) {
       this.subtaskForm.markAllAsTouched();
@@ -60,6 +74,7 @@ export class SubtaskList implements OnChanges {
     this.showCreateDialog = false;
   }
 
+  // Delete a subtask by ID
   deleteSubtask(id: string) {
     this.store.dispatch(new DeleteSubtask(id));
   }

@@ -3,6 +3,9 @@ import { TagRepository } from '../../i-repositories/tag-repository';
 import { TagModel } from '../../models/tag/tag-model';
 import { Observable } from 'rxjs';
 
+/**
+ * Use case for updating an existing tag.
+ */
 @Injectable({ providedIn: 'root' })
 export class UpdateTagUseCase {
   private tagRepository = inject(TagRepository);

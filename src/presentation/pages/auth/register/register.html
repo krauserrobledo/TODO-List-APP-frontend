@@ -1,7 +1,6 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register</title>
@@ -16,6 +15,7 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
 </head>
+<!-- Body -->
 
 <body class="min-h-screen flex items-center justify-center bg-[#18181c] overflow-x-hidden">
   <div class="w-full bg-slate-900 max-w-md flex flex-col gap-6 relative border-white/10 border rounded-3xl px-8 py-8">
@@ -80,29 +80,23 @@
           Password
         </label>
         <div class="field pt-2">
-          <p-password
-            id="password"
-            formControlName="password"
-            [toggleMask]="true"
-            [feedback]="false"
+          <p-password id="password" formControlName="password" [toggleMask]="true" [feedback]="false"
             styleClass="w-full"
             inputStyleClass="w-full rounded-lg bg-[#232329bb] border border-white/10 px-3 py-2 text-white placeholder-white/40 focus:outline-none focus:border-[#8f51ea] transition"
             [inputStyle]="{
               'background-color': '#232329bb',
               'border-color': registerForm.get('password')?.invalid && registerForm.get('password')?.touched ? '#f87171' : 'rgba(255, 255, 255, 0.1)'
-            }"
-            placeholder="Enter your password">
+            }" placeholder="Enter your password">
           </p-password>
-          
+
           @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
-            <small class="p-error block mt-2">
-              <i class="pi pi-exclamation-circle"></i>
-              Password must be at least 6 characters
-            </small>
+          <small class="p-error block mt-2">
+            <i class="pi pi-exclamation-circle"></i>
+            Password must be at least 6 characters
+          </small>
           }
         </div>
       </div>
-  
 
       <!-- get Login -->
       <button pButton type="submit" class="btn mx-auto mt-2 relative">
@@ -115,9 +109,7 @@
         </span>
         <strong class="relative z-10">SIGN IN</strong>
       </button>
-
     </form>
-
     <div class="border-b border-white/10"></div>
     <div class="text-center mt-4">
       <span class="text-white/60 text-xs">Already have an account?
@@ -126,7 +118,7 @@
     </div>
     <p class="text-center text-white/20 text-xs mt-4 select-none">© 2025 Embrace IT</p>
   </div>
-
+  <!-- Error Dialog -->
   <p-dialog header="Register Error" [(visible)]="showErrorDialog" [modal]="true" [style]="{ width: '450px' }"
     [draggable]="false" [resizable]="false">
     <div class="flex align-items-center">
@@ -138,6 +130,7 @@
       </p-button>
     </ng-template>
   </p-dialog>
+  <!-- Particles JS Script -->
   <script>
     particlesJS("particles-js", {
       "particles": {
@@ -207,5 +200,4 @@
     });
   </script>
 </body>
-
 </html>

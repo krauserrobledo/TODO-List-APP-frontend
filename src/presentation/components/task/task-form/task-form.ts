@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Output, Input, OnChanges, inject } from '@angular/core';
-
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TaskModel } from '../../../../domain/models/task/task-model';
 import { Button } from "primeng/button";
@@ -12,6 +11,16 @@ import { Store } from '@ngxs/store';
 import { LoadCategories } from '../../../stores/category/category.actions';
 import { LoadTags } from '../../../stores/tag/tag.actions';
 
+/**
+ * Component for creating and editing tasks.
+ * Provides a form with fields for title, description, status, due date,
+ * categories, and tags.
+ * Emits events for creating, updating, deleting, and cancelling task operations.
+ * Integrates with NGXS store for loading categories and tags.
+ * @see TaskModel
+ * @see LoadCategories
+ * @see LoadTags
+ */
 @Component({
   selector: 'app-task-form',
   standalone: true,
@@ -24,10 +33,11 @@ import { LoadTags } from '../../../stores/tag/tag.actions';
     TextareaModule,
     InputTextModule,
     ReactiveFormsModule
-],
+  ],
   templateUrl: './task-form.html',
   styleUrls: ['./task-form.css'],
 })
+
 export class TaskForm implements OnChanges {
   @Input() task: TaskModel | null = null;
 
@@ -38,10 +48,8 @@ export class TaskForm implements OnChanges {
 
   isEdit = false;
   taskForm!: FormGroup;
-
   selectedCategories: any[] = [];
   selectedTags: any[] = [];
-
   store = inject(Store);
 
   statusOptions = [
@@ -62,15 +70,16 @@ export class TaskForm implements OnChanges {
     });
   }
 
+  // Load categories and tags on component initialization
   ngOnInit() {
     this.store.dispatch(new LoadCategories());
     this.store.dispatch(new LoadTags());
   }
 
+  // Update form when task input changes
   ngOnChanges() {
     if (this.task) {
       this.isEdit = true;
-
       this.taskForm.patchValue({
         newTitle: this.task.title,
         newDescription: this.task.description ?? '',
@@ -91,6 +100,7 @@ export class TaskForm implements OnChanges {
     }
   }
 
+  // Submit the task form for creating or updating a task
   submit() {
     if (this.taskForm.invalid) {
       this.taskForm.markAllAsTouched();
@@ -115,10 +125,12 @@ export class TaskForm implements OnChanges {
     }
   }
 
+  // Emit delete event for the current task
   remove() {
     if (this.task) this.delete.emit(this.task);
   }
 
+  // Emit cancel event
   close() {
     this.cancel.emit();
   }

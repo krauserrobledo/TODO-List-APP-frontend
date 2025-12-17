@@ -1,8 +1,11 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { SubtaskRepository } from '../../i-repositories/subtask-repository';
 import { SubtaskModel } from '../../models/subtask/subtask-model';
 import { Observable } from 'rxjs';
 
+/**
+ * Use case for creating a new subtask under a specific task.
+ */
 @Injectable({ providedIn: 'root' })
 export class CreateSubtaskUseCase {
   constructor(private repository: SubtaskRepository) {}

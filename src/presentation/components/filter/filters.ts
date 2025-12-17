@@ -3,6 +3,9 @@ import { Store } from '@ngxs/store';
 import { TaskState } from '../../stores/task/task.state';
 import { TaskModel } from '../../../domain/models/task/task-model';
 
+/**
+ * Component for filtering tasks based on their status.
+ */
 @Component({
   selector: 'app-filters',
   standalone: true,
@@ -32,12 +35,13 @@ export class TaskFiltersComponent {
       this.tasks = tasks;
     });
   }
-
+  // Get the count of tasks for a given state
   count(state: string): number {
     if (!state) return this.tasks.length;
     return this.tasks.filter(t => t.status === state).length;
   }
 
+  // Select a filter and emit the change
   selectFilter(state: string) {
     this.active = state;
     this.filterChange.emit(state);

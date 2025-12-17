@@ -1,7 +1,8 @@
 <div class="app min-h-screen flex flex-col  px-6 py-6">
   <!-- Header -->
   <header class="app-header mb-5">
-    <nav class="flex items-center justify-between bg-slate-900/80 backdrop-blur-xl rounded-2xl px-6 py-4 shadow-lg ring-1 ring-white/10">
+    <nav
+      class="flex items-center justify-between bg-slate-900/80 backdrop-blur-xl rounded-2xl px-6 py-4 shadow-lg ring-1 ring-white/10">
       <h1 class="text-xl font-semibold text-white tracking-tight flex items-center gap-2">
         <i class="pi pi-check-square text-violet-400"></i>
         Manage your Tasks
@@ -38,33 +39,21 @@
 
     <!-- Center column-->
     <div class="col-span-4 ">
-      <p-panel
-        class="bg-slate-900/90 backdrop-blur-xl rounded-xl shadow-lg ring-1 ring-white/10 text-white ">
-       <app-task-list
-  #taskList
-  class="h-full"
-  (selectTask)="onSelectTask($event)"
-></app-task-list>
-
-
+      <p-panel class="bg-slate-900/90 backdrop-blur-xl rounded-xl shadow-lg ring-1 ring-white/10 text-white ">
+        <app-task-list #taskList class="h-full" (selectTask)="onSelectTask($event)"></app-task-list>
       </p-panel>
     </div>
 
     <!-- Right column -->
     <div class="col-span-5 backdrop-blur-xl">
       @if (selectedTask) {
-        <p-panel
-          class="bg-slate-900/90 backdrop-blur-xl rounded-xl shadow-lg ring-1 ring-white/10 text-white">
-          <app-task-details
-            [task]="selectedTask"
-            (close)="closeDetails()"
-            (update)="updateTask($event)"
-            (delete)="deleteTask($event)"
-            (changeStatus)="changeStatus($event)">
-          </app-task-details>
-        </p-panel>
+      <p-panel class="bg-slate-900/90 backdrop-blur-xl rounded-xl shadow-lg ring-1 ring-white/10 text-white">
+        <app-task-details [task]="selectedTask" (close)="closeDetails()" (update)="updateTask($event)"
+          (delete)="deleteTask($event)" (changeStatus)="changeStatus($event)">
+        </app-task-details>
+      </p-panel>
       }
     </div>
 
   </main>
-  </div>
+</div>

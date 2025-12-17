@@ -6,42 +6,42 @@ import { SubtaskModel } from "../../domain/models/subtask/subtask-model";
 
 @Injectable({ providedIn: 'root' })
 export class SubtaskMapper {
-    static toSubtaskModel(subtaskResponseDto: SubtaskResponseDto): import("rxjs").Observable<SubtaskModel> {
-        throw new Error("Method not implemented.");
+  static toSubtaskModel(subtaskResponseDto: SubtaskResponseDto): import("rxjs").Observable<SubtaskModel> {
+    throw new Error("Method not implemented.");
+  }
+
+  // Domain Entity → DTO
+  toCreateRequestDto(model: SubtaskModel): SubtaskCreateRequest {
+    return {
+
+      title: model.title
     }
+  }
 
-    // Domain Entity → DTO
-    toCreateRequestDto(model: SubtaskModel): SubtaskCreateRequest {
-        return {
+  toUpdateRequestDto(model: SubtaskModel): SubtaskUpdateRequest {
+    return {
 
-            title: model.title
-        }
+      title: model.title
     }
+  }
 
-    toUpdateRequestDto(model: SubtaskModel): SubtaskUpdateRequest {
-        return {
+  // DTO → Domain Entity
+  toSubtaskModel(dto: SubtaskResponseDto): SubtaskModel {
+    return {
 
-            title: model.title
-        }
+      id: dto.id,
+      title: dto.title,
+      taskId: dto.taskId
     }
+  }
 
-    // DTO → Domain Entity
-    toSubtaskModel(dto: SubtaskResponseDto): SubtaskModel {
-        return {
+  // API Response → DTO
+  toSubtaskResponseDto(apiResponse: any): SubtaskResponseDto {
+    return {
 
-            id: dto.id,
-            title: dto.title,
-            taskId: dto.taskId
-        }
+      id: apiResponse.id ?? apiResponse.data?.id ?? '',
+      title: apiResponse.title ?? apiResponse.data?.title ?? '',
+      taskId: apiResponse.taskId ?? apiResponse.data?.taskId ?? ''
     }
-
-    // API Response → DTO
-    toSubtaskResponseDto(apiResponse: any): SubtaskResponseDto {
-        return {
-
-            id: apiResponse.id ?? apiResponse.data?.id ?? '',
-            title: apiResponse.title ?? apiResponse.data?.title ?? '',
-            taskId: apiResponse.taskId ?? apiResponse.data?.taskId ?? ''
-        }
-    }
+  }
 }

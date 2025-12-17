@@ -7,13 +7,16 @@ import { SubtaskMapper } from "./subtask-mapper";
 import { TagMapper } from "./tag-mapper";
 import { CategoryMapper } from "./category-mapper";
 
+/**
+ * Mapper service to convert between Domain Models and Data Transfer Objects (DTOs) for tasks.
+ */
 @Injectable({ providedIn: 'root' })
 export class TaskMapper {
   constructor(
     private subtaskMapper: SubtaskMapper,
     private tagMapper: TagMapper,
     private categoryMapper: CategoryMapper
-  ) {}
+  ) { }
 
   // Domain → DTO
   toCreateRequestDto(model: TaskModel): TaskCreateRequest {
@@ -31,12 +34,10 @@ export class TaskMapper {
       description: model.description,
       dueDate: model.dueDate ? new Date(model.dueDate).toISOString() : null,
       status: model.status,
-      categoryIds: model.categories?.map(c => c.id) ?? [],
-      tagIds: model.tags?.map(t => t.id) ?? []
     };
   }
 
-  // DTO → Domain 
+  // DTO → Domain
   toTaskModel(dto: TaskResponseDto): TaskModel {
     return {
       id: dto.id,
@@ -51,7 +52,7 @@ export class TaskMapper {
     };
   }
 
-  // API Response → DTO 
+  // API Response → DTO
   toTaskResponseDto(apiResponse: any): TaskResponseDto {
     return {
       id: apiResponse.id ?? '',

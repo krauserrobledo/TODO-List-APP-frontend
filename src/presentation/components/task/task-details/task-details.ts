@@ -9,16 +9,26 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { TaskForm } from '../task-form/task-form';
 import { Store } from '@ngxs/store';
-import { 
-  AddCategoryToTask, 
-  DeleteCategoryFromTask, 
-  AddTagToTask, 
-  DeleteTagFromTask, 
-  UpdateTask 
-} from '../../../stores/task/task.actions';
+import { AddCategoryToTask, DeleteCategoryFromTask, AddTagToTask, DeleteTagFromTask, UpdateTask } from '../../../stores/task/task.actions';
 import { CategoryState } from '../../../stores/category/category.state';
 import { TagState } from '../../../stores/tag/tag.state';
 
+/**
+ * Component for displaying and managing the details of a task.
+ * Allows viewing and editing task information, changing status,
+ * and managing associated categories and tags.
+ * Integrates with NGXS store for state management.
+ * @see TaskModel
+ * @see SubtaskList
+ * @see TaskForm
+ * @see AddCategoryToTask
+ * @see DeleteCategoryFromTask
+ * @see AddTagToTask
+ * @see DeleteTagFromTask
+ * @see UpdateTask
+ * @see CategoryState
+ * @see TagState
+ */
 @Component({
   selector: 'app-task-details',
   standalone: true,
@@ -30,6 +40,7 @@ import { TagState } from '../../../stores/tag/tag.state';
   templateUrl: './task-details.html',
   styleUrls: ['./task-details.css']
 })
+
 export class TaskDetails implements OnChanges {
   @Input() task: TaskModel | null = null;
 
@@ -42,13 +53,10 @@ export class TaskDetails implements OnChanges {
 
   selectedStatus: TaskModel['status'] = 'Non Started';
   showEditDialog = false;
-
   showCategoryDialog = false;
   showTagDialog = false;
-
   allCategories = this.store.selectSnapshot(CategoryState.categories);
   allTags = this.store.selectSnapshot(TagState.tags);
-
   statusOptions = [
     { label: 'Non Started', value: 'Non Started' },
     { label: 'In Progress', value: 'In Progress' },
@@ -57,12 +65,14 @@ export class TaskDetails implements OnChanges {
     { label: 'Finished', value: 'Finished' }
   ];
 
+  // Update selectedStatus when task input changes
   ngOnChanges() {
     if (this.task) {
       this.selectedStatus = this.task.status;
     }
   }
 
+  // on Update task form submission
   onUpdate(updated: TaskModel) {
     this.store.dispatch(new UpdateTask(updated.id, updated)).subscribe(() => {
       const refreshed = this.store.selectSnapshot(state =>
@@ -78,9 +88,10 @@ export class TaskDetails implements OnChanges {
     });
   }
 
-  // -------------------------
-  // CATEGORY MANAGEMENT
-  // -------------------------
+  /** ---------------------
+  * CATEGORY MANAGEMENT
+  -------------------------**/
+  // Remove a category from the task
   removeCategory(categoryId: string) {
     if (!this.task) return;
 
@@ -98,6 +109,7 @@ export class TaskDetails implements OnChanges {
     });
   }
 
+  // Add a category to the task
   addCategory(categoryId: string) {
     if (!this.task) return;
 
@@ -117,9 +129,10 @@ export class TaskDetails implements OnChanges {
     });
   }
 
-  // -------------------------
-  // TAG MANAGEMENT
-  // -------------------------
+  /** -------------------------
+  * TAG MANAGEMENT
+   -------------------------**/
+   // Remove a tag from the task
   removeTag(tagId: string) {
     if (!this.task) return;
 
@@ -137,6 +150,7 @@ export class TaskDetails implements OnChanges {
     });
   }
 
+  // Add a tag to the task
   addTag(tagId: string) {
     if (!this.task) return;
 
@@ -156,6 +170,7 @@ export class TaskDetails implements OnChanges {
     });
   }
 
+  // Get CSS class based on task status
   getStatusClass(status: string) {
     switch (status) {
       case 'Non Started': return 'non_started';

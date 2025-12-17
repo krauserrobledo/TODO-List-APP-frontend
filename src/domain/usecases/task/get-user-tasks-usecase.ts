@@ -3,6 +3,9 @@ import { TaskModel } from "../../models/task/task-model";
 import { TaskRepository } from "../../i-repositories/task-repository";
 import { Observable } from "rxjs";
 
+/**
+ * Use case for retrieving all tasks of the current user.
+ */
 @Injectable({ providedIn: 'root' })
 export class GetUserTasksUseCase {
   private taskRepository = inject(TaskRepository);

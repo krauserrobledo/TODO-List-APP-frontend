@@ -1,6 +1,9 @@
 import { Observable } from "rxjs";
 import { TaskModel } from "../models/task/task-model";
 
+/**
+ * Abstract repository interface for managing tasks.
+ */
 export abstract class TaskRepository {
 
   abstract createTask(category: TaskModel): Observable<TaskModel>;
@@ -12,5 +15,4 @@ export abstract class TaskRepository {
   abstract addTagToTask(taskId: string, tagId: string): Observable<TaskModel>;
   abstract deleteCategoryFromTask(taskId: string, categoryId: string): Observable<TaskModel>;
   abstract deleteTagFromTask(taskId: string, tagId: string): Observable<TaskModel>;
-
 }

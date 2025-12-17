@@ -5,6 +5,14 @@ import { CategoryService } from '../../components/categories/service/category-se
 import { CreateCategory, DeleteCategory, LoadCategories, LoadCategory, UpdateCategory } from './category.actions';
 import { catchError, tap, throwError } from 'rxjs';
 
+/**
+ * CategoryState manages the state related to categories in the application.
+ * It handles actions for creating, updating, deleting, and loading categories.
+ * The state includes a list of categories, the selected category,
+ * loading status, and error information.
+ * It uses CategoryService to perform the necessary operations
+ * and updates the state accordingly.
+ */
 @State<CategoryStateModel>({
   name: 'categories',
   defaults: {
@@ -14,9 +22,12 @@ import { catchError, tap, throwError } from 'rxjs';
     error: null
   }
 })
+
 @Injectable()
 export class CategoryState {
-  constructor(private categoryService: CategoryService) {}
+  constructor(private categoryService: CategoryService) { }
+
+  // Selectors
 
   @Selector()
   static categories(state: CategoryStateModel) {
@@ -38,6 +49,8 @@ export class CategoryState {
     return state.error;
   }
 
+  // Actions
+  /* Creates a new category */
   @Action(CreateCategory)
   add(ctx: StateContext<CategoryStateModel>, action: CreateCategory) {
     return this.categoryService.createCategory(action.payload).pipe(
@@ -45,6 +58,7 @@ export class CategoryState {
     );
   }
 
+  /* Updates an existing category */
   @Action(UpdateCategory)
   update(ctx: StateContext<CategoryStateModel>, action: UpdateCategory) {
     return this.categoryService.updateCategory(action.id, action.payload).pipe(
@@ -54,6 +68,7 @@ export class CategoryState {
     );
   }
 
+  /* Deletes a category */
   @Action(DeleteCategory)
   delete(ctx: StateContext<CategoryStateModel>, action: DeleteCategory) {
     return this.categoryService.deleteCategory(action.id).pipe(
@@ -63,6 +78,7 @@ export class CategoryState {
     );
   }
 
+  /* Loads a specific category */
   @Action(LoadCategory)
   getTag(ctx: StateContext<CategoryStateModel>, action: LoadCategory) {
     return this.categoryService.getCategory(action.id).pipe(
@@ -70,6 +86,7 @@ export class CategoryState {
     );
   }
 
+  /* Loads all categories */
   @Action(LoadCategories)
   getTasks(ctx: StateContext<CategoryStateModel>) {
     ctx.patchState({ isLoading: true });

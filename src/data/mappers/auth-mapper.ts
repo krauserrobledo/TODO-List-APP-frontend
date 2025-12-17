@@ -8,22 +8,25 @@ import { RegisterModel } from '../../domain/models/auth/register-model';
 import { ValidateTokenModel } from '../../domain/models/auth/validate-token-model';
 import { ValidateTokenRequestDto } from '../dtos/auth/validate-token-request-dto';
 
+/**
+ * Mapper service to convert between Domain Models and Data Transfer Objects (DTOs) for authentication.
+ */
 @Injectable({ providedIn: 'root' })
 export class AuthMapper {
-  
+
   // Domain Model → DTO (requests)
   toRegisterRequestDto(model: RegisterModel): RegisterRequestDto {
     return {
-      userName: model.userName, 
+      userName: model.userName,
       email: model.email,
-      password: model.password  
+      password: model.password
     };
   }
 
   toLoginRequestDto(model: LoginModel): LoginRequestDto {
     return {
-      email: model.email,  
-      password: model.password 
+      email: model.email,
+      password: model.password
     };
   }
 
@@ -36,7 +39,7 @@ export class AuthMapper {
   // DTO → Domain Model
   toUserModel(dto: AuthResponseDto): UserModel {
     return {
-      id:  '', 
+      id: '',
       email: dto.email,
       userName: dto.userName ?? ''
     };

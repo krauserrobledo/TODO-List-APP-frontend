@@ -3,6 +3,9 @@ import { TagModel } from "../tag/tag-model";
 import { CategoryModel } from "../category/category-model";
 import { TaskStatus } from "./task-status";
 
+/**
+ * Model representing a task.
+ */
 export interface TaskModel {
   id: string;
   title: string;

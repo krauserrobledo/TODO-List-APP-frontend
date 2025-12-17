@@ -4,8 +4,11 @@ import { SubtaskModel } from "../../domain/models/subtask/subtask-model";
 import { HttpClient } from "@angular/common/http";
 import { SubtaskMapper } from "../mappers/subtask-mapper";
 import { environment } from "../../environments/environment";
-import { firstValueFrom, map, Observable } from "rxjs";
+import { map, Observable } from "rxjs";
 
+/**
+ * API repository implementation for managing subtasks.
+ */
 @Injectable({ providedIn: 'root' })
 export class SubtaskApiRepository implements SubtaskRepository {
   private http = inject(HttpClient);
@@ -21,6 +24,7 @@ export class SubtaskApiRepository implements SubtaskRepository {
       ))
     );
   }
+
   //Update existing subtask
   updateSubtask(id: string, model: SubtaskModel): Observable<SubtaskModel> {
     const dto = this.subtaskMapper.toUpdateRequestDto(model);
@@ -30,10 +34,12 @@ export class SubtaskApiRepository implements SubtaskRepository {
       ))
     );
   }
+
   //Delete a existing subtask
   deleteSubtask(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
+
   //Get a subtask by id
   getSubtask(id: string): Observable<SubtaskModel> {
     return this.http.get<SubtaskModel>(`${this.baseUrl}/${id}`).pipe(
@@ -42,6 +48,7 @@ export class SubtaskApiRepository implements SubtaskRepository {
       ))
     );
   }
+
   //Get all subtask by task
   getTaskSubtasks(taskId: string): Observable<SubtaskModel[]> {
     return this.http.get<SubtaskModel[]>(`${this.baseUrl}/task/${taskId}`).pipe(

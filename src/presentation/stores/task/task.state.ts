@@ -2,15 +2,19 @@ import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import { tap, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import {
-  LoadTasks, AddTask, UpdateTask, DeleteTask, LoadTask,
-  AddCategoryToTask, DeleteCategoryFromTask,
-  AddTagToTask, DeleteTagFromTask
-} from './task.actions';
+import { LoadTasks, AddTask, UpdateTask, DeleteTask, LoadTask, AddCategoryToTask, DeleteCategoryFromTask, AddTagToTask, DeleteTagFromTask } from './task.actions';
 import { TaskService } from '../../components/task/service/task-service';
 import { TaskStateModel } from '../../../domain/models/task/task-state-model';
 import { TaskModel } from '../../../domain/models/task/task-model';
 
+/**
+ * TaskState manages the state related to tasks in the application.
+ * It handles actions for creating, updating, deleting, and loading tasks.
+ * The state includes a list of tasks, the selected task,
+ * loading status, and error information.
+ * It uses TaskService to perform the necessary operations
+ * and updates the state accordingly.
+ */
 @State<TaskStateModel>({
   name: 'tasks',
   defaults: {
@@ -20,13 +24,12 @@ import { TaskModel } from '../../../domain/models/task/task-model';
     error: null
   }
 })
+
 @Injectable()
 export class TaskState {
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService) { }
 
-  // ---------------------
-  // SELECTORS
-  // ---------------------
+  // Selectors
   @Selector()
   static tasks(state: TaskStateModel) {
     return state.tasks;
@@ -47,9 +50,8 @@ export class TaskState {
     return state.error;
   }
 
-  // ---------------------
   // Actions
-  // ---------------------
+  /* Loads all tasks for the user */
   @Action(LoadTasks)
   load(ctx: StateContext<TaskStateModel>) {
     ctx.patchState({ isLoading: true });
@@ -72,6 +74,7 @@ export class TaskState {
     );
   }
 
+  /* Adds a new task */
   @Action(AddTask)
   add(ctx: StateContext<TaskStateModel>, action: AddTask) {
     return this.taskService.createTask(action.payload).pipe(
@@ -84,6 +87,7 @@ export class TaskState {
     );
   }
 
+  /* Updates an existing task */
   @Action(UpdateTask)
   update(ctx: StateContext<TaskStateModel>, action: UpdateTask) {
     return this.taskService.updateTask(action.id, action.payload).pipe(
@@ -107,6 +111,7 @@ export class TaskState {
     );
   }
 
+  /* Deletes a task */
   @Action(DeleteTask)
   delete(ctx: StateContext<TaskStateModel>, action: DeleteTask) {
     return this.taskService.deleteTask(action.id).pipe(
@@ -122,7 +127,7 @@ export class TaskState {
     );
   }
 
-
+  /* Loads a specific task */
   @Action(LoadTask)
   getTask(ctx: StateContext<TaskStateModel>, action: LoadTask) {
     return this.taskService.getTask(action.id).pipe(
@@ -130,7 +135,7 @@ export class TaskState {
     );
   }
 
-
+  /* Adds a category to a task */
   @Action(AddCategoryToTask)
   addCategory(ctx: StateContext<TaskStateModel>, action: AddCategoryToTask) {
     return this.taskService.addCategory(action.taskId, action.categoryId).pipe(
@@ -148,6 +153,7 @@ export class TaskState {
     );
   }
 
+  /* Deletes a category from a task */
   @Action(DeleteCategoryFromTask)
   deleteCategory(ctx: StateContext<TaskStateModel>, action: DeleteCategoryFromTask) {
     return this.taskService.deleteCategory(action.taskId, action.categoryId).pipe(
@@ -165,7 +171,7 @@ export class TaskState {
     );
   }
 
-
+  /* Adds a tag to a task */
   @Action(AddTagToTask)
   addTag(ctx: StateContext<TaskStateModel>, action: AddTagToTask) {
     return this.taskService.addTag(action.taskId, action.tagId).pipe(
@@ -183,6 +189,7 @@ export class TaskState {
     );
   }
 
+  /* Deletes a tag from a task */
   @Action(DeleteTagFromTask)
   deleteTag(ctx: StateContext<TaskStateModel>, action: DeleteTagFromTask) {
     return this.taskService.deleteTag(action.taskId, action.tagId).pipe(

@@ -1,13 +1,10 @@
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <!-- Geist Font -->
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -16,7 +13,6 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
 </head>
-
 <body class="min-h-screen flex items-center justify-center bg-[#18181c] overflow-x-hidden">
   <div class="bg-slate-900 w-full max-w-md flex flex-col gap-6 relative border-white/10 border rounded-3xl px-8 py-8">
     <div class="flex flex-col items-center gap-4">
@@ -34,7 +30,6 @@
       <div>
         <label for="email" class="block text-sm font-medium text-white tracking-wide mb-1 pb-3">
           <i class="pi pi-envelope pr-2">
-
           </i>
           Email</label>
         <input id="email" type="email" required autocomplete="email"
@@ -49,20 +44,19 @@
         </small>
         }
       </div>
+
       <!--Password-->
       <div>
         <label for="password" class="block text-sm font-medium text-white tracking-wide pt-1 pb-4">
           <i class="pi pi-key pr-2 pt-2"></i>
           Password
         </label>
-
         <p-password id="password" formControlName="password" required autocomplete="current-password" [feedback]="false"
           [toggleMask]="true" styleClass="w-full" [inputStyleClass]="
             (loginForm.get('password')?.invalid && loginForm.get('password')?.touched ? 'p-invalid ' : '') +
             'w-full pb-2 rounded-lg bg-[#232329bb] border border-white/10 px-3 py-2 text-white placeholder-white/40 focus:outline-none focus:border-[#8f51ea] transition'
           " placeholder="Enter your password">
         </p-password>
-
         @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
         <small class="p-error block">
           <i class="pi pi-exclamation-circle"></i>
@@ -72,20 +66,16 @@
       </div>
 
       <!-- get Login -->
-<button pButton type="submit" class="btn mx-auto" (click)="onSubmit()">
-  <span id="container-stars">
-    <div id="particles-js"></div>
-  </span>
-  <span id="glow">
-    <span class="circle"></span>
-    <span class="circle"></span>
-  </span>
-  <strong class="relative z-10">SIGN IN</strong>
-</button>
-
-      
-
-      
+      <button pButton type="submit" class="btn mx-auto" (click)="onSubmit()">
+        <span id="container-stars">
+          <div id="particles-js"></div>
+        </span>
+        <span id="glow">
+          <span class="circle"></span>
+          <span class="circle"></span>
+        </span>
+        <strong class="relative z-10">SIGN IN</strong>
+      </button>
     </form>
     <div class="border-b border-white/10"></div>
     <div class="text-center mt-4">
@@ -96,6 +86,8 @@
     </div>
     <p class="text-center text-white/20 text-xs mt-4 select-none">© 2025 Embrace IT</p>
   </div>
+
+  <!-- Error dialog -->
   <p-dialog header="Login Error" [(visible)]="showErrorDialog" [modal]="true" [style]="{ width: '450px' }"
     [draggable]="false" [resizable]="false">
     <div class="flex align-items-center">
@@ -107,6 +99,8 @@
       </p-button>
     </ng-template>
   </p-dialog>
+
+  <!-- Particles JS -->
   <script>
     particlesJS("particles-js", {
       "particles": {

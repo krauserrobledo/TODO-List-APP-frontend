@@ -3,6 +3,9 @@ import { TaskRepository } from '../../i-repositories/task-repository';
 import { TaskModel } from '../../models/task/task-model';
 import { Observable } from 'rxjs';
 
+/**
+ * Use case for updating an existing task.
+ */
 @Injectable({ providedIn: 'root' })
 export class UpdateTaskUseCase {
   private taskRepository = inject(TaskRepository);

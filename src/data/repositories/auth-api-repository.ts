@@ -8,7 +8,9 @@ import { LoginModel } from '../../domain/models/auth/login-model';
 import { RegisterModel } from '../../domain/models/auth/register-model';
 import { ValidateTokenModel } from '../../domain/models/auth/validate-token-model';
 import { Observable, map, of, tap } from 'rxjs';
-
+/**
+ * Implementation of AuthRepository that interacts with a RESTful API for authentication.
+ */
 @Injectable({ providedIn: 'root' })
 export class AuthApiRepository implements AuthRepository {
   private http = inject(HttpClient);
@@ -16,6 +18,7 @@ export class AuthApiRepository implements AuthRepository {
   private baseUrl = `${environment.apiUrl}/auth`;
   private readonly TOKEN_KEY = 'authToken';
   private readonly USER_KEY = 'current_user';
+
   // Get Logged in the app
   login(model: LoginModel): Observable<UserModel> {
     const dto = this.authMapper.toLoginRequestDto(model);
@@ -62,7 +65,7 @@ export class AuthApiRepository implements AuthRepository {
     const token = localStorage.getItem(this.TOKEN_KEY);
     return of(token);
   }
-  
+
   //Sets token string
   private setToken(token: string): void {
     localStorage.setItem(this.TOKEN_KEY, token);

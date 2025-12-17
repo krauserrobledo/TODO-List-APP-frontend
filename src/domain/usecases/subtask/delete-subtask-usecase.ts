@@ -2,6 +2,9 @@ import { Injectable, inject } from '@angular/core';
 import { SubtaskRepository } from '../../i-repositories/subtask-repository';
 import { Observable } from 'rxjs';
 
+/**
+ * Use case for deleting a subtask.
+ */
 @Injectable({ providedIn: 'root' })
 export class DeleteSubtaskUseCase {
   private subtaskRepository = inject(SubtaskRepository);

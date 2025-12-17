@@ -10,6 +10,13 @@ import { LogoutUseCase } from "../../../../domain/usecases/auth/logout-usecase";
 import { RegisterUseCase } from "../../../../domain/usecases/auth/register-usecase";
 import { ValidateTokenUseCase } from "../../../../domain/usecases/auth/validate-token-usecase";
 
+/**
+ * AuthService provides authentication-related operations
+ * such as login, logout, registration, token validation,
+ * and fetching user profile information.
+ * It acts as a bridge between the presentation layer
+ * and the domain layer use cases.
+ */
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   constructor(

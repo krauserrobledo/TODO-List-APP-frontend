@@ -4,7 +4,11 @@ import { RegisterModel } from '../models/auth/register-model';
 import { ValidateTokenModel } from '../models/auth/validate-token-model';
 import { Observable } from 'rxjs';
 
+/**
+ * Abstract repository interface for authentication-related operations.
+ */
 export abstract class AuthRepository {
+
   abstract login(model: LoginModel): Observable<UserModel>;
   abstract register(model: RegisterModel): Observable<UserModel>;
   abstract validateToken(model: ValidateTokenModel): Observable<{ valid: boolean }>;

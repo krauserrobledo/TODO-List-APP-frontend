@@ -5,6 +5,13 @@ import { Login, Register, Logout, ValidateToken, GetUserProfile, HydrateUser } f
 import { AuthService } from '../../pages/auth/service/auth-service';
 import { AuthStateModel } from '../../../domain/models/auth/auth-state-model';
 
+/**
+ * AuthState manages the authentication state of the application.
+ * It handles actions related to user login, registration, logout,
+ * token validation, and user profile retrieval.
+ * It uses AuthService to perform the necessary operations
+ * and updates the state accordingly.
+ */
 @State<AuthStateModel>({
   name: 'auth',
   defaults: {
@@ -15,10 +22,13 @@ import { AuthStateModel } from '../../../domain/models/auth/auth-state-model';
     token: ""
   }
 })
+
 @Injectable()
 export class AuthState {
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
+
+  //Selectors
 
   @Selector()
   static isLoading(state: AuthStateModel): boolean {
@@ -40,6 +50,9 @@ export class AuthState {
     return state.isAuthenticated;
   }
 
+  //Actions
+
+  /** Login action handler */
   @Action(Login)
   login(ctx: StateContext<AuthStateModel>, action: Login) {
     ctx.patchState({ isLoading: true });
@@ -48,6 +61,7 @@ export class AuthState {
     );
   }
 
+  /** Register action handler */
   @Action(Register)
   register(ctx: StateContext<AuthStateModel>, action: Register) {
     ctx.patchState({ isLoading: true });
@@ -56,12 +70,14 @@ export class AuthState {
     );
   }
 
+  /** Logout action handler */
   @Action(Logout)
-logout(ctx: StateContext<AuthStateModel>) {
-  ctx.patchState({ user: null, isAuthenticated: false });
-  return this.authService.logout();
-}
+  logout(ctx: StateContext<AuthStateModel>) {
+    ctx.patchState({ user: null, isAuthenticated: false });
+    return this.authService.logout();
+  }
 
+  /** GetUserProfile action handler */
   @Action(GetUserProfile)
   getUserProfile(ctx: StateContext<AuthStateModel>) {
     return this.authService.getUserProfile().pipe(
@@ -69,6 +85,7 @@ logout(ctx: StateContext<AuthStateModel>) {
     );
   }
 
+  /** ValidateToken action handler */
   @Action(ValidateToken)
   validateToken(ctx: StateContext<AuthStateModel>, action: ValidateToken) {
     return this.authService.validateToken(action.payload).pipe(
@@ -80,16 +97,16 @@ logout(ctx: StateContext<AuthStateModel>) {
     );
   }
 
+  /** HydrateUser action handler */
   @Action(HydrateUser)
-hydrate(ctx: StateContext<AuthStateModel>) {
-  const userData = localStorage.getItem('current_user');
-  const token = localStorage.getItem('authToken');
-  if (userData && token) {
-    ctx.patchState({
-      user: JSON.parse(userData),
-      token
-    });
+  hydrate(ctx: StateContext<AuthStateModel>) {
+    const userData = localStorage.getItem('current_user');
+    const token = localStorage.getItem('authToken');
+    if (userData && token) {
+      ctx.patchState({
+        user: JSON.parse(userData),
+        token
+      });
+    }
   }
-}
-
 }

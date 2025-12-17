@@ -15,6 +15,19 @@ import { Observable } from 'rxjs';
 import { TaskState } from '../../../stores/task/task.state';
 import { TaskForm } from "../task-form/task-form";
 
+/**
+ * Component for displaying and managing a list of tasks.
+ * Provides filtering options by status and due date.
+ * Allows selecting, creating, updating, and deleting tasks.
+ * Integrates with NGXS store for state management.
+ * @see TaskModel
+ * @see TaskForm
+ * @see AddTask
+ * @see DeleteTask
+ * @see LoadTasks
+ * @see UpdateTask
+ * @see TaskState
+ */
 @Component({
   selector: 'app-task-list',
   standalone: true,
@@ -32,6 +45,7 @@ import { TaskForm } from "../task-form/task-form";
   templateUrl: './task-list.html',
   styleUrls: ['./task-list.css']
 })
+
 export class TaskList {
 
   private store = inject(Store);
@@ -67,6 +81,7 @@ export class TaskList {
     newStatus: ['Non Started', Validators.required]
   });
 
+  // Load tasks on component initialization
   ngOnInit() {
     this.store.dispatch(new LoadTasks());
 
@@ -114,6 +129,7 @@ export class TaskList {
     this.selectTask.emit(task);
   }
 
+  // add new task from form
   addTask() {
     if (this.listForm.invalid) {
       this.listForm.markAllAsTouched();
@@ -121,7 +137,6 @@ export class TaskList {
     }
 
     const formValue = this.listForm.value;
-
     const model: TaskModel = {
       id: crypto.randomUUID(),
       title: formValue.newTitle!,
@@ -139,35 +154,40 @@ export class TaskList {
     });
   }
 
+  // Open the form dialog for creating a new task
   openCreateForm() {
     this.selectedTask = null;
     this.showFormDialog = true;
   }
-  
+
+  // Close the task form dialog
   closeForm() {
     this.showFormDialog = false;
     this.selectedTask = null;
   }
-  
+
+  // Handle task creation
   onCreateTask(model: TaskModel) {
     this.store.dispatch(new AddTask(model)).subscribe(() => {
       this.closeForm();
     });
   }
-  
+
+  // Handle task update
   onUpdateTask(model: TaskModel) {
     this.store.dispatch(new UpdateTask(model.id, model)).subscribe(() => {
       this.closeForm();
     });
   }
-  
+
+  // Handle task deletion
   onDeleteTask(model: TaskModel) {
     this.store.dispatch(new DeleteTask(model.id)).subscribe(() => {
       this.closeForm();
     });
   }
-  
 
+  // Get CSS class based on task status
   getStatusClass(status: string) {
     switch (status) {
       case 'Non Started': return 'non_started';

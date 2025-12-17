@@ -38,7 +38,6 @@
       <textarea pInputTextarea formControlName="newDescription" rows="3" class="field-input"></textarea>
     </div>
 
-
     <!-- Actions -->
     <div class="task-dialog-footer">
       <p-button *ngIf="isEdit" type="button" label="Delete" icon="pi pi-trash" severity="danger"
@@ -46,8 +45,6 @@
 
       <p-button type="submit" [label]="isEdit ? 'Update Task' : 'Add Task'" icon="pi pi-check"
         severity="success"></p-button>
-
     </div>
-
   </form>
 </div>

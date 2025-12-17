@@ -6,8 +6,10 @@ import { environment } from '../../environments/environment';
 import { TaskMapper } from '../mappers/task-mapper';
 import { Observable, map } from 'rxjs';
 
+/**
+ * API repository implementation for managing tasks.
+ */
 @Injectable({ providedIn: 'root' })
-
 export class TaskApiRepository implements TaskRepository {
   private http = inject(HttpClient);
   private taskMapper = inject(TaskMapper);

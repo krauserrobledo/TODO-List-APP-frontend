@@ -3,6 +3,9 @@ import { TaskModel } from "../../models/task/task-model";
 import { TaskRepository } from "../../i-repositories/task-repository";
 import { Observable } from "rxjs";
 
+/**
+ * Use case for deleting a category from a task.
+ */
 @Injectable({ providedIn: 'root' })
 export class DeleteCategoryFromTaskUseCase {
   private taskRepository = inject(TaskRepository);

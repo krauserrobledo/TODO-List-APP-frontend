@@ -9,7 +9,9 @@ import { Store } from '@ngxs/store';
 import { HydrateUser, Logout } from '../presentation/stores/auth/auth.actions';
 import { AuthState } from '../presentation/stores/auth/auth.state';
 import { MenuModule } from "primeng/menu";
-
+/**
+ * The root component of the application, responsible for rendering the main layout and handling user authentication state.
+ */
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -19,30 +21,32 @@ import { MenuModule } from "primeng/menu";
 })
 
 export class AppComponent {
-showUserMenu: boolean = false;  
+  showUserMenu: boolean = false;
   store = inject(Store);
   currentUser$ = this.store.select(AuthState.user);
   private router = inject(Router);
 
+  /// Logout the current user and navigate to the login page
   logout(): void {
-    this.store.dispatch( new Logout());
+    this.store.dispatch(new Logout());
     this.router.navigate(['/login']);
-    this.showUserMenu= false;
+    this.showUserMenu = false;
   }
-
+  /// On component initialization, hydrate the user state
   ngOnInit() {
     this.store.dispatch(new HydrateUser());
-  
   }
 
+  /// Navigate to the registration page
   goRegister() {
     this.router.navigate(['/register']);
   }
-
+  /// Navigate to the login page
   goLogin() {
     this.router.navigate(['/login']);
   }
-  
+
+  /// Listen for clicks outside the user menu to close it
   @HostListener('document:click', ['$event'])
   onClickOutside(event: Event) {
     const target = event.target as HTMLElement;

@@ -3,6 +3,9 @@ import { TaskRepository } from '../../i-repositories/task-repository';
 import { TaskModel } from '../../models/task/task-model';
 import { Observable } from 'rxjs';
 
+/**
+ * Use case for deleting a tag from a task.
+ */
 @Injectable({ providedIn: 'root' })
 export class DeleteTagFromTaskUseCase {
   private taskRepository = inject(TaskRepository);

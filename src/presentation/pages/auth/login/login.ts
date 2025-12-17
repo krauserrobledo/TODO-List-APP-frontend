@@ -9,7 +9,6 @@ import { MessageModule } from 'primeng/message';
 import { MessageService } from 'primeng/api';
 import { PasswordModule } from 'primeng/password';
 import { DialogModule } from 'primeng/dialog';
-
 import { AuthState } from '../../../stores/auth/auth.state';
 import { Login } from '../../../stores/auth/auth.actions';
 
@@ -26,17 +25,18 @@ export class LoginComponent {
   private store = inject(Store);
   private router = inject(Router);
 
- 
   isLoading$: Observable<boolean> = this.store.select(AuthState.isLoading);
   error$: Observable<string | null> = this.store.select(AuthState.error);
-
   showErrorDialog = false;
-
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required]
   });
 
+  /** Handles form submission
+   * @returns Promise<void>
+   * @throws Error if login fails
+  */
   async onSubmit(): Promise<void> {
     if (this.loginForm.invalid) return;
 

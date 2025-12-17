@@ -14,6 +14,12 @@ import { CategoryState } from '../../../stores/category/category.state';
 import { Observable } from 'rxjs';
 import { Chip } from "primeng/chip";
 
+/**
+ * Component for displaying and managing the list of categories.
+ * Allows creating, selecting, and deleting categories.
+ * Uses a dialog for creating new categories.
+ * Integrates with NGXS store for state management.
+ */
 @Component({
   selector: 'app-category-list',
   standalone: true,
@@ -27,7 +33,7 @@ import { Chip } from "primeng/chip";
     ListboxModule,
     ReactiveFormsModule,
     Chip
-],
+  ],
   templateUrl: './category-list.html',
   styleUrls: ['./category-list.css']
 })
@@ -41,8 +47,9 @@ export class CategoryList {
   showCreateDialog = false;
   categoryForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) { }
 
+  // Initialize the component and load categories
   ngOnInit() {
     this.store.dispatch(new LoadCategories());
 
@@ -52,6 +59,7 @@ export class CategoryList {
     });
   }
 
+  // Submit the form to create a new category
   submit() {
     if (this.categoryForm.invalid) return;
 
@@ -69,15 +77,18 @@ export class CategoryList {
     this.categoryForm.reset({ name: '', color: '#0078d7' });
   }
 
+  // Delete a category
   deleteCategory(category: CategoryModel) {
     this.store.dispatch(new DeleteCategory(category.id));
     if (this.selectedCategory?.id === category.id) this.selectedCategory = null;
   }
 
+  // Get the current user's ID (stub implementation)
   private getUserId(): string {
     return 'current-user-id';
   }
 
+  // Open the dialog to create a new category
   openDialog() {
     this.showCreateDialog = true;
     this.categoryForm.reset({ name: '', color: '#0078d7' });

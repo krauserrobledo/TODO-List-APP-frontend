@@ -6,6 +6,14 @@ import { throwError } from 'rxjs';
 import { TagService } from '../../components/tag/service/tag-service';
 import { TagStateModel } from '../../../domain/models/tag/tag-state-model';
 
+/**
+ * TagState manages the state related to tags in the application.
+ * It handles actions for creating, updating, deleting, and loading tags.
+ * The state includes a list of tags, the selected tag,
+ * loading status, and error information.
+ * It uses TagService to perform the necessary operations
+ * and updates the state accordingly.
+ */
 @State<TagStateModel>({
   name: 'tags',
   defaults: {
@@ -15,6 +23,7 @@ import { TagStateModel } from '../../../domain/models/tag/tag-state-model';
     error: null
   }
 })
+
 @Injectable()
 export class TagState {
   constructor(private tagService: TagService) {}
@@ -39,15 +48,17 @@ export class TagState {
   static error(state: TagStateModel) {
     return state.error;
   }
-  
+
   //Actions
+  /* Adds a new tag */
   @Action(AddTag)
   add(ctx: StateContext<TagStateModel>, action: AddTag) {
     return this.tagService.createTag(action.payload).pipe(
       tap(tag => ctx.patchState({ tags: [...ctx.getState().tags, tag] }))
     );
   }
-  
+
+  /* Updates an existing tag */
   @Action(UpdateTag)
   update(ctx: StateContext<TagStateModel>, action: UpdateTag) {
     return this.tagService.updateTag(action.id, action.payload).pipe(
@@ -57,6 +68,7 @@ export class TagState {
     );
   }
 
+  /* Deletes a tag */
   @Action(DeleteTag)
   delete(ctx: StateContext<TagStateModel>, action: DeleteTag) {
     return this.tagService.deleteTag(action.id).pipe(
@@ -66,6 +78,7 @@ export class TagState {
     );
   }
 
+  /* Loads a specific tag */
   @Action(LoadTag)
   getTag(ctx: StateContext<TagStateModel>, action: LoadTag) {
     return this.tagService.getTag(action.id).pipe(
@@ -73,6 +86,7 @@ export class TagState {
     );
   }
 
+  /* Loads all tags for the user */
   @Action(LoadTags)
   getTasks(ctx: StateContext<TagStateModel>) {
     ctx.patchState({ isLoading: true });

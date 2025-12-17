@@ -4,6 +4,9 @@ import { RegisterModel } from '../../models/auth/register-model';
 import { UserModel } from '../../models/auth/user-model';
 import { Observable } from 'rxjs';
 
+/**
+ * Use case for registering a new user.
+ */
 @Injectable({ providedIn: 'root' })
 export class RegisterUseCase {
   private authRepository = inject(AuthRepository);

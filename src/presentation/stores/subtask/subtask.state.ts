@@ -4,8 +4,15 @@ import { SubtaskStateModel } from '../../../domain/models/subtask/subtask-state-
 import { SubtaskService } from '../../components/subtask/service/subtask-service';
 import { AddSubtask, DeleteSubtask, LoadSubtask, LoadSubtasks, UpdateSubtask } from './subtask.actions';
 import { catchError, tap, throwError } from 'rxjs';
-import { TaskStateModel } from '../../../domain/models/task/task-state-model';
 
+/**
+ * SubtaskState manages the state related to subtasks in the application.
+ * It handles actions for creating, updating, deleting, and loading subtasks.
+ * The state includes a list of subtasks, the selected subtask,
+ * loading status, and error information.
+ * It uses SubtaskService to perform the necessary operations
+ * and updates the state accordingly.
+ */
 @State<SubtaskStateModel>({
   name: 'subtasks',
   defaults: {
@@ -15,9 +22,10 @@ import { TaskStateModel } from '../../../domain/models/task/task-state-model';
     error: null
   }
 })
+
 @Injectable()
 export class SubtaskState {
-  constructor(private subtaskService: SubtaskService) {}
+  constructor(private subtaskService: SubtaskService) { }
 
   // Selectors
   @Selector()
@@ -41,8 +49,10 @@ export class SubtaskState {
   }
 
   // Actions
+
+  /* Loads all subtasks for a specific task */
   @Action(LoadSubtasks)
-  getSubtasks(ctx: StateContext<SubtaskStateModel>,  action: LoadSubtasks) {
+  getSubtasks(ctx: StateContext<SubtaskStateModel>, action: LoadSubtasks) {
     ctx.patchState({ isLoading: true });
     return this.subtaskService.getTaskSubtasks(action.taskId).pipe(
       tap(subtasks => ctx.patchState({ subtasks, isLoading: false })),
@@ -53,6 +63,7 @@ export class SubtaskState {
     );
   }
 
+  /* Adds a new subtask */
   @Action(AddSubtask)
   add(ctx: StateContext<SubtaskStateModel>, action: AddSubtask) {
     return this.subtaskService.createSubtask(action.payload).pipe(
@@ -60,6 +71,7 @@ export class SubtaskState {
     );
   }
 
+  /* Updates an existing subtask */
   @Action(UpdateSubtask)
   update(ctx: StateContext<SubtaskStateModel>, action: UpdateSubtask) {
     return this.subtaskService.updateSubtask(action.id, action.payload).pipe(
@@ -69,6 +81,7 @@ export class SubtaskState {
     );
   }
 
+  /* Deletes a subtask */
   @Action(DeleteSubtask)
   delete(ctx: StateContext<SubtaskStateModel>, action: DeleteSubtask) {
     return this.subtaskService.deleteSubtask(action.id).pipe(
@@ -78,6 +91,7 @@ export class SubtaskState {
     );
   }
 
+  /* Loads a specific subtask */
   @Action(LoadSubtask)
   getSubtask(ctx: StateContext<SubtaskStateModel>, action: LoadSubtask) {
     return this.subtaskService.getSubtask(action.id).pipe(

@@ -10,13 +10,25 @@ import { AuthState } from '../../../stores/auth/auth.state';
 import { Observable, firstValueFrom } from 'rxjs';
 import { Register } from '../../../stores/auth/auth.actions';
 
+/**
+ * RegisterComponent handles user registration functionality.
+ * It includes a form for user input, validation, and submission handling.
+ * On successful registration, it navigates to the dashboard.
+ * In case of errors, it displays an error dialog.
+ * @component
+ * @example
+ * <app-register></app-register>
+ * @see {@link AuthState} for state management details.
+ * @see {@link Register} for registration action details.
+ */
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, Dialog, ButtonModule, PasswordModule ],
+  imports: [CommonModule, ReactiveFormsModule, Dialog, ButtonModule, PasswordModule],
   templateUrl: './register.html',
   styleUrl: './register.css'
 })
+
 export class RegisterComponent {
   private fb = inject(FormBuilder);
   private store = inject(Store);
@@ -32,13 +44,16 @@ export class RegisterComponent {
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
 
+  /** Handles form submission
+   * @returns Promise<void>
+   * @throws Error if login fails
+  */
   async onSubmit(): Promise<void> {
     if (this.registerForm.invalid) return;
 
     const request = this.registerForm.value as { userName: string; email: string; password: string };
 
     try {
-      
       await firstValueFrom(this.store.dispatch(new Register(request)));
       this.router.navigate(['/dashboard']);
     } catch (err) {
